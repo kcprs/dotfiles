@@ -6,27 +6,28 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Set up history
-HISTFILE=~/.zsh_history
+HISTFILE=$HOME/zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
 setopt inc_append_history hist_ignore_dups
  
 # some useful options (man zshoptions)
-setopt auto_cd extended_glob nomatch menu_complete interactive_comments
+setopt auto_cd extended_glob nomatch menu_complete interactive_comments correct correct_all
 # stty stop undef		# Disable ctrl-s to freeze terminal.
 # zle_highlight=('paste:none')
  
 # beeping is annoying
 setopt no_beep
-# 
-# 
-# # completions
-# autoload -Uz compinit
-# zstyle ':completion:*' menu select
-# # zstyle ':completion::complete:lsof:*' menu yes select
-# zmodload zsh/complist
-# # compinit
-# _comp_options+=(globdots)		# Include hidden files.
+ 
+ 
+# completions
+# zmodload zsh/complist # Must be loaded before call to compinit?
+autoload -U compinit && compinit
+zstyle ':completion:*' menu select # Enable completions via menu
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' # Fall back to case-insensitive matches
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*' # Fall back to partial matches
+_comp_options+=(globdots)		# Include hidden files in completions
+#
 # 
 # autoload -U up-line-or-beginning-search
 # autoload -U down-line-or-beginning-search
@@ -77,14 +78,15 @@ zsh_add_file "zsh-aliases"
 # # bindkey '^e' edit-command-line
 # 
 # # Environment variables set everywhere
-# export EDITOR="nvim"
+export EDITOR="$(command -v nvim 2>/dev/null || command -v vim)"
+export VISUAL="$EDITOR"
 # export TERMINAL="alacritty"
 # export BROWSER="brave"
 
 # Plugins
-zsh_add_plugin "zsh-users/zsh-autosuggestions"
+# zsh_add_plugin "zsh-users/zsh-autosuggestions"
 zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-zsh_add_plugin "hlissner/zsh-autopair"
+# zsh_add_plugin "hlissner/zsh-autopair"
 zsh_add_plugin "romkatv/powerlevel10k"
 # zsh_add_completion "esc/conda-zsh-completion" false
 # For more plugins: https://github.com/unixorn/awesome-zsh-plugins
