@@ -1,5 +1,7 @@
 alias md='mkdir -p'
 alias cl='clear'
+alias nv='nvim'
+
 # alias j='z'
 # alias f='zi'
 # alias g='lazygit'
