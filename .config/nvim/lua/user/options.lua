@@ -1,6 +1,6 @@
 vim.opt.fileencoding = "utf-8"                  -- the encoding written to a file
-vim.opt.shiftwidth = 4                          -- the number of spaces inserted for each indentation
-vim.opt.tabstop = 4                             -- insert 2 spaces for a tab
+vim.opt.shiftwidth = 2                          -- the number of spaces inserted for each indentation
+vim.opt.tabstop = 2                             -- insert 2 spaces for a tab
 vim.opt.number = true                           -- set numbered lines
 vim.opt.mouse = "a"                             -- allow the mouse to be used in neovim
 vim.opt.ignorecase = true                       -- ignore case in search patterns

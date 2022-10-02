@@ -46,6 +46,13 @@ return packer.startup(function(use)
   -- Color schemes
   use { "https://gitlab.com/__tpb/monokai-pro.nvim", commit = "826d028edbcc7a8aadc0f7a32b32747d97575615" }
 
+  -- Telescope
+  use {
+		"nvim-telescope/telescope.nvim",
+		tag = "0.1.0",
+		requires = { {'nvim-lua/plenary.nvim'} },
+	}
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
