@@ -51,17 +51,28 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-buffer", commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" } -- buffer completions
   use { "hrsh7th/cmp-path", commit = "466b6b8270f7ba89abd59f402c73f63c7331ff6e" } -- path completions
   use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" } -- snippet completions
-  use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" }
-  use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" }
+  use { "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" } -- LSP completions
+  use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" } -- completions for neovim Lua API
+
+  -- LSP
+  use { "neovim/nvim-lspconfig", tag = "v0.1.3" } -- enable LSP
+  use { "williamboman/mason.nvim", commit = "59e6feeba9e07fd8228e20ed919d38b62af1d212" } -- simple to use language server installer
+  -- use { "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" } -- provides glue between mason and lspconfig
+  use {
+    "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
+    commit = "ff40739e5be6581899b43385997e39eecdbf9465",
+    requires = { {"nvim-lua/plenary.nvim"} },
+  }
+  use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" } -- highlight all occurences of word under cursor
 
   -- snippets
-  use { "L3MON4D3/LuaSnip", tag = "v1.0.0" } --snippet engine
+  use { "L3MON4D3/LuaSnip", tag = "v1.*" } --snippet engine
 
   -- Telescope
   use {
     "nvim-telescope/telescope.nvim",
     tag = "0.1.0",
-    requires = { {'nvim-lua/plenary.nvim'} },
+    requires = { {"nvim-lua/plenary.nvim"} },
   }
 
   -- Automatically set up your configuration after cloning packer.nvim

@@ -18,6 +18,6 @@ require "user.telescope"
 -- require "user.illuminate"
 -- require "user.indentline"
 -- require "user.alpha"
--- require "user.lsp"
+require "user.lsp"
 -- require "user.dap"
 
