@@ -13,12 +13,10 @@ setopt inc_append_history hist_ignore_dups
  
 # some useful options (man zshoptions)
 setopt auto_cd extended_glob nomatch menu_complete interactive_comments correct correct_all
-# stty stop undef		# Disable ctrl-s to freeze terminal.
 # zle_highlight=('paste:none')
  
 # beeping is annoying
 setopt no_beep
- 
  
 # completions
 # zmodload zsh/complist # Must be loaded before call to compinit?
@@ -46,7 +44,7 @@ zsh_add_file "zsh-aliases"
 # zsh_add_file "zsh-vim-mode"
 # zsh_add_file "zsh-prompt"
  
-# 
+ 
 # # Key-bindings
 # bindkey -s '^o' 'ranger^M'
 # bindkey -s '^f' 'zi^M'
@@ -61,7 +59,7 @@ zsh_add_file "zsh-aliases"
 # bindkey "^j" down-line-or-beginning-search # Down
 # bindkey -r "^u"
 # bindkey -r "^d"
-# 
+ 
 # # FZF 
 # # TODO update for mac
 # [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
@@ -76,7 +74,7 @@ zsh_add_file "zsh-aliases"
 # # Edit line in vim with ctrl-e:
 # autoload edit-command-line; zle -N edit-command-line
 # # bindkey '^e' edit-command-line
-# 
+ 
 # # Environment variables set everywhere
 export EDITOR="$(command -v nvim 2>/dev/null || command -v vim)"
 export VISUAL="$EDITOR"
@@ -84,9 +82,9 @@ export VISUAL="$EDITOR"
 # export BROWSER="brave"
 
 # Plugins
-# zsh_add_plugin "zsh-users/zsh-autosuggestions"
+zsh_add_plugin "zsh-users/zsh-autosuggestions"
 zsh_add_plugin "zsh-users/zsh-syntax-highlighting"
-# zsh_add_plugin "hlissner/zsh-autopair"
+zsh_add_plugin "hlissner/zsh-autopair"
 zsh_add_plugin "romkatv/powerlevel10k"
 # zsh_add_completion "esc/conda-zsh-completion" false
 # For more plugins: https://github.com/unixorn/awesome-zsh-plugins
