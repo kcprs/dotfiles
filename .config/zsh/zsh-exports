@@ -2,6 +2,8 @@
 typeset -Ux path
 # then add to path with: path=(~/somedir ~/otherdir $path)
 
+path=($HOME/.local/bin $path)
+
 # export PATH="$HOME/.local/bin":$PATH
 # export MANPAGER='nvim +Man!'
 # export MANWIDTH=999
