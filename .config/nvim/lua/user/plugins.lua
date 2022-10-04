@@ -41,7 +41,7 @@ packer.init {
 -- Install your plugins here
 return packer.startup(function(use)
   -- Have packer manage itself
-  use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" } 
+  use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }
 
   -- Color schemes
   use { "https://gitlab.com/__tpb/monokai-pro.nvim", commit = "826d028edbcc7a8aadc0f7a32b32747d97575615" }
@@ -57,7 +57,6 @@ return packer.startup(function(use)
   -- LSP
   use { "neovim/nvim-lspconfig", tag = "v0.1.3" } -- enable LSP
   use { "williamboman/mason.nvim", commit = "59e6feeba9e07fd8228e20ed919d38b62af1d212" } -- simple to use language server installer
-  -- use { "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" } -- provides glue between mason and lspconfig
   use {
     "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
     commit = "ff40739e5be6581899b43385997e39eecdbf9465",

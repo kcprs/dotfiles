@@ -47,7 +47,7 @@ cmp.setup({
 	-- Specify snippet engine
 	snippet = {
 		expand = function(args)
-			luasnip.lsp_expand(args.body) 
+			luasnip.lsp_expand(args.body)
 		end,
 	},
 
@@ -119,10 +119,10 @@ cmp.setup({
 		behavior = cmp.ConfirmBehavior.Replace,
 		select = false,
 	},
-	-- window = {
-		-- completion = cmp.config.window.bordered(),
-		-- documentation = cmp.config.window.bordered(),
-	-- },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+  },
 	experimental = {
 		ghost_text = true,
 	},
