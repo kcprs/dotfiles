@@ -38,16 +38,18 @@ packer.init {
   },
 }
 
--- Install your plugins here
 return packer.startup(function(use)
   -- Have packer manage itself
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }
+
+  -- just plugins
+  use { "numToStr/Comment.nvim", tag = "v0.*" }
 
   -- Color schemes
   use { "https://gitlab.com/__tpb/monokai-pro.nvim", commit = "826d028edbcc7a8aadc0f7a32b32747d97575615" }
 
   -- cmp plugins
-  use { "hrsh7th/nvim-cmp", tag = "v0.0.1" } -- The completion plugin
+  use { "hrsh7th/nvim-cmp", tag = "v0.*" } -- The completion plugin
   use { "hrsh7th/cmp-buffer", commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" } -- buffer completions
   use { "hrsh7th/cmp-path", commit = "466b6b8270f7ba89abd59f402c73f63c7331ff6e" } -- path completions
   use { "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" } -- snippet completions
@@ -55,7 +57,7 @@ return packer.startup(function(use)
   use { "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" } -- completions for neovim Lua API
 
   -- LSP
-  use { "neovim/nvim-lspconfig", tag = "v0.1.3" } -- enable LSP
+  use { "neovim/nvim-lspconfig", tag = "v0.*" } -- enable LSP
   use { "williamboman/mason.nvim", commit = "59e6feeba9e07fd8228e20ed919d38b62af1d212" } -- simple to use language server installer
   use {
     "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters

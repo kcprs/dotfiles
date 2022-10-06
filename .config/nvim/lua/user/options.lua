@@ -4,6 +4,7 @@ vim.opt.tabstop = 2                             -- insert 2 spaces for a tab
 vim.opt.expandtab = true                        -- convert tabs to spaces
 vim.opt.smartindent = true                      -- make indenting smarter again
 vim.opt.number = true                           -- set numbered lines
+vim.opt.relativenumber = true                   -- set relative line numbers
 vim.opt.mouse = "a"                             -- allow the mouse to be used in neovim
 vim.opt.ignorecase = true                       -- ignore case in search patterns
 vim.opt.smartcase = true                        -- ignore "ignore case" if search term has uppercase characters
