@@ -44,6 +44,7 @@ return packer.startup(function(use)
 
   -- just plugins
   use { "numToStr/Comment.nvim", tag = "v0.*" }
+  use { "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" } -- Autopairs, integrates with both cmp and treesitter
 
   -- Color schemes
   use { "https://gitlab.com/__tpb/monokai-pro.nvim", commit = "826d028edbcc7a8aadc0f7a32b32747d97575615" }
