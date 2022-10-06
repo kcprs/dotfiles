@@ -29,7 +29,7 @@ local servers = {
   { "pyright" }, -- TODO: allow bare string here
 }
 
-local common = require("lua.user.lsp.settings.common")
+local common = require("user.lsp.settings.common")
 common.setup()
 
 for _, server in pairs(servers) do
