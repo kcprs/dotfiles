@@ -76,6 +76,9 @@ return packer.startup(function(use)
     requires = { {"nvim-lua/plenary.nvim"} },
   }
 
+  -- Treesitter
+  use { "nvim-treesitter/nvim-treesitter", commit = "a33858d399d0da226b0cf7b45fe9dc8f0a06547b" }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
