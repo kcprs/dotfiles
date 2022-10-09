@@ -1,3 +1,4 @@
+-- TODO: review and copy keymaps, then remove this file
 local M = {}
 
 local status_cmp_ok, cmp_nvim_lsp = pcall(require, "cmp_nvim_lsp")
