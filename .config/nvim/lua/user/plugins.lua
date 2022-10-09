@@ -42,6 +42,9 @@ return packer.startup(function(use)
   -- Have packer manage itself
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }
 
+  -- Many other plugins depend on this
+  use {"nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }
+
   -- just plugins
   use { "numToStr/Comment.nvim", tag = "v0.*" }
   use { "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" } -- Autopairs, integrates with both cmp and treesitter
@@ -60,11 +63,7 @@ return packer.startup(function(use)
   -- LSP
   use { "neovim/nvim-lspconfig", tag = "v0.*" } -- enable LSP
   use { "williamboman/mason.nvim", commit = "59e6feeba9e07fd8228e20ed919d38b62af1d212" } -- simple to use language server installer
-  use {
-    "jose-elias-alvarez/null-ls.nvim", -- for formatters and linters
-    commit = "ff40739e5be6581899b43385997e39eecdbf9465",
-    requires = { {"nvim-lua/plenary.nvim"} },
-  }
+  use { "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" } -- for formatters and linters
   use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" } -- highlight all occurences of word under cursor
   use { "simrat39/rust-tools.nvim", commit = "86a2b4e31f504c00715d0dd082a6b8b5d4afbf03" }
 
@@ -72,11 +71,13 @@ return packer.startup(function(use)
   use { "L3MON4D3/LuaSnip", tag = "v1.*" } --snippet engine
 
   -- Telescope
+  use { "nvim-telescope/telescope.nvim", tag = "0.1.*" }
   use {
-    "nvim-telescope/telescope.nvim",
-    tag = "0.1.0",
-    requires = { {"nvim-lua/plenary.nvim"} },
+    "nvim-telescope/telescope-fzf-native.nvim",
+    commit = "65c0ee3d4bb9cb696e262bca1ea5e9af3938fc90",
+    run = "make"
   }
+  use { "kyazdani42/nvim-web-devicons", commit  = "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da" }
 
   -- Treesitter
   use { "nvim-treesitter/nvim-treesitter", commit = "a33858d399d0da226b0cf7b45fe9dc8f0a06547b" }
