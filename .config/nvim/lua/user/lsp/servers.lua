@@ -17,9 +17,6 @@ local servers = {
             [vim.fn.stdpath "config" .. "/lua"] = true,
           },
         },
-        telemetry = {
-          enable = false,
-        },
       },
     },
     pre_on_attach = function(client, _)
@@ -27,6 +24,7 @@ local servers = {
     end
   },
   { "pyright" }, -- TODO: allow bare string here
+  -- { "rust_analyzer" }, -- Leave commented out, setup handled by rust-tools
 }
 
 local common = require("user.lsp.settings.common")

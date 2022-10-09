@@ -66,6 +66,7 @@ return packer.startup(function(use)
     requires = { {"nvim-lua/plenary.nvim"} },
   }
   use { "RRethy/vim-illuminate", commit = "a2e8476af3f3e993bb0d6477438aad3096512e42" } -- highlight all occurences of word under cursor
+  use { "simrat39/rust-tools.nvim", commit = "86a2b4e31f504c00715d0dd082a6b8b5d4afbf03" }
 
   -- snippets
   use { "L3MON4D3/LuaSnip", tag = "v1.*" } --snippet engine
