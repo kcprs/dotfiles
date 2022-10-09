@@ -5,9 +5,7 @@ end
 
 rust_tools.setup{
   server = {
-    on_attach = function (_, bufnr)
-      require("user.keymaps").set_lsp_keymaps(bufnr)
-    end
+    on_attach = require("user.lsp.common").on_attach
   }
 }
 
