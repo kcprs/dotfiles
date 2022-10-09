@@ -24,9 +24,9 @@ keymap("i", "jk", "<ESC>", opts)
 -- Plugins --
 
 -- Telescope
-keymap("n", "<leader>ff", "<cmd>lua require('telescope.builtin').find_files()<CR>", opts)
-keymap("n", "<leader>fg", "<cmd>lua require('telescope.builtin').live_grep()<CR>", opts)
-keymap("n", "<leader>fb", "<cmd>lua require('telescope.builtin').current_buffer_fuzzy_find()<CR>", opts)
+keymap("n", "<leader>ff", require("telescope.builtin").find_files, opts)
+keymap("n", "<leader>fg", require("telescope.builtin").live_grep, opts)
+keymap("n", "<leader>fb", require("telescope.builtin").current_buffer_fuzzy_find, opts)
 
 -- LSP - function called when language server attaches
 M.set_lsp_keymaps = function(bufnr)
@@ -43,7 +43,7 @@ M.set_lsp_keymaps = function(bufnr)
 	keymap("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 	keymap("n", "<space>wl", function()
 		print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-	end, bufopts)
+	end, vim.tbl_deep_extend("error", bufopts, { desc = "List workspace folders" }))
 	keymap("n", "<space>rn", vim.lsp.buf.rename, bufopts)
 	keymap("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 	keymap("n", "<space>bf", function()
