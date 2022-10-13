@@ -48,7 +48,7 @@ M.set_lsp_keymaps = function(bufnr)
 	keymap("n", "<space>ca", vim.lsp.buf.code_action, bufopts)
 	keymap("n", "<space>bf", function()
 		vim.lsp.buf.formatting({ async = true })
-	end, bufopts)
+	end, vim.tbl_deep_extend("error", bufopts, { desc = "Format current buffer" }))
 end
 
 return M
