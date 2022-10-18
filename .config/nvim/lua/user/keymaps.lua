@@ -17,6 +17,9 @@ vim.g.mapleader = " "
 --   term_mode = "t",
 --   command_mode = "c",
 
+-- Normal --
+keymap("n", "<leader>/", "<cmd>nohlsearch<cr>")
+
 -- Insert --
 -- Press jk fast to return to normal mode
 keymap("i", "jk", "<ESC>", opts)
@@ -27,6 +30,9 @@ keymap("i", "jk", "<ESC>", opts)
 keymap("n", "<leader>ff", require("telescope.builtin").find_files, opts)
 keymap("n", "<leader>fg", require("telescope.builtin").live_grep, opts)
 keymap("n", "<leader>fb", require("telescope.builtin").current_buffer_fuzzy_find, opts)
+keymap("n", "<leader>fc", require("telescope.builtin").commands, opts)
+keymap("n", "<leader>fs", require("telescope.builtin").treesitter, opts)
+keymap("n", "<leader>fk", require("telescope.builtin").keymaps, opts)
 
 -- LSP - function called when language server attaches
 M.set_lsp_keymaps = function(bufnr)
