@@ -14,4 +14,4 @@ vim.opt.updatetime = 300                        -- faster completion (4000ms def
 vim.opt.scrolloff = 8                           -- always keep this many lines above/below cursor
 vim.opt.sidescrolloff = 8												-- always keep this many lines before/after cursor
 vim.opt.signcolumn = "yes"                      -- keep sign column (left of number column) always enabled - this avoids layout shift when diagnostic signs appear
-
+vim.opt.cursorline = true                       -- highlight cursor line
