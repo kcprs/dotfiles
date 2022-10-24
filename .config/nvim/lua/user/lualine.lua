@@ -20,6 +20,7 @@ local filename = {
 	"filename",
 	symbols = {
 		modified = "",
+    readonly = "(read-only)",
 	},
 }
 
