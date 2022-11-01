@@ -30,3 +30,6 @@ opt.smartcase = true -- ignore "ignore case" if search term has uppercase charac
 -- file handling
 opt.fileencoding = "utf-8" -- the encoding written to a file
 opt.undofile = true -- enable persistent undo
+
+-- completion
+opt.completeopt = "menu,preview,menuone" -- also show autocomplete drop-down with one item
