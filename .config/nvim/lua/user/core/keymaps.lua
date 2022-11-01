@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 -- Shorten function name
 local keymap = vim.keymap.set
@@ -19,6 +19,7 @@ vim.g.mapleader = " "
 
 -- Normal --
 keymap("n", "<leader>/", "<cmd>nohlsearch<cr>")
+keymap("n", "x", '"_x') -- do not put deleted character in a register when replacing with "x"
 
 -- Insert --
 -- Press jk fast to return to normal mode
