@@ -51,7 +51,12 @@ return packer.startup(function(use)
   use {
     "nvim-lualine/lualine.nvim",
     commit = "3325d5d43a7a2bc9baeef2b7e58e1d915278beaf",
-    requires = { "kyazdani42/nvim-web-devicons" }
+    requires = { "nvim-tree/nvim-web-devicons" }
+  }
+  use {
+    "nvim-tree/nvim-tree.lua",
+    commit = "6ca6f99e7689c68679e8f0a58b421545ff52931f",
+    requires = { "nvim-tree/nvim-web-devicons" }
   }
 
   -- Color schemes

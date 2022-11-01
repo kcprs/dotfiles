@@ -34,6 +34,9 @@ keymap("n", "<leader>fc", require("telescope.builtin").commands, opts)
 keymap("n", "<leader>fs", require("telescope.builtin").treesitter, opts)
 keymap("n", "<leader>fk", require("telescope.builtin").keymaps, opts)
 
+-- Nvim Tree
+keymap("n", "<leader>t", "<cmd>NvimTreeToggle<CR>", opts)
+
 -- LSP - function called when language server attaches
 M.set_lsp_keymaps = function(bufnr)
 	-- See `:help vim.lsp.*` for documentation on any of the below functions

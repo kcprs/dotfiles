@@ -29,6 +29,9 @@ local spaces = function()
 end
 
 lualine.setup({
+  options ={
+    disabled_filetypes = { "NvimTree" },
+  },
 	sections = {
 		lualine_a = { "mode" },
 		lualine_b = { "branch", diff },
