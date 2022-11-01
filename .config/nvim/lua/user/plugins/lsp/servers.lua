@@ -13,8 +13,8 @@ local servers = {
         },
         workspace = {
           library = {
-            [vim.fn.expand "$VIMRUNTIME/lua"] = true,
-            [vim.fn.stdpath "config" .. "/lua"] = true,
+            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
+            [vim.fn.stdpath("config") .. "/lua"] = true,
           },
         },
       },
@@ -27,7 +27,7 @@ local servers = {
   -- { "rust_analyzer" }, -- Leave commented out, setup handled by rust-tools
 }
 
-local common = require "user.plugins.lsp.common"
+local common = require("user.plugins.lsp.common")
 common.setup()
 
 for _, server in pairs(servers) do

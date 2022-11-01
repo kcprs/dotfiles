@@ -20,8 +20,8 @@ opt.sidescrolloff = 8 -- always keep this many lines before/after cursor
 opt.showmode = false -- show current mode - covered by lualine plugin
 opt.updatetime = 300 -- faster completion (4000ms default)
 opt.cursorline = true -- highlight cursor line
-opt.splitright = true -- put new window to the right when creating horizontal split 
-opt.splitbelow = true -- put new window below current one when creating vertical split 
+opt.splitright = true -- put new window to the right when creating horizontal split
+opt.splitbelow = true -- put new window below current one when creating vertical split
 
 -- search
 opt.ignorecase = true -- ignore case in search patterns

@@ -3,7 +3,7 @@ if not status_ok then
   return
 end
 
--- Disable netrw file explorer
+-- Recommended settings from nvim-tree documentation
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
