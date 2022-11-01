@@ -3,11 +3,11 @@ M = {}
 M.setup = function()
   -- Mappings
   -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-  local opts = { noremap=true, silent=true } -- TODO: move to keymaps.lua
-  vim.keymap.set('n', '<space>e', vim.diagnostic.open_float, opts)
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-  vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist, opts)
+  local opts = { noremap = true, silent = true } -- TODO: move to keymaps.lua
+  vim.keymap.set("n", "<space>e", vim.diagnostic.open_float, opts)
+  vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
+  vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
+  vim.keymap.set("n", "<space>q", vim.diagnostic.setloclist, opts)
 
   -- Nice dignostics symbols
   local signs = {
@@ -43,11 +43,11 @@ M.setup = function()
 end
 
 -- To keep mappings in keymaps.lua file
-local keymaps = require("user.keymaps")
+local keymaps = require "user.keymaps"
 
 M.on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
   -- Mappings
   keymaps.set_lsp_keymaps(bufnr)

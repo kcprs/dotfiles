@@ -20,4 +20,3 @@ require "user.lualine"
 -- require "user.alpha"
 require "user.lsp"
 -- require "user.dap"
-

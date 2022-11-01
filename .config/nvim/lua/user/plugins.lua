@@ -43,7 +43,7 @@ return packer.startup(function(use)
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }
 
   -- Many other plugins depend on this
-  use {"nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }
+  use { "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }
 
   -- just plugins
   use { "numToStr/Comment.nvim", tag = "v0.*" }
@@ -51,12 +51,12 @@ return packer.startup(function(use)
   use {
     "nvim-lualine/lualine.nvim",
     commit = "3325d5d43a7a2bc9baeef2b7e58e1d915278beaf",
-    requires = { "nvim-tree/nvim-web-devicons" }
+    requires = { "nvim-tree/nvim-web-devicons" },
   }
   use {
     "nvim-tree/nvim-tree.lua",
     commit = "6ca6f99e7689c68679e8f0a58b421545ff52931f",
-    requires = { "nvim-tree/nvim-web-devicons" }
+    requires = { "nvim-tree/nvim-web-devicons" },
   }
 
   -- Color schemes
@@ -85,9 +85,9 @@ return packer.startup(function(use)
   use {
     "nvim-telescope/telescope-fzf-native.nvim",
     commit = "65c0ee3d4bb9cb696e262bca1ea5e9af3938fc90",
-    run = "make"
+    run = "make",
   }
-  use { "kyazdani42/nvim-web-devicons", commit  = "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da" }
+  use { "kyazdani42/nvim-web-devicons", commit = "a8cf88cbdb5c58e2b658e179c4b2aa997479b3da" }
 
   -- Treesitter
   use { "nvim-treesitter/nvim-treesitter", commit = "a33858d399d0da226b0cf7b45fe9dc8f0a06547b" }

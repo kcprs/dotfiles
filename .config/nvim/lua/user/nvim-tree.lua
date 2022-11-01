@@ -37,4 +37,3 @@ nvim_tree.setup {
     side = "right",
   },
 }
-

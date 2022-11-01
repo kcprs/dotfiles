@@ -10,9 +10,8 @@ telescope.setup {
     file_ignore_patterns = { ".git/" },
     layout_config = {
       prompt_position = "top",
-    }
+    },
   },
 }
 
-telescope.load_extension("fzf")
-
+telescope.load_extension "fzf"
