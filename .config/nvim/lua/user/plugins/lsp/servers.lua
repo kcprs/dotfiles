@@ -27,7 +27,7 @@ local servers = {
   -- { "rust_analyzer" }, -- Leave commented out, setup handled by rust-tools
 }
 
-local common = require "user.lsp.common"
+local common = require "user.plugins.lsp.common"
 common.setup()
 
 for _, server in pairs(servers) do

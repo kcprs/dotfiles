@@ -5,6 +5,6 @@ end
 
 rust_tools.setup {
   server = {
-    on_attach = require("user.lsp.common").on_attach,
+    on_attach = require("user.plugins.lsp.common").on_attach,
   },
 }

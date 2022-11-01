@@ -43,7 +43,7 @@ M.setup = function()
 end
 
 -- To keep mappings in keymaps.lua file
-local keymaps = require "user.keymaps"
+local keymaps = require "user.core.keymaps"
 
 M.on_attach = function(client, bufnr)
   -- Enable completion triggered by <c-x><c-o>
