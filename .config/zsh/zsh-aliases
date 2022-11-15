@@ -29,7 +29,9 @@ alias mv='mv -i'
 # alias pscpu='ps auxf | sort -nr -k 3 | head -5'
  
 # git
-alias g="git"
+alias gs="git switch"
+alias gc="git commit"
+alias gp="git push"
 alias cfgit='git --git-dir=$HOME/.cfgit --work-tree=$HOME'
  
 case "$(uname -s)" in
