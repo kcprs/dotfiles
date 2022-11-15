@@ -5,3 +5,5 @@
 	email = ksagnowski@gmail.com
 [merge]
 	tool = nvimdiff
+[core]
+	excludesFile = ~/.gitignore_global
