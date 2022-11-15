@@ -45,7 +45,8 @@ zsh_add_file "zsh-aliases"
 # zsh_add_file "zsh-prompt"
  
  
-# # Key-bindings
+# Key-bindings
+bindkey '^R' history-incremental-search-backward 
 # bindkey -s '^o' 'ranger^M'
 # bindkey -s '^f' 'zi^M'
 # bindkey -s '^s' 'ncdu^M'
@@ -59,7 +60,7 @@ zsh_add_file "zsh-aliases"
 # bindkey "^j" down-line-or-beginning-search # Down
 # bindkey -r "^u"
 # bindkey -r "^d"
- 
+
 # # FZF 
 # # TODO update for mac
 # [ -f /usr/share/fzf/completion.zsh ] && source /usr/share/fzf/completion.zsh
