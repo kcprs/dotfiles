@@ -33,6 +33,7 @@ alias gs="git switch"
 alias gc="git commit"
 alias gp="git push"
 alias gb="git branch"
+alias gm="git merge"
 alias cfgit='git --git-dir=$HOME/.cfgit --work-tree=$HOME'
  
 case "$(uname -s)" in
