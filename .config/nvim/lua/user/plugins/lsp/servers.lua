@@ -20,7 +20,7 @@ local servers = {
       },
     },
     pre_on_attach = function(client, _)
-      client.resolved_capabilities.document_formatting = false
+      client.server_capabilities.document_formatting = false
     end,
   },
   { "pyright" }, -- TODO: allow bare string here
