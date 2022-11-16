@@ -1,0 +1,6 @@
+# Ignore everything
+*
+
+# Apart from the config file and .gitignore itself
+!config.toml
+!.gitignore
