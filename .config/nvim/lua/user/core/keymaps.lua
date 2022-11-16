@@ -38,6 +38,17 @@ keymap("n", "<leader>fk", require("telescope.builtin").keymaps, opts)
 -- Nvim Tree
 keymap("n", "<leader>t", "<cmd>NvimTreeToggle<CR>", opts)
 
+-- ToggleTerm
+keymap("n", "<c-\\>", "<cmd>ToggleTerm<CR>", opts)
+
+function _G.set_terminal_keymaps()
+  local ttopts = { buffer = 0 }
+  vim.keymap.set("t", "<esc>", [[<c-\><c-n>]], ttopts)
+  vim.keymap.set("t", "jk", [[<c-\><c-n>]], ttopts)
+end
+
+vim.cmd("autocmd! TermOpen term://*toggleterm#* lua set_terminal_keymaps()")
+
 -- LSP - function called when language server attaches
 M.set_lsp_keymaps = function(bufnr)
   -- See `:help vim.lsp.*` for documentation on any of the below functions

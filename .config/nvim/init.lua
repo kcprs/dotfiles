@@ -13,7 +13,7 @@ require("user.plugins.gitsigns")
 require("user.plugins.mason")
 -- require "user.plugins.bufferline"
 require("user.plugins.lualine")
--- require "user.plugins.toggleterm"
+require "user.plugins.toggleterm"
 -- require "user.plugins.project"
 -- require "user.plugins.impatient"
 -- require "user.plugins.indentline"
