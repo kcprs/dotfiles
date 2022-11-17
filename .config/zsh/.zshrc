@@ -77,7 +77,7 @@ bindkey '^R' history-incremental-search-backward
 # # bindkey '^e' edit-command-line
  
 # # Environment variables set everywhere
-export EDITOR="$(command -v nvim 2>/dev/null || command -v vim)"
+export EDITOR="$(command -v hx 2>/dev/null || command -v vim)"
 export VISUAL="$EDITOR"
 # export TERMINAL="alacritty"
 # export BROWSER="brave"
