@@ -22,6 +22,7 @@ right = ["diagnostics", "selections", "primary-selection-length", "position", "p
 
 [keys.normal]
 "space" = { t = ":format" }
+"X" = "extend_line_above"
 
 [keys.insert]
 j = { k = "normal_mode" }
