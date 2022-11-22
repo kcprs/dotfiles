@@ -5,6 +5,7 @@ true-color = true
 line-number = "relative"
 idle-timeout = 100
 color-modes = true
+auto-format = false
 
 [editor.cursor-shape]
 insert = "bar"
@@ -12,8 +13,8 @@ normal = "block"
 
 [editor.file-picker]
 hidden = false
-git-ignore = false
-git-global = false
+# git-ignore = false
+# git-global = false
 
 [editor.statusline]
 left = ["mode", "spinner"]
