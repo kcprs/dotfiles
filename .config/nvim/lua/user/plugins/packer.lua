@@ -58,7 +58,7 @@ return packer.startup(function(use)
     commit = "6ca6f99e7689c68679e8f0a58b421545ff52931f",
     requires = { "nvim-tree/nvim-web-devicons" },
   }
-  use { "akinsho/toggleterm.nvim", tag = "v1.*" }
+  use { "akinsho/toggleterm.nvim", tag = "v2.*" }
 
   -- Color schemes
   use { "https://gitlab.com/__tpb/monokai-pro.nvim", commit = "826d028edbcc7a8aadc0f7a32b32747d97575615" }
