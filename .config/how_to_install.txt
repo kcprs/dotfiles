@@ -1,0 +1,5 @@
+alias cfgit='git --git-dir=$HOME/.cfgit/ --work-tree=$HOME'
+echo ".cfgit" >> .gitignore
+git clone --bare git@github.com:kcprs/dotfiles.git $HOME/.cfgit/
+cfgit checkout
+cfgit config status.showUntrackedFiles no
