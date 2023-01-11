@@ -32,7 +32,7 @@ alias mv='mv -i'
 alias gs="git switch"
 alias gc="git commit"
 alias gb="git branch"
-alias gm="git merge"
+alias gsu="git submodule update"
 alias cfgit='git --git-dir=$HOME/.cfgit --work-tree=$HOME'
  
 case "$(uname -s)" in
