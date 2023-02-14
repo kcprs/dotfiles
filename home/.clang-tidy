@@ -1,0 +1,3 @@
+Checks: 'bugprone-*,-bugprone-easily-swappable-parameters,cert-*,clang-analyzer-*,clang-diagnostic-*,concurrency-*,cppcoreguidelines-*,misc-*,modernize-*,performance-*,portability-*,readability-*,-readability-uppercase-literal-suffix'
+# CheckOptions:
+#  readability-function-cognitive-complexity.DescribeBasicIncrements: 'false'

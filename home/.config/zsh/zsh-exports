@@ -1,0 +1,6 @@
+# Prevent adding duplicates to path (U), export (x)
+typeset -Ux path
+# then add to path with: path=(~/somedir ~/otherdir $path)
+
+path=($HOME/.local/bin $path)
+
