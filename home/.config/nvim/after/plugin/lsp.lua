@@ -6,6 +6,7 @@ lsp.preset("recommended")
 -- Set up LSP keymaps on attach
 lsp.on_attach(require("kcprs.keymap").setup_lsp)
 
+-- Configure clangd
 lsp.configure("clangd", {
     cmd = {
         "clangd",
@@ -15,7 +16,7 @@ lsp.configure("clangd", {
     }
 })
 
--- (Optional) Configure lua language server for neovim
+-- Configure lua language server for neovim
 lsp.nvim_workspace()
 
 lsp.setup()
