@@ -72,7 +72,7 @@ setup_tools() {
         return
     fi
 
-    brew install alacritty clang-format cmake deno doxygen git git-lfs graphviz llvm neovim ninja python ripgrep sox tmux tree tree-sitter watch wget
+    brew install alacritty clang-format cmake deno doxygen git git-lfs graphviz htop llvm neovim ninja python ripgrep sox tmux tree tree-sitter watch wget
     xattr -d com.apple.quarantine /Applications/Alacritty.app
 
     brew tap homebrew/cask-fonts
