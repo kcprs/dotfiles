@@ -72,30 +72,44 @@ setup_tools() {
         return
     fi
 
-    brew tap homebrew/cask-fonts
-    brew install --cask font-jetbrains-mono-nerd-font
-
-    brew install clang-format cmake deno doxygen git git-lfs graphviz llvm neovim ninja python ripgrep sox tmux tree tree-sitter watch wget
-
-    brew install alacritty
+    brew install alacritty clang-format cmake deno doxygen git git-lfs graphviz llvm neovim ninja python ripgrep sox tmux tree tree-sitter watch wget
     xattr -d com.apple.quarantine /Applications/Alacritty.app
 
+    brew tap homebrew/cask-fonts
+    brew install --cask font-jetbrains-mono-nerd-font neovide
+    xattr -d com.apple.quarantine /Applications/Neovide.app
+    
+    # Git setup
+    git lfs install
+    git config --global user.name "Kacper Sagnowski"
+    git config --global core.excludesfile ~/.gitignore_global
+    git config --global pull.rebase true
+    git config --global fetch.rebase true
+    git config --global init.defaultBranch main
+
     curl https://sh.rustup.rs -sSf | sh
+    
+    git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+
+    info "Tools installed. It's recommended to reboot your machine now."
 }
 
 case "$1" in
-    # backup)
-    #     backup
-    #     ;;
     link)
         setup_symlinks
+        ;;
+    homebrew)
+        setup_homebrew
+        ;;
+    tools)
+        setup_tools
         ;;
     # git)
     #     setup_git
     #     ;;
-    homebrew)
-        setup_homebrew
-        ;;
+    # backup)
+    #     backup
+    #     ;;
     # shell)
     #     setup_shell
     #     ;;
@@ -117,7 +131,7 @@ case "$1" in
     #     setup_macos
     #     ;;
     *)
-        echo -e $"\nUsage: $(basename "$0") {backup|link|git|homebrew|shell|terminfo|macos|all}\n"
+        echo -e $"\nUsage: $(basename "$0") {link|homebrew|tools}\n"
         exit 1
         ;;
 esac
