@@ -5,6 +5,16 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Init homebrew on macOS
+if [[ $(uname) -eq "Darwin" ]]; then
+  if [[ $(uname -m) -eq arm64  ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  else if [[ $(uname -m) -eq arm64  ]]
+    return 1 # TODO: use intel mac path here
+  fi
+fi
+
+
 # Set up history
 HISTFILE=$HOME/zsh_history
 HISTSIZE=10000
