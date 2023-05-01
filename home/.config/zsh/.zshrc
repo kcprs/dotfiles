@@ -7,6 +7,7 @@ plug "zsh-users/zsh-syntax-highlighting"
 plug "agkozak/zsh-z"
 plug "zap-zsh/vim"
 plug "hlissner/zsh-autopair"
+plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
  
 plug "zsh-users/zsh-history-substring-search"
 bindkey '^[[A' history-substring-search-up
