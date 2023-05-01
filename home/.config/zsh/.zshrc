@@ -12,7 +12,7 @@ SAVEHIST=10000
 setopt inc_append_history hist_ignore_dups
  
 # some useful options (man zshoptions)
-setopt auto_cd extended_glob  menu_complete interactive_comments correct correct_all no_nomatch
+setopt auto_cd extended_glob  menu_complete interactive_comments no_nomatch
 # zle_highlight=('paste:none')
  
 # beeping is annoying
