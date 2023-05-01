@@ -87,9 +87,14 @@ setup_tools() {
     git config --global fetch.rebase true
     git config --global init.defaultBranch main
 
+    # Rust
     curl https://sh.rustup.rs -sSf | sh
     
+    # AstroNvim
     git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+
+    # Zap plugin manager for zsh
+    zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
 
     info "Tools installed. It's recommended to reboot your machine now."
 }
