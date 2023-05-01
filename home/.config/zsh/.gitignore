@@ -1,4 +1,4 @@
 .zcompdump
 plugins/
-.zsh_sessions/
+.zsh_sessions
 .zcompcache
