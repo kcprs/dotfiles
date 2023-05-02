@@ -1,6 +1,11 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
+[directory]
+truncation_length = 10
+truncate_to_repo = false
+truncation_symbol = '.../'
+
 [git_status]
 format = '([$ahead_behind$conflicted$stashed$deleted$renamed$modified$staged$untracked]($style))'
 ahead = '⇡$count '
