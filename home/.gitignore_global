@@ -11,3 +11,4 @@ __pycache__/
 .DS_Store
 razel.jsonl
 razel-out/
+compile_commands.json
