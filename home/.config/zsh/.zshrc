@@ -1,6 +1,10 @@
 # Zap setup
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
-plug "zap-zsh/supercharge" #  Sets basic zsh options to sensible defaults
+
+plug "zap-zsh/supercharge" # Set basic zsh options to sensible defaults
+setopt INC_APPEND_HISTORY  # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY       # Share history between all sessions.
+
 plug "zap-zsh/completions"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
@@ -8,7 +12,7 @@ plug "agkozak/zsh-z"
 plug "zap-zsh/vim"
 plug "hlissner/zsh-autopair"
 plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
- 
+
 plug "zsh-users/zsh-history-substring-search"
 bindkey '^[[A' history-substring-search-up
 bindkey '^[[B' history-substring-search-down
@@ -22,4 +26,3 @@ source "$ZDOTDIR/zsh-aliases"
 
 # Starship prompt
 eval "$(starship init zsh)"
-
