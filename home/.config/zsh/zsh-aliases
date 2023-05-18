@@ -23,6 +23,8 @@ alias gc="git commit"
 alias gb="git branch"
 alias gsu="git submodule update"
 alias gf="git fetch"
+
+alias lg=lazygit
  
 case "$(uname -s)" in
 Darwin)
