@@ -2,16 +2,6 @@ alias md='mkdir -p'
 alias cl='clear'
 alias nv='lvim'
 
-# alias j='z'
-# alias f='zi'
-# alias g='lazygit'
-# alias nvimrc='nvim ~/.config/nvim/'
- 
-# # Colorize grep output (good for log files)
-# alias grep='grep --color=auto'
-# alias egrep='egrep --color=auto'
-# alias fgrep='fgrep --color=auto'
- 
 # confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
@@ -33,6 +23,8 @@ function git-show-merge() {
 	# Same as above, but shows more detail apart from just SHA
 	merge=$(git-find-merge "$1" "$2") && [ -n "$merge" ] && git show "$merge" 
 }
+
+alias zj=zellij
 
 case "$(uname -s)" in
 Darwin)
