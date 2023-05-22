@@ -1,6 +1,8 @@
 .vscode/
 _build*/
 _dev/
+_tasks/
+_t/
 _ignore/
 _cc/
 .lldbinit
