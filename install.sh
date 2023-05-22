@@ -133,7 +133,7 @@ setup_tools() {
 		["cmake"]="lmw"
 		["deno"]="lmw"
 		["doxygen"]="lmw"
-    ["fd"]="lmw"
+		["fd"]="lmw"
 		["git"]="lmw"
 		["git-lfs"]="lmw"
 		["gnu-sed"]="m"
@@ -157,12 +157,14 @@ setup_tools() {
 	ulimit -n $(ulimit -Hn) # See: https://github.com/Homebrew/brew/issues/9120#issuecomment-726699074 - this persists for current shell only
 	brew install $(filter_by_os formulae $os)
 
+	if [[ "$os" != "w" ]]; then
+		brew tap homebrew/cask-fonts
+		brew install --cask font-jetbrains-mono-nerd-font alacritty
+	fi
+
 	# MacOS only
 	if [[ "$os" == "m" ]]; then
-		brew tap homebrew/cask-fonts
-		brew install --cask font-jetbrains-mono-nerd-font neovide
 		xattr -d com.apple.quarantine /Applications/Alacritty.app
-		xattr -d com.apple.quarantine /Applications/Neovide.app
 	fi
 
 	# Linux only
@@ -180,9 +182,6 @@ setup_tools() {
 
 	# Rust
 	curl https://sh.rustup.rs -sSf | sh
-
-	# AstroNvim
-	# git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 
 	# Zap plugin manager for zsh
 	zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
