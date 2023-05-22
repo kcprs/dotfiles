@@ -1,6 +1,6 @@
 alias md='mkdir -p'
 alias cl='clear'
-alias nv='nvim'
+alias nv='lvim'
 
 # alias j='z'
 # alias f='zi'
