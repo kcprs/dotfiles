@@ -133,6 +133,7 @@ setup_tools() {
 		["cmake"]="lmw"
 		["deno"]="lmw"
 		["doxygen"]="lmw"
+    ["fd"]="lmw"
 		["git"]="lmw"
 		["git-lfs"]="lmw"
 		["gnu-sed"]="m"
@@ -181,7 +182,7 @@ setup_tools() {
 	curl https://sh.rustup.rs -sSf | sh
 
 	# AstroNvim
-	git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
+	# git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim
 
 	# Zap plugin manager for zsh
 	zsh <(curl -s https://raw.githubusercontent.com/zap-zsh/zap/master/install.zsh) --branch release-v1
