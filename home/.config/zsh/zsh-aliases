@@ -13,6 +13,7 @@ alias gc="git commit"
 alias gb="git branch"
 alias gsu="git submodule update"
 alias gf="git fetch"
+alias gst="git stash"
 alias lg=lazygit
 function git-find-merge() {
 	# Usage: git-find-merge <commit-SHA> [<branch>]
