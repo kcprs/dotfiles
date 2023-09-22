@@ -39,5 +39,7 @@ bindkey -M vicmd 'j' history-substring-search-down
 source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
 
+fpath=($fpath "$ZDOTDIR/completions")
+
 # Starship prompt
 eval "$(starship init zsh)"
