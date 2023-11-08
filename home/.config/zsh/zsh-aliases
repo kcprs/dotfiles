@@ -1,6 +1,5 @@
 alias md='mkdir -p'
 alias cl='clear'
-alias nv='lvim'
 
 # confirm before overwriting something
 alias cp="cp -i"
@@ -17,7 +16,6 @@ alias gst="git stash"
 alias gpl="git pull"
 alias gps="git push"
 alias gsh="git show -q HEAD"
-alias lg=lazygit
 function git-find-merge() {
 	# Usage: git-find-merge <commit-SHA> [<branch>]
 	# Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
@@ -30,7 +28,10 @@ function git-show-merge() {
 
 alias zj=zellij
 alias p3=python3
+alias docker=podman
 alias pm=podman
+alias nv=nvim
+alias lg=lazygit
 
 case "$(uname -s)" in
 Darwin)
