@@ -5,7 +5,7 @@ typeset -Ux path
 path=($HOME/.local/bin $path)
 
 # Environment variables set everywhere
-export EDITOR=hx
+export EDITOR=nvim
 export VISUAL="$EDITOR"
 # export TERMINAL="alacritty"
 # export BROWSER="firefox"
