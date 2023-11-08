@@ -151,13 +151,12 @@ require('lazy').setup({
       end,
     },
   },
-
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
+    "catppuccin/nvim",
+    name = "catppuccin",
     priority = 1000,
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      vim.cmd.colorscheme 'catppuccin'
     end,
   },
 
@@ -274,6 +273,7 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 
 vim.o.relativenumber = true
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience
@@ -281,6 +281,7 @@ vim.o.relativenumber = true
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
 vim.keymap.set('i', 'jk', "<ESC>", { noremap = true })
+
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
@@ -347,7 +348,7 @@ local function live_grep_git_root()
   local git_root = find_git_root()
   if git_root then
     require('telescope.builtin').live_grep({
-      search_dirs = {git_root},
+      search_dirs = { git_root },
     })
   end
 end
