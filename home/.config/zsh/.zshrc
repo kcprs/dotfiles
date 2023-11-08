@@ -12,6 +12,9 @@ case $(uname) in
 		;;
 esac
 
+# Completions dir
+fpath=($fpath "$ZDOTDIR/completions")
+
 # Zap setup
 [ -f "$HOME/.local/share/zap/zap.zsh" ] && source "$HOME/.local/share/zap/zap.zsh"
 
@@ -35,11 +38,12 @@ bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 # Further configuration possible: https://github.com/zsh-users/zsh-history-substring-search
 
+# Useful mv alternative
+autoload zmv
+
 # Files to source
 source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
-
-fpath=($fpath "$ZDOTDIR/completions")
 
 # Starship prompt
 eval "$(starship init zsh)"
