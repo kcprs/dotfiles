@@ -207,6 +207,12 @@ require('lazy').setup({
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
+
+  {
+    'windwp/nvim-autopairs',
+    event = "InsertEnter",
+    opts = {}
+  },
 }, {})
 
 require("options")
@@ -369,4 +375,10 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+
+local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+cmp.event:on(
+  "confirm_done",
+  cmp_autopairs.on_confirm_done()
+)
 
