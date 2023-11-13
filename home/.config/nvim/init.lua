@@ -38,7 +38,7 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now :)
 --]]
 
-local keymaps = require "keymaps"
+local keymaps = require "custom.keymaps"
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 keymaps.setup_leader()
@@ -215,7 +215,7 @@ require('lazy').setup({
   },
 }, {})
 
-require("options")
+require("custom.options")
 keymaps.setup_basic()
 
 -- [[ Highlight on yank ]]
@@ -278,7 +278,7 @@ end
 
 vim.api.nvim_create_user_command('LiveGrepGitRoot', live_grep_git_root, {})
 
-require("treesitter")
+require("custom.treesitter")
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
