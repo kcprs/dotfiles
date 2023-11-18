@@ -1,3 +1,5 @@
+require("custom.options")
+
 local keymaps = require "custom.keymaps"
 
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
@@ -27,7 +29,6 @@ vim.opt.rtp:prepend(lazypath)
 --    as they will be available in your neovim runtime.
 require('lazy').setup("plugins")
 
-require("custom.options")
 keymaps.setup_basic()
 
 -- [[ Highlight on yank ]]
