@@ -27,8 +27,14 @@ end
 
 function M.telescope()
   -- See `:help telescope.builtin`
+  vim.keymap.set('n', '<leader>fd', require('telescope.builtin').find_files, { desc = '[f]in[d] files' })
+  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[f]ind in [g]it'})
+  vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[f]ind existing [b]uffers' })
+
+  vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[f]ind in [h]elp' })
+
+  --------------
   vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-  vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
   vim.keymap.set('n', '<leader>/', function()
     -- You can pass additional configuration to telescope to change theme, layout, etc.
     require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
@@ -37,9 +43,6 @@ function M.telescope()
     })
   end, { desc = '[/] Fuzzily search in current buffer' })
 
-  vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
-  vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-  vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
   vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
   vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
   vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
@@ -47,11 +50,13 @@ function M.telescope()
   vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
 end
 
-function M.telescope_default_mappings()
+function M.telescope_setup_defaults_mappings()
   return {
     i = {
       ['<C-u>'] = false,
       ['<C-d>'] = false,
+      ["<esc>"] = require("telescope.actions").close,
+      ["jk"] = require("telescope.actions").close,
     },
   }
 end
