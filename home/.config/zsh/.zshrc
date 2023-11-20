@@ -32,8 +32,8 @@ plug "hlissner/zsh-autopair"
 plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
 
 plug "zsh-users/zsh-history-substring-search"
-bindkey '^[[A' history-substring-search-up
-bindkey '^[[B' history-substring-search-down
+bindkey '^[[A' history-substring-search-up # up arrow
+bindkey '^[[B' history-substring-search-down # down arrow
 bindkey -M vicmd 'k' history-substring-search-up
 bindkey -M vicmd 'j' history-substring-search-down
 # Further configuration possible: https://github.com/zsh-users/zsh-history-substring-search
