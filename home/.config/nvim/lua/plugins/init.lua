@@ -118,6 +118,13 @@ return {
         end,
       },
     },
+    config = function()
+      require("telescope").setup {
+        defaults = {
+          mappings = keymaps.telescope_setup_defaults_mappings(),
+        },
+      }
+    end,
   },
 
   {

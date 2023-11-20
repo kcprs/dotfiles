@@ -34,12 +34,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 -- [[ Configure Telescope ]]
 -- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
-  defaults = {
-    mappings = keymaps.telescope_default_mappings()
-  },
-}
-
 keymaps.telescope()
 
 -- Enable telescope fzf native, if installed
