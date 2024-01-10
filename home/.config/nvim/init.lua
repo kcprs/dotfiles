@@ -79,8 +79,16 @@ require("custom.treesitter")
 
 -- [[ Configure LSP ]]
 --  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+local on_attach = function(client, bufnr)
   keymaps.lsp_on_attach(bufnr)
+
+  -- Breadcrumbs plugin
+  if client.server_capabilities.documentSymbolProvider then
+    require("nvim-navic").attach(client, bufnr)
+  end
+
+  -- Symbols navigator
+  require("nvim-navbuddy").attach(client, bufnr)
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)

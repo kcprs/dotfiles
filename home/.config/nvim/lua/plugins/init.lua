@@ -25,6 +25,15 @@ return {
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
+
+      -- Breadcrumbs and navigating symbols
+      {
+        "SmiteshP/nvim-navbuddy",
+        dependencies = {
+          "SmiteshP/nvim-navic",
+          "MunifTanjim/nui.nvim"
+        },
+      }
     },
   },
 
@@ -84,6 +93,15 @@ return {
         section_separators = '',
         disabled_filetypes = { "neo-tree" },
       },
+      winbar = {
+        lualine_c = {
+          {
+            "navic",
+            color_correction=nil,
+            naivc_opts=nil,
+          }
+        }
+      }
     },
   },
 
