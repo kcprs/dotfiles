@@ -183,11 +183,15 @@ return {
       "MunifTanjim/nui.nvim",
       -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     },
-    opts = {
-      window = {
-        position = "right"
+    config = function()
+      require("neo-tree").setup {
+        window = {
+          position = "right"
+        }
       }
-    }
+      require("custom.keymaps").set_neotree()
+    end
+  },
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
