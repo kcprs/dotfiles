@@ -97,8 +97,8 @@ return {
         lualine_c = {
           {
             "navic",
-            color_correction=nil,
-            naivc_opts=nil,
+            color_correction = nil,
+            naivc_opts = nil,
           }
         }
       }
