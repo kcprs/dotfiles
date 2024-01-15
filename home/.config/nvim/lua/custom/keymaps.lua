@@ -28,6 +28,7 @@ end
 function M.telescope()
   -- See `:help telescope.builtin`
   vim.keymap.set('n', '<leader>fd', require('telescope.builtin').find_files, { desc = '[f]in[d] files' })
+  vim.keymap.set('n', '<leader>fD', function() require('telescope.builtin').find_files{ hidden = true, no_ignore = true } end, { desc = '[f]in[D] ALL files' })
   vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[f]ind in [g]it'})
   vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[f]ind existing [b]uffers' })
 
