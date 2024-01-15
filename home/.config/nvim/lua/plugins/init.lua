@@ -192,6 +192,21 @@ return {
       require("custom.keymaps").set_neotree()
     end
   },
+
+  {
+    "Civitasv/cmake-tools.nvim",
+    config = function()
+      require("cmake-tools").setup {
+        cmake_build_directory = "_build",
+        cmake_generate_options = {
+          "-G",
+          "Ninja",
+          "-DCMAKE_EXPORT_COMPILE_COMMANDS=1",
+        },
+      }
+    end,
+  },
+
   {
     "kylechui/nvim-surround",
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
