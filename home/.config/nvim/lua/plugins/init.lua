@@ -219,5 +219,15 @@ return {
     config = function()
       require("illuminate").configure {}
     end
-  }
+  },
+
+  -- {
+  --   "akinsho/toggleterm.nvim",
+  --   config = function ()
+  --     require("toggleterm").setup{
+  --       open_mapping = require("custom.keymaps").toggleterm_get_open_mapping(),
+  --       terminal_mappings = true,
+  --     }
+  --   end
+  -- }
 }

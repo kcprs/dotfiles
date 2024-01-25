@@ -18,6 +18,9 @@ function M.setup_basic()
   vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
+  -- Easily exit terminal mode
+  vim.keymap.set("t", [[<c-\>]], [[<c-\><c-n>]])
+
   -- Diagnostic keymaps
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous diagnostic message' })
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next diagnostic message' })
@@ -169,5 +172,9 @@ function M.set_neotree()
   vim.keymap.set("n", "<leader>eB", ":Neotree toggle action=focus source=buffers position=float<cr>", { desc = "Toggle Neotree float - [e]xplore [B]uffers" })
   vim.keymap.set("n", "<leader>eG", ":Neotree toggle action=focus source=git_status position=float<cr>", { desc = "Toggle Neotree float - [e]xplore [G]it" })
 end
+
+-- function M.toggleterm_get_open_mapping()
+--   return [[<c-`>]]
+-- end
 
 return M
