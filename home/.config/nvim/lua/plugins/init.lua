@@ -52,6 +52,21 @@ return {
       'rafamadriz/friendly-snippets',
     },
   },
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("nvim-autopairs").setup()
+  --     require("cmp").event:on(
+  --       "confirm_done",
+  --       require("nvim-autopairs.completion.cmp").on_confirm_done()
+  --     )
+  --   end,
+  --   dependencies = {
+  --     'hrsh7th/nvim-cmp',
+  --   },
+  -- },
+
 
   -- Useful plugin to show you pending keybinds.
   { 'folke/which-key.nvim',  opts = {} },
@@ -167,12 +182,6 @@ return {
   --
   --    For additional information see: https://github.com/folke/lazy.nvim#-structuring-your-plugins
   -- { import = 'custom.plugins' },
-
-  {
-    'windwp/nvim-autopairs',
-    event = "InsertEnter",
-    opts = {}
-  },
 
   {
     "nvim-neo-tree/neo-tree.nvim",
