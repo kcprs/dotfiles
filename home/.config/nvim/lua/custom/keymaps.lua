@@ -30,11 +30,11 @@ end
 
 function M.telescope()
   -- See `:help telescope.builtin`
-  vim.keymap.set('n', '<leader>fd', require('telescope.builtin').git_files, { desc = '[f]in[d] files' })
-  vim.keymap.set('n', '<leader>fD', function() require('telescope.builtin').find_files{ hidden = true, no_ignore = true } end, { desc = '[f]in[D] ALL files' })
+  vim.keymap.set('n', '<leader>fd', function() require('telescope.builtin').find_files{ hidden = true, no_ignore = true } end, { desc = '[f]in[d] files' })
+  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[f]ind [g]it files' })
   vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[f]ind existing [b]uffers' })
 
-  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').live_grep, { desc = '[f]ind by [g]rep' })
+  vim.keymap.set('n', '<leader>fr', require('telescope.builtin').live_grep, { desc = '[f]ind by g[r]ep' })
 
   vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[f]ind in [h]elp' })
   vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = '[f]ind [r]ecently opened files' })
