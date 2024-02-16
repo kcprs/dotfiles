@@ -9,5 +9,4 @@ export EDITOR=nvim
 export VISUAL="$EDITOR"
 # export TERMINAL="alacritty"
 # export BROWSER="firefox"
-
 export CMAKE_GENERATOR=Ninja

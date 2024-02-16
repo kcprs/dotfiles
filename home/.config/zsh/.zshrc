@@ -44,6 +44,7 @@ autoload zmv
 # Files to source
 source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
+source "$ZDOTDIR/zsh-local-config"
 
 # Starship prompt
 eval "$(starship init zsh)"
