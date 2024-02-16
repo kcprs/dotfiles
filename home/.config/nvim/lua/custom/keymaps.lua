@@ -63,6 +63,7 @@ function M.telescope_setup_defaults_mappings()
       ['<C-d>'] = false,
       ["<esc>"] = require("telescope.actions").close,
       ["jk"] = require("telescope.actions").close,
+      ["<C-h>"] =require("telescope.actions").which_key,
     },
   }
 end
