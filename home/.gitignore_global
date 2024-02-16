@@ -14,3 +14,6 @@ __pycache__/
 razel.jsonl
 razel-out/
 compile_commands.json
+.nvim.lua
+.cache/
+bacon.toml
