@@ -37,7 +37,7 @@ function M.telescope()
   vim.keymap.set('n', '<leader>fr', require('telescope.builtin').live_grep, { desc = '[f]ind by g[r]ep' })
 
   vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[f]ind in [h]elp' })
-  vim.keymap.set('n', '<leader>fr', require('telescope.builtin').oldfiles, { desc = '[f]ind [r]ecently opened files' })
+  vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[f]ind [o]ld opened files' })
   vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[f]ind [k]eymaps' })
   vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, { desc = '[f]ind [c]ommands' })
 
