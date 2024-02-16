@@ -155,6 +155,7 @@ return {
       require("telescope").setup {
         defaults = {
           mappings = keymaps.telescope_setup_defaults_mappings(),
+          file_ignore_patterns = { "%.git/" },
         },
       }
     end,
