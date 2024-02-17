@@ -176,7 +176,7 @@ end
 -- end
 
 function M.oil_set()
-  vim.keymap.set("n", "<leader>o", ":Oil<cr>", { desc = "Open [o]il" })
+  vim.keymap.set("n", "<leader>o", require("oil").toggle_float, { desc = "Open [o]il" })
 end
 
 function M.toggleterm_get_open_mapping()
@@ -209,6 +209,22 @@ function M.toggleterm_set()
   end
 
   vim.keymap.set("n", "<leader>G", "<cmd>lua LazyGitToggle()<CR>", {noremap = true, silent = true}, "[G]it")
+end
+
+function M.harpoon_set()
+  local harpoon = require("harpoon")
+
+  vim.keymap.set("n", "<leader>ha", function() harpoon:list():append() end)
+  vim.keymap.set("n", "<leader>hs", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+  -- vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+  -- vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+  -- vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+  -- vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+  -- Toggle previous & next buffers stored within Harpoon list
+  vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+  vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
 end
 
 return M
