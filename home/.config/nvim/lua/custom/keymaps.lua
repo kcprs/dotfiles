@@ -173,6 +173,9 @@ function M.set_neotree()
   vim.keymap.set("n", "<leader>eF", ":Neotree toggle action=focus source=filesystem position=float<cr>", { desc = "Toggle Neotree float - [e]xplore [F]iles" })
   vim.keymap.set("n", "<leader>eB", ":Neotree toggle action=focus source=buffers position=float<cr>", { desc = "Toggle Neotree float - [e]xplore [B]uffers" })
   vim.keymap.set("n", "<leader>eG", ":Neotree toggle action=focus source=git_status position=float<cr>", { desc = "Toggle Neotree float - [e]xplore [G]it" })
+
+function M.oil_set()
+  vim.keymap.set("n", "<leader>o", ":Oil<cr>", { desc = "Open [o]il" })
 end
 
 function M.toggleterm_get_open_mapping()
