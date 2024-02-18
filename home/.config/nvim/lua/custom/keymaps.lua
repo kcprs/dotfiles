@@ -28,46 +28,6 @@ function M.setup_basic()
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostics list' })
 end
 
-function M.telescope()
-  -- See `:help telescope.builtin`
-  vim.keymap.set('n', '<leader>fd', function() require('telescope.builtin').find_files{ hidden = true, no_ignore = true } end, { desc = '[f]in[d] files' })
-  vim.keymap.set('n', '<leader>fg', require('telescope.builtin').git_files, { desc = '[f]ind [g]it files' })
-  vim.keymap.set('n', '<leader>fb', require('telescope.builtin').buffers, { desc = '[f]ind existing [b]uffers' })
-
-  vim.keymap.set('n', '<leader>fr', require('telescope.builtin').live_grep, { desc = '[f]ind by g[r]ep' })
-
-  vim.keymap.set('n', '<leader>fh', require('telescope.builtin').help_tags, { desc = '[f]ind in [h]elp' })
-  vim.keymap.set('n', '<leader>fo', require('telescope.builtin').oldfiles, { desc = '[f]ind [o]ld opened files' })
-  vim.keymap.set('n', '<leader>fk', require('telescope.builtin').keymaps, { desc = '[f]ind [k]eymaps' })
-  vim.keymap.set('n', '<leader>fc', require('telescope.builtin').commands, { desc = '[f]ind [c]ommands' })
-
-  --------------
-  vim.keymap.set('n', '<leader>/', function()
-    -- You can pass additional configuration to telescope to change theme, layout, etc.
-    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
-      winblend = 10,
-      previewer = false,
-    })
-  end, { desc = '[/] Fuzzily search in current buffer' })
-
-  vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>sG', ':LiveGrepGitRoot<cr>', { desc = '[S]earch by [G]rep on Git Root' })
-  vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
-  vim.keymap.set('n', '<leader>sr', require('telescope.builtin').resume, { desc = '[S]earch [R]esume' })
-end
-
-function M.telescope_setup_defaults_mappings()
-  return {
-    i = {
-      ['<C-u>'] = false,
-      ['<C-d>'] = false,
-      ["<esc>"] = require("telescope.actions").close,
-      ["jk"] = require("telescope.actions").close,
-      ["<C-h>"] =require("telescope.actions").which_key,
-    },
-  }
-end
-
 function M.gitsigns_on_attach(bufnr)
   vim.keymap.set('n', '<leader>hp', require('gitsigns').preview_hunk, { buffer = bufnr, desc = 'Preview git hunk' })
 
