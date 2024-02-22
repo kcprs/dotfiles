@@ -1,3 +1,23 @@
+local M = {}
+
+-- We cache the results of "git rev-parse"
+-- Process creation is expensive in Windows, so this reduces latency
+local is_inside_work_tree = {}
+
+function M.project_files()
+    local cwd = vim.fn.getcwd()
+    if is_inside_work_tree[cwd] == nil then
+        vim.fn.system("git rev-parse --is-inside-work-tree")
+        is_inside_work_tree[cwd] = vim.v.shell_error == 0
+    end
+
+    if is_inside_work_tree[cwd] then
+        require("telescope.builtin").git_files()
+    else
+        require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
+    end
+end
+
 return {
     "nvim-telescope/telescope.nvim",
     branch = "0.1.x",
@@ -27,6 +47,9 @@ return {
                         ["jk"] = require("telescope.actions").close,
                         ["<C-h>"] = require("telescope.actions").which_key,
                     },
+                    n = {
+                        ["<c-c>"] = require("telescope.actions").close,
+                    }
                 },
 
                 file_ignore_patterns = { "%.git/" },
@@ -37,9 +60,10 @@ return {
         pcall(require("telescope").load_extension, "fzf")
 
         -- See `:help telescope.builtin`
-        vim.keymap.set("n", "<leader>fd", function()
+        vim.keymap.set("n", "<leader>fd", M.project_files, { desc = "[f]in[d] project files (git with fallback)"})
+        vim.keymap.set("n", "<leader>fD", function()
             require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
-        end, { desc = "[f]in[d] files" })
+        end, { desc = "[f]in[D] ALL files" })
         vim.keymap.set("n", "<leader>fg", require("telescope.builtin").git_files, { desc = "[f]ind [g]it files" })
         vim.keymap.set("n", "<leader>fb", require("telescope.builtin").buffers, { desc = "[f]ind existing [b]uffers" })
         vim.keymap.set("n", "<leader>fr", require("telescope.builtin").live_grep, { desc = "[f]ind by g[r]ep" })
