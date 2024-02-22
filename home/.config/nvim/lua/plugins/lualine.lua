@@ -12,10 +12,15 @@ return {
         winbar = {
             lualine_c = {
                 {
-                    "navic",
-                    color_correction = nil,
-                    naivc_opts = nil,
-                },
+                    function()
+                        local breadcrumbs = require("nvim-navic").get_location()
+                        -- Add trailing space to ensure that something gets printed, even if breadcrumb string itself is empty
+                        return breadcrumbs .. " "
+                    end,
+                    cond = function()
+                        return require("nvim-navic").is_available()
+                    end
+                }
             },
         },
     },
