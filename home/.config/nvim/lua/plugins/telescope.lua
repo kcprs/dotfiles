@@ -14,7 +14,7 @@ function M.project_files()
     if is_inside_work_tree[cwd] then
         require("telescope.builtin").git_files()
     else
-        require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
+        require("telescope.builtin").find_files()
     end
 end
 
