@@ -5,6 +5,7 @@ _tasks/
 _t/
 _ignore/
 _cc/
+_venv/
 .lldbinit
 .clang-tidy
 .clangd
