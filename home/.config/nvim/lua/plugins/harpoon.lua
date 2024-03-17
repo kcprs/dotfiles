@@ -9,7 +9,7 @@ return {
         vim.keymap.set("n", "<leader>ha", function()
             harpoon:list():append()
         end, { desc = "[h]arpoon [a]ppend" })
-        vim.keymap.set("n", "<leader>ht", function()
+        vim.keymap.set("n", "<leader>hs", function()
             harpoon.ui:toggle_quick_menu(harpoon:list())
         end, { desc = "[h]arpoon [t]oggle" })
 
