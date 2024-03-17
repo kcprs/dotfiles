@@ -49,7 +49,7 @@ return {
                     },
                     n = {
                         ["<c-c>"] = require("telescope.actions").close,
-                    }
+                    },
                 },
 
                 file_ignore_patterns = { "%.git/" },
@@ -60,7 +60,7 @@ return {
         pcall(require("telescope").load_extension, "fzf")
 
         -- See `:help telescope.builtin`
-        vim.keymap.set("n", "<leader>fd", M.project_files, { desc = "[f]in[d] project files (git with fallback)"})
+        vim.keymap.set("n", "<leader>fd", M.project_files, { desc = "[f]in[d] project files (git with fallback)" })
         vim.keymap.set("n", "<leader>fD", function()
             require("telescope.builtin").find_files({ hidden = true, no_ignore = true })
         end, { desc = "[f]in[D] ALL files" })
@@ -83,12 +83,7 @@ return {
             }))
         end, { desc = "[/] Fuzzily search in current buffer" })
 
-        vim.keymap.set(
-            "n",
-            "<leader>sw",
-            require("telescope.builtin").grep_string,
-            { desc = "[S]earch current [W]ord" }
-        )
+        vim.keymap.set("n", "<leader>sw", require("telescope.builtin").grep_string, { desc = "[S]earch current [W]ord" })
         vim.keymap.set("n", "<leader>sG", ":LiveGrepGitRoot<cr>", { desc = "[S]earch by [G]rep on Git Root" })
         vim.keymap.set("n", "<leader>sd", require("telescope.builtin").diagnostics, { desc = "[S]earch [D]iagnostics" })
 
