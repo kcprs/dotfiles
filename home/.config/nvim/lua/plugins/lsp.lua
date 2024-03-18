@@ -41,7 +41,6 @@ local function keymaps_on_attach(bufnr)
     keymap("n", "gD", vim.lsp.buf.declaration, "[g]o to [D]eclaration")
     keymap("n", "gr", require("telescope.builtin").lsp_references, "[g]o to [r]eferences")
     keymap("n", "gi", require("telescope.builtin").lsp_implementations, "[g]o to [i]mplementation")
-    keymap("n", "gt", require("telescope.builtin").lsp_type_definitions, "[g]o to [t]ype")
 
     keymap("n", "<leader>lC", require("telescope.builtin").lsp_incoming_calls, "show [C]allers")
     keymap("n", "<leader>lc", require("telescope.builtin").lsp_outgoing_calls, "show [c]allees")
