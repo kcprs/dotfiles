@@ -2,26 +2,30 @@ return {
     "nvim-lualine/lualine.nvim",
     -- See `:help lualine.txt`
     opts = {
-        options = {
-            icons_enabled = false,
-            theme = "auto",
-            component_separators = "|",
-            section_separators = "",
-            disabled_filetypes = { "neo-tree" },
-        },
         winbar = {
             lualine_c = {
                 {
                     function()
-                        local breadcrumbs = require("nvim-navic").get_location()
-                        -- Add trailing space to ensure that something gets printed, even if breadcrumb string itself is empty
-                        return breadcrumbs .. " "
+                        return require("nvim-navic").get_location()
                     end,
-                    cond = function()
-                        return require("nvim-navic").is_available()
-                    end,
+                    draw_empty = true,
                 },
             },
         },
+        inactive_winbar = {
+            lualine_c = {
+                {
+                    -- This is to avoid buffer contents jumping one line down when the window becomes active
+                    function()
+                        return ""
+                    end,
+                    draw_empty = true,
+                }
+            }
+        },
+        extensions = {
+            "oil",
+            "toggleterm",
+        }
     },
 }
