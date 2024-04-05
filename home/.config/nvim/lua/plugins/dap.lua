@@ -1,9 +1,8 @@
 return {
     {
-
         "theHamsta/nvim-dap-virtual-text",
         dependencies = {
-            "mfussenegger/nvim-dap"
+            "mfussenegger/nvim-dap",
         },
         config = function()
             require("nvim-dap-virtual-text").setup()
@@ -12,7 +11,8 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         dependencies = {
-            "mfussenegger/nvim-dap"
+            "mfussenegger/nvim-dap",
+            "nvim-neotest/nvim-nio",
         },
         config = function()
             local dap, dapui = require("dap"), require("dapui")
