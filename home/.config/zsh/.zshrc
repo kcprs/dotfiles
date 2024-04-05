@@ -48,3 +48,6 @@ source "$ZDOTDIR/zsh-local-config"
 
 # Starship prompt
 eval "$(starship init zsh)"
+
+# Open zellij when opening shell
+eval "$(zellij setup --generate-auto-start zsh)"
