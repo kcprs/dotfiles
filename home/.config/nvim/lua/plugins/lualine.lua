@@ -5,6 +5,7 @@ return {
         options = {
             disabled_filetypes = { "DiffviewFiles" },
         },
+        -- TODO integrate trouble?
         winbar = {
             lualine_c = {
                 {
