@@ -21,12 +21,6 @@ function M.setup_basic()
     -- Easily exit terminal mode
     vim.keymap.set("t", [[<c-\>]], [[<c-\><c-n>]])
 
-    -- Diagnostic keymaps
-    vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "go to previous diagnostic message" })
-    vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "go to next diagnostic message" })
-    vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, { desc = "open floating [d]iagnostic message" })
-    vim.keymap.set("n", "<leader>lD", vim.diagnostic.setloclist, { desc = "open [D]iagnostics list" })
-
     -- Move selected range up and down, stolen from the Primeagen
     vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
     vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

@@ -1,11 +1,3 @@
--- Enable the following language servers
---  -- Recommended Feel free to add/remove any LSPs that you want here. They will automatically be installed.
---
---  Add any additional override configuration in the following tables. They will be passed to
---  the `settings` field of the server config. You must look up that documentation yourself.
---
---  If you want to override the default filetypes that your language server will attach to you can
---  define the property 'filetypes' to the map in question.
 local servers = {
     clangd = {},
     pyright = {},
@@ -49,6 +41,11 @@ local function keymaps_on_attach(bufnr)
     keymap("n", "<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "workspace [S]ymbols")
 
     keymap("n", "<leader>lf", vim.lsp.buf.format, "[f]ormat")
+
+    keymap("n", "[d", vim.diagnostic.goto_prev, "go to previous diagnostic message")
+    keymap("n", "]d", vim.diagnostic.goto_next, "go to next diagnostic message")
+    keymap("n", "<leader>ld", vim.diagnostic.open_float, "open floating [d]iagnostic message")
+    keymap("n", "<leader>lD", vim.diagnostic.setloclist, "open [D]iagnostics list")
 
     -- TODO Navbuddy keymaps
 
