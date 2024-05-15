@@ -1,3 +1,3 @@
 !.clangd
 !.clang-tidy
-home/.config/containers
+.config/containers
