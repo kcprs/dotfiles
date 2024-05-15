@@ -50,4 +50,4 @@ source "$ZDOTDIR/zsh-local-config"
 eval "$(starship init zsh)"
 
 # Open zellij when opening shell
-eval "$(zellij setup --generate-auto-start zsh)"
+# eval "$(zellij setup --generate-auto-start zsh)"
