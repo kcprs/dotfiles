@@ -32,7 +32,7 @@ alias p3=python3
 alias docker=podman
 alias pm=podman
 alias nv=nvim
-alias ng="nvim +:Neogit"
+alias ng="nvim +\":lua require('neogit').open({ kind = 'replace'})\""
 
 case "$(uname -s)" in
 Darwin)
