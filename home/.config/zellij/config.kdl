@@ -4,25 +4,25 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     tmux {
-        bind "[" { SwitchToMode "Search"; }
+        bind "s" { SwitchToMode "Search"; }
         bind "m" { SwitchToMode "Move"; }
         bind "Ctrl b" "Ctrl c"  { SwitchToMode "Normal"; }
-        bind "\"" { NewPane "Down"; SwitchToMode "Normal"; }
-        bind "%" { NewPane "Right"; SwitchToMode "Normal"; }
+        bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "v" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
-        bind "c" { NewTab; SwitchToMode "Normal"; }
-        bind "," { SwitchToMode "RenameTab"; }
+        bind "t" { NewTab; SwitchToMode "Normal"; }
+        bind "r" { SwitchToMode "RenameTab"; }
         bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
         bind "n" { GoToNextTab; SwitchToMode "Normal"; }
         bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
         bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
         bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
         bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
-        bind "o" { FocusNextPane; }
+        bind "f" { FocusNextPane; }
         bind "d" { Detach; }
         bind "q" { Quit; }
         bind "Space" { NextSwapLayout; }
-        bind "x" { CloseFocus; SwitchToMode "Normal"; }
+        bind "c" { CloseFocus; SwitchToMode "Normal"; }
         bind "w" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
@@ -50,12 +50,11 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     entersearch {
-        bind "Ctrl c" "Esc" { SwitchToMode "Search"; }
-        bind "Enter" { SwitchToMode "Search"; }
+        bind "Enter" "Ctrl c" "Esc" { SwitchToMode "Search"; }
     }
     move {
         bind "Ctrl b" "Ctrl c"  { SwitchToMode "Normal"; }
-        bind "n" "Tab" { MovePane; }
+        bind "n" { MovePane; }
         bind "p" { MovePaneBackwards; }
         bind "h" { MovePane "Left"; }
         bind "j" { MovePane "Down"; }
