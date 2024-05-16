@@ -26,40 +26,6 @@ function M.setup_basic()
     vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 end
 
-function M.cmp_mapping()
-    local cmp = require("cmp")
-    local luasnip = require("luasnip")
-    return {
-        ["<C-n>"] = cmp.mapping.select_next_item(),
-        ["<C-p>"] = cmp.mapping.select_prev_item(),
-        ["<C-d>"] = cmp.mapping.scroll_docs(-4),
-        ["<C-f>"] = cmp.mapping.scroll_docs(4),
-        ["<C-Space>"] = cmp.mapping.complete({}),
-        ["<CR>"] = cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Replace,
-            select = true,
-        }),
-        ["<Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_next_item()
-            elseif luasnip.expand_or_locally_jumpable() then
-                luasnip.expand_or_jump()
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-                cmp.select_prev_item()
-            elseif luasnip.locally_jumpable(-1) then
-                luasnip.jump(-1)
-            else
-                fallback()
-            end
-        end, { "i", "s" }),
-    }
-end
-
 -- function M.set_neotree()
 --   vim.keymap.set("n", "<leader>ef", ":Neotree toggle action=focus source=filesystem position=right<cr>", { desc = "Toggle Neotree - [e]xplore [f]iles" })
 --   vim.keymap.set("n", "<leader>eb", ":Neotree toggle action=focus source=buffers position=right<cr>", { desc = "Toggle Neotree - [e]xplore [b]uffers" })
@@ -104,6 +70,21 @@ function M.toggleterm_set()
     -- end
     --
     -- vim.keymap.set("n", "<leader>G", "<cmd>lua LazyGitToggle()<CR>", { noremap = true, silent = true }, "[G]it")
+end
+
+function M.cmp_get_mapping()
+    local cmp = require("cmp")
+    return {
+        ["<c-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<c-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+        ["<c-y>"] = cmp.mapping(
+            cmp.mapping.confirm({
+                select = true,
+                behavior = cmp.ConfirmBehavior.Insert,
+            }),
+            { "i", "c" }
+        ),
+    }
 end
 
 return M
