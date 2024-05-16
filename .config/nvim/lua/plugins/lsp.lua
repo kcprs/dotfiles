@@ -51,7 +51,7 @@ local function keymaps_on_attach(bufnr)
 
     -- See `:help K` for why this keymap
     keymap("n", "K", vim.lsp.buf.hover, "hover documentation")
-    keymap({ "n", "i" }, "<c-j>", vim.lsp.buf.signature_help, "signature [h]elp")
+    keymap({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, "signature [h]elp")
 
     -- Lesser used LSP functionality
 
