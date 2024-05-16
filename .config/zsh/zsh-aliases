@@ -18,13 +18,13 @@ alias gps="git push"
 alias gsh="git show -q HEAD"
 alias gstat="git status"
 function git-find-merge() {
-	# Usage: git-find-merge <commit-SHA> [<branch>]
-	# Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
-	commit=$1 && branch=${2:-HEAD} && (git rev-list "$commit".."$branch" --ancestry-path | cat -n; git rev-list "$commit".."$branch" --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2
+    # Usage: git-find-merge <commit-SHA> [<branch>]
+    # Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
+    commit=$1 && branch=${2:-HEAD} && (git rev-list "$commit".."$branch" --ancestry-path | cat -n; git rev-list "$commit".."$branch" --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2
 }
 function git-show-merge() {
-	# Same as above, but shows more detail apart from just SHA
-	merge=$(git-find-merge "$1" "$2") && [ -n "$merge" ] && git show "$merge" 
+    # Same as above, but shows more detail apart from just SHA
+    merge=$(git-find-merge "$1" "$2") && [ -n "$merge" ] && git show "$merge" 
 }
 
 alias zj=zellij
@@ -36,17 +36,17 @@ alias ng="nvim +\":lua require('neogit').open({ kind = 'replace'})\""
 
 case "$(uname -s)" in
 Darwin)
-	alias ls='ls -G'
-	alias ll='ls -Gl'
-	alias la='ls -Gla'
-	;;
+    alias ls='ls -G'
+    alias ll='ls -Gl'
+    alias la='ls -Gla'
+    ;;
 Linux)
-	alias ls='ls --color=auto'
-	alias ll='ls --color=auto -l'
-	alias la='ls --color=auto -la'
-	;;
+    alias ls='ls --color=auto'
+    alias ll='ls --color=auto -l'
+    alias la='ls --color=auto -la'
+    ;;
 CYGWIN* | MINGW32* | MSYS* | MINGW*)
-	;;
+    ;;
 *)
-	;;
+    ;;
 esac
