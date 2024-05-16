@@ -27,6 +27,9 @@ function git-show-merge() {
     merge=$(git-find-merge "$1" "$2") && [ -n "$merge" ] && git show "$merge" 
 }
 
+alias ls=eza
+alias la="eza -la"
+alias cat=bat
 alias zj=zellij
 alias p3=python3
 alias docker=podman
