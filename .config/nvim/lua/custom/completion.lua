@@ -1,9 +1,6 @@
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 -- vim.opt.shortmess:append("c") -- TODO: try out
 
-local lspkind = require("lspkind")
-lspkind.init()
-
 local cmp = require("cmp")
 cmp.setup({
     sources = {

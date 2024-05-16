@@ -6,7 +6,6 @@ return {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
-        "onsails/lspkind.nvim", -- For nicer icons
     },
     config = function()
         require("custom.completion")
