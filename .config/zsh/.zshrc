@@ -24,7 +24,7 @@ setopt SHARE_HISTORY       # Share history between all sessions.
 unsetopt NOMATCH           # Causes problems sometimes
 
 plug "zap-zsh/completions"
-plug "zsh-users/zsh-autosuggestions"
+plug "zsh-users/zsh-autosuggestions" && bindkey '^y' autosuggest-accept
 export VI_MODE_ESC_INSERT="jk" && plug "zap-zsh/vim"
 plug "hlissner/zsh-autopair"
 plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
