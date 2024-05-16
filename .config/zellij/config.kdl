@@ -30,6 +30,7 @@ keybinds clear-defaults=true {
             };
             SwitchToMode "Normal"
         }
+        bind "e" { EditScrollback; SwitchToMode "Normal"; }
     }
     search {
         bind "Ctrl b" "Ctrl c" { ScrollToBottom; SwitchToMode "Normal"; }
