@@ -25,29 +25,19 @@ unsetopt NOMATCH           # Causes problems sometimes
 
 plug "zap-zsh/completions"
 plug "zsh-users/zsh-autosuggestions"
-plug "zsh-users/zsh-syntax-highlighting"
-plug "zap-zsh/vim"
+export VI_MODE_ESC_INSERT="jk" && plug "zap-zsh/vim"
 plug "hlissner/zsh-autopair"
 plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
 
-plug "zsh-users/zsh-history-substring-search"
-bindkey '^[[A' history-substring-search-up # up arrow
-bindkey '^[[B' history-substring-search-down # down arrow
-bindkey -M vicmd 'k' history-substring-search-up
-bindkey -M vicmd 'j' history-substring-search-down
-# Further configuration possible: https://github.com/zsh-users/zsh-history-substring-search
-
-# Useful mv alternative
-autoload zmv
-
-# Files to source
+# Other config files to source
 source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
 source "$ZDOTDIR/zsh-local-config"
 
+# Init tools
 source <(fzf --zsh)
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
+# eval "$(zellij setup --generate-auto-start zsh)" # Open zellij when opening shell
 
-# Open zellij when opening shell
-# eval "$(zellij setup --generate-auto-start zsh)"
+plug "zsh-users/zsh-syntax-highlighting" # Should be sourced at the end of the .zshrc file
