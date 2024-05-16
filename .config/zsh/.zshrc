@@ -26,7 +26,6 @@ unsetopt NOMATCH           # Causes problems sometimes
 plug "zap-zsh/completions"
 plug "zsh-users/zsh-autosuggestions"
 plug "zsh-users/zsh-syntax-highlighting"
-plug "agkozak/zsh-z"
 plug "zap-zsh/vim"
 plug "hlissner/zsh-autopair"
 plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
@@ -46,8 +45,9 @@ source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
 source "$ZDOTDIR/zsh-local-config"
 
-# Starship prompt
+source <(fzf --zsh)
 eval "$(starship init zsh)"
+eval "$(zoxide init zsh --cmd cd)"
 
 # Open zellij when opening shell
 # eval "$(zellij setup --generate-auto-start zsh)"
