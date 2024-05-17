@@ -42,8 +42,10 @@ local function keymaps_on_attach(bufnr)
 
     keymap("n", "<leader>lf", vim.lsp.buf.format, "[f]ormat")
 
-    keymap("n", "[d", vim.diagnostic.goto_prev, "go to previous diagnostic message")
-    keymap("n", "]d", vim.diagnostic.goto_next, "go to next diagnostic message")
+    -- go to diagnostic is mapped like this by default since nvim 10.0
+    -- keymap("n", "[d", vim.diagnostic.goto_prev, "go to previous diagnostic message")
+    -- keymap("n", "]d", vim.diagnostic.goto_next, "go to next diagnostic message")
+
     keymap("n", "<leader>ld", vim.diagnostic.open_float, "open floating [d]iagnostic message")
     keymap("n", "<leader>lD", vim.diagnostic.setloclist, "open [D]iagnostics list")
 
