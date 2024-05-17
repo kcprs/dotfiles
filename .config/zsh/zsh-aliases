@@ -36,4 +36,4 @@ alias p3=python3
 alias docker=podman
 alias pm=podman
 alias nv=nvim
-alias ng="nvim +:Neogit kind=replace"
+alias ng="nvim '+:Neogit kind=replace'"
