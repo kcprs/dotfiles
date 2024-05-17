@@ -1,8 +1,8 @@
 -- Set highlight on search
 vim.o.hlsearch = false
 
--- Make line numbers default
-vim.wo.number = true
+vim.o.number = true
+vim.o.relativenumber = true
 
 -- Enable mouse mode
 vim.o.mouse = "a"
@@ -27,8 +27,6 @@ vim.o.timeoutlen = 300
 -- NOTE: You should make sure your terminal supports this
 vim.o.termguicolors = true
 
-vim.o.relativenumber = true
-
 vim.o.cursorline = true
 
 vim.o.scrolloff = 8
@@ -36,3 +34,8 @@ vim.o.scrolloff = 8
 vim.o.splitright = true
 
 vim.o.exrc = true
+
+-- Indentation
+vim.o.tabstop = 4
+vim.o.shiftwidth = 0
+vim.o.softtabstop = 0
