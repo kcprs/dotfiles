@@ -35,7 +35,7 @@ source "$ZDOTDIR/zsh-aliases"
 source "$ZDOTDIR/zsh-local-config"
 
 # Init tools
-source <(fzf --zsh)
+eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh --cmd cd)"
 # eval "$(zellij setup --generate-auto-start zsh)" # Open zellij when opening shell
