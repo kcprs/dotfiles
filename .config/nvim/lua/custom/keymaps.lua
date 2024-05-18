@@ -1,10 +1,14 @@
 local M = {}
 
+-----------------------------
+-- LOCAL UTILITY FUNCTIONS --
+-----------------------------
+
 local map = vim.keymap.set
 
 local function bind_buffer(fn, buffer)
     return function(modes, lhs, rhs, opts)
-        fn(modes, lhs, rhs, vim.tbl_extend("force", { opts, { buffer = buffer } }))
+        fn(modes, lhs, rhs, vim.tbl_extend("force", opts, { buffer = buffer }))
     end
 end
 
@@ -20,6 +24,10 @@ local function bind_group(fn, prefix, group_name)
         fn(modes, prefix .. lhs, rhs, opts)
     end
 end
+
+-----------------------
+-- MAPPING FUNCTIONS --
+-----------------------
 
 function M.setup_leader()
     -- Set <space> as the leader key
@@ -136,6 +144,61 @@ function M.telescope_get_setup_mappings()
             ["<c-c>"] = actions.close,
         },
     }
+end
+
+function M.lsp_common(bufnr)
+    local map_with_buffer = bind_buffer(map, bufnr)
+    local map_with_leader_l = bind_group(map_with_buffer, "<leader>l", "LSP")
+
+    map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
+    map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
+
+    map_with_leader_l("n", "C", require("telescope.builtin").lsp_incoming_calls, { desc = "LSP: show [C]allers" })
+    map_with_leader_l("n", "c", require("telescope.builtin").lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
+
+    map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
+    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "LSP: workspace [S]ymbols" })
+
+    map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
+
+    map_with_leader_l("n", "d", vim.diagnostic.open_float, { desc = "LSP: open floating [d]iagnostic message" })
+    map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
+
+
+    map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
+    map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
+    map_with_buffer("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP: [g]o to [r]eferences" })
+    map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations, { desc = "LSP: [g]o to [i]mplementation" })
+
+    -- See `:help K` for why this keymap
+    map_with_buffer("n", "K", vim.lsp.buf.hover, { desc = "LSP: hover documentation" })
+    map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
+
+    -- TODO Navbuddy keymaps
+
+    -- Lesser used LSP functionality
+
+    -- keymap("n", '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
+    -- keymap("n", '<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
+    -- keymap("n", '<leader>wl', function()
+    --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    -- end, '[W]orkspace [L]ist Folders')
+end
+
+function M.lsp_rust(bufnr)
+    local map_with_buffer = bind_buffer(map, bufnr)
+    local map_with_leader_l = bind_group(map_with_buffer, "<leader>l", "LSP")
+
+    map_with_leader_l("n", "a", function()
+        vim.cmd.RustLsp("codeAction")
+    end, { desc = "LSP: code [a]ction" })
+    map_with_leader_l("n", "d", function()
+        vim.cmd.RustLsp("renderDiagnostic")
+    end, { desc = "LSP: open floating [d]iagnostic message" })
+
+    map_with_buffer("n", "<s-J>", function()
+        vim.cmd.RustLsp("joinLines")
+    end, { desc = "LSP: open floating [d]iagnostic message" })
 end
 
 return M

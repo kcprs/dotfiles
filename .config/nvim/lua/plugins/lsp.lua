@@ -2,6 +2,7 @@ local servers = {
     clangd = {},
     pyright = {},
     rust_analyzer = {}, -- Note - configured using rustaceanvim
+
     -- tsserver = {},
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 
@@ -13,59 +14,8 @@ local servers = {
     },
 }
 
-local function create_mapping_fn(bufnr)
-    return function(modes, keys, func, desc)
-        if desc then
-            desc = "LSP: " .. desc
-        end
-
-        vim.keymap.set(modes, keys, func, { buffer = bufnr, desc = desc })
-    end
-end
-
-local function keymaps_on_attach(bufnr)
-    local keymap = create_mapping_fn(bufnr)
-
-    keymap("n", "<leader>lr", vim.lsp.buf.rename, "[r]ename")
-    keymap("n", "<leader>la", vim.lsp.buf.code_action, "code [a]ction")
-
-    keymap("n", "gd", require("telescope.builtin").lsp_definitions, "[g]o to [d]efinition")
-    keymap("n", "gD", vim.lsp.buf.declaration, "[g]o to [D]eclaration")
-    keymap("n", "gr", require("telescope.builtin").lsp_references, "[g]o to [r]eferences")
-    keymap("n", "gi", require("telescope.builtin").lsp_implementations, "[g]o to [i]mplementation")
-
-    keymap("n", "<leader>lC", require("telescope.builtin").lsp_incoming_calls, "show [C]allers")
-    keymap("n", "<leader>lc", require("telescope.builtin").lsp_outgoing_calls, "show [c]allees")
-
-    keymap("n", "<leader>ls", require("telescope.builtin").lsp_document_symbols, "document [s]ymbols")
-    keymap("n", "<leader>lS", require("telescope.builtin").lsp_dynamic_workspace_symbols, "workspace [S]ymbols")
-
-    keymap("n", "<leader>lf", vim.lsp.buf.format, "[f]ormat")
-
-    -- go to diagnostic is mapped like this by default since nvim 10.0
-    -- keymap("n", "[d", vim.diagnostic.goto_prev, "go to previous diagnostic message")
-    -- keymap("n", "]d", vim.diagnostic.goto_next, "go to next diagnostic message")
-
-    keymap("n", "<leader>ld", vim.diagnostic.open_float, "open floating [d]iagnostic message")
-    keymap("n", "<leader>lD", vim.diagnostic.setloclist, "open [D]iagnostics list")
-
-    -- TODO Navbuddy keymaps
-
-    -- See `:help K` for why this keymap
-    keymap("n", "K", vim.lsp.buf.hover, "hover documentation")
-    keymap({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, "signature [h]elp")
-
-    -- Lesser used LSP functionality
-
-    -- keymap("n", '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
-    -- keymap("n", '<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
-    -- keymap("n", '<leader>wl', function()
-    --   print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    -- end, '[W]orkspace [L]ist Folders')
-end
-
 local function on_attach(client, bufnr)
-    keymaps_on_attach(bufnr)
+    require("custom.keymaps").lsp_common(bufnr)
 
     -- Breadcrumbs plugin
     if client.server_capabilities.documentSymbolProvider then
@@ -80,17 +30,7 @@ local function rust_on_attach(client, bufnr)
     on_attach(client, bufnr)
 
     -- Overwrite Rust-specific keymaps
-    local keymap = create_mapping_fn(bufnr)
-
-    keymap("n", "<leader>la", function()
-        vim.cmd.RustLsp("codeAction")
-    end, "code [a]ction")
-    keymap("n", "<leader>ld", function()
-        vim.cmd.RustLsp("renderDiagnostic")
-    end, "open floating [d]iagnostic message")
-    keymap("n", "<s-J>", function()
-        vim.cmd.RustLsp("joinLines")
-    end, "open floating [d]iagnostic message")
+    require("custom.keymaps").lsp_rust(bufnr)
 end
 
 return {
