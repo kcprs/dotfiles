@@ -155,8 +155,8 @@ function M.telescope_defaults_mappings()
 end
 
 function M.telescope_find_files_mappings()
-    local function switch_to_git_files(prompt_bufnr)
-        require("custom.telescope").switch_picker(prompt_bufnr, require("telescope.builtin").git_files)
+    local function switch_to_git_files(prompt_buffer)
+        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").git_files)
     end
 
     return {
@@ -170,8 +170,8 @@ function M.telescope_find_files_mappings()
 end
 
 function M.telescope_git_files_mappings()
-    local function switch_to_find_files(prompt_bufnr)
-        require("custom.telescope").switch_picker(prompt_bufnr, require("telescope.builtin").find_files)
+    local function switch_to_find_files(prompt_buffer)
+        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").find_files)
     end
 
     return {
@@ -196,8 +196,8 @@ function M.telescope_buffers_mappings()
     }
 end
 
-function M.lsp_common(bufnr)
-    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", bufnr)
+function M.lsp_common(buffer)
+    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
 
     map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
@@ -213,7 +213,7 @@ function M.lsp_common(bufnr)
     map_with_leader_l("n", "d", vim.diagnostic.open_float, { desc = "LSP: open floating [d]iagnostic message" })
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
 
-    local map_with_buffer = bind_buffer(map, bufnr)
+    local map_with_buffer = bind_buffer(map, buffer)
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
@@ -235,8 +235,8 @@ function M.lsp_common(bufnr)
     -- end, '[W]orkspace [L]ist Folders')
 end
 
-function M.lsp_rust(bufnr)
-    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", bufnr)
+function M.lsp_rust(buffer)
+    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
     map_with_leader_l("n", "a", function()
         vim.cmd.RustLsp("codeAction")
     end, { desc = "LSP: code [a]ction" })
@@ -244,7 +244,7 @@ function M.lsp_rust(bufnr)
         vim.cmd.RustLsp("renderDiagnostic")
     end, { desc = "LSP: open floating [d]iagnostic message" })
 
-    local map_with_buffer = bind_buffer(map, bufnr)
+    local map_with_buffer = bind_buffer(map, buffer)
     map_with_buffer("n", "<s-J>", function()
         vim.cmd.RustLsp("joinLines")
     end, { desc = "LSP: open floating [d]iagnostic message" })
@@ -284,8 +284,8 @@ function M.harpoon()
     end, { desc = "[h]arpoon [n]ext" })
 end
 
-function M.gitsigns(bufnr)
-    local map_with_leader_g = bind_group(map, "<leader>g", "git", bufnr)
+function M.gitsigns(buffer)
+    local map_with_leader_g = bind_group(map, "<leader>g", "git", buffer)
 
     local gs = package.loaded.gitsigns
 
