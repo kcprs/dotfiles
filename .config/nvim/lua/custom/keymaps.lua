@@ -284,4 +284,44 @@ function M.harpoon()
     end, { desc = "[h]arpoon [n]ext" })
 end
 
+function M.gitsigns(bufnr)
+    local map_with_leader_g = bind_group(map, "<leader>g", "git", bufnr)
+
+    local gs = package.loaded.gitsigns
+
+    -- Navigation (don't override the built-in keymaps)
+    map({ "n", "v" }, "]c", function()
+        if vim.wo.diff then
+            return "]c"
+        end
+        vim.schedule(function()
+            gs.next_hunk()
+        end)
+        return "<Ignore>"
+    end, { expr = true, desc = "Jump to next hunk" })
+    map({ "n", "v" }, "[c", function()
+        if vim.wo.diff then
+            return "[c"
+        end
+        vim.schedule(function()
+            gs.prev_hunk()
+        end)
+        return "<Ignore>"
+    end, { expr = true, desc = "Jump to previous hunk" })
+
+    map_with_leader_g("n", "p", gs.preview_hunk, { desc = "[g]it [p]review hunk" })
+    map_with_leader_g("n", "s", gs.stage_hunk, { desc = "[g]it [s]tage hunk" })
+    map_with_leader_g("n", "r", gs.reset_hunk, { desc = "[g]it [r]eset hunk" })
+    map_with_leader_g("v", "s", function()
+        gs.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, { desc = "[g]it [s]tage hunk" })
+    map_with_leader_g("v", "r", function()
+        gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+    end, { desc = "[g]it [r]eset hunk" })
+
+    map_with_leader_g("n", "b", function()
+        gs.blame_line({ full = true })
+    end, { desc = "[g]it show [b]lame" })
+end
+
 return M
