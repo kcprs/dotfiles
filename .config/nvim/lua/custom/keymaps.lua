@@ -101,7 +101,7 @@ end
 function M.telescope()
     local custom = require("custom.telescope")
     local builtin = require("telescope.builtin")
-    local map_with_leader_f = bind_group(map, "<leader>f", "[f]ind")
+    local map_with_leader_f = bind_group(map, "<leader>f", "find")
 
     map_with_leader_f("n", "d", custom.project_files, { desc = "[f]in[d] project files (git with fallback)" })
     map_with_leader_f("n", "D", function()
@@ -244,32 +244,35 @@ function M.lsp_rust(bufnr)
 end
 
 function M.harpoon()
+    local map_with_leader_h = bind_group(map, "<leader>h", "harpoon")
+
     local harpoon = require("harpoon")
-    vim.keymap.set("n", "<leader>ha", function()
+
+    map_with_leader_h("n", "a", function()
         harpoon:list():append()
     end, { desc = "[h]arpoon [a]ppend" })
-    vim.keymap.set("n", "<leader>hs", function()
+    map_with_leader_h("n", "s", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
     end, { desc = "[h]arpoon [s]how" })
 
-    vim.keymap.set("n", "<leader>hh", function()
+    map_with_leader_h("n", "h", function()
         harpoon:list():select(1)
     end, { desc = "[h]arpoon file 1" })
-    vim.keymap.set("n", "<leader>hj", function()
+    map_with_leader_h("n", "j", function()
         harpoon:list():select(2)
     end, { desc = "[h]arpoon file 2" })
-    vim.keymap.set("n", "<leader>hk", function()
+    map_with_leader_h("n", "k", function()
         harpoon:list():select(3)
     end, { desc = "[h]arpoon file 3" })
-    vim.keymap.set("n", "<leader>hl", function()
+    map_with_leader_h("n", "l", function()
         harpoon:list():select(4)
     end, { desc = "[h]arpoon file 4" })
 
     -- Toggle previous & next buffers stored within Harpoon list
-    vim.keymap.set("n", "<leader>hp", function()
+    map_with_leader_h("n", "p", function()
         harpoon:list():prev()
     end, { desc = "[h]arpoon [p]revious" })
-    vim.keymap.set("n", "<leader>hn", function()
+    map_with_leader_h("n", "n", function()
         harpoon:list():next()
     end, { desc = "[h]arpoon [n]ext" })
 end
