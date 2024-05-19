@@ -146,6 +146,36 @@ function M.telescope_defaults_mappings()
     }
 end
 
+function M.telescope_find_files_mappings()
+    local function switch_to_git_files(prompt_bufnr)
+        require("custom.telescope").switch_picker(prompt_bufnr, require("telescope.builtin").git_files)
+    end
+
+    return {
+        i = {
+            ["<c-f>"] = switch_to_git_files
+        },
+        n = {
+            ["<c-f>"] = switch_to_git_files
+        },
+    }
+end
+
+function M.telescope_git_files_mappings()
+    local function switch_to_find_files(prompt_bufnr)
+        require("custom.telescope").switch_picker(prompt_bufnr, require("telescope.builtin").find_files)
+    end
+
+    return {
+        i = {
+            ["<c-f>"] = switch_to_find_files
+        },
+        n = {
+            ["<c-f>"] = switch_to_find_files
+        },
+    }
+end
+
 function M.telescope_buffers_mappings()
     local actions = require("telescope.actions")
     return {

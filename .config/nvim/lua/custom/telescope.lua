@@ -18,4 +18,13 @@ function M.project_files()
     end
 end
 
+function M.switch_picker(prompt_bufnr, new_picker)
+    local current_picker = require('telescope.actions.state').get_current_picker(prompt_bufnr)
+    local current_prompt_text = current_picker:_get_prompt()
+    require('telescope.actions').close(prompt_bufnr)
+    new_picker({
+        default_text = current_prompt_text
+    })
+end
+
 return M

@@ -36,7 +36,13 @@ return {
                 buffers = {
                     sort_lastused = true,
                     mappings = require("custom.keymaps").telescope_buffers_mappings()
-                }
+                },
+                find_files = {
+                    mappings = require("custom.keymaps").telescope_find_files_mappings()
+                },
+                git_files = {
+                    mappings = require("custom.keymaps").telescope_git_files_mappings()
+                },
             }
         })
 
