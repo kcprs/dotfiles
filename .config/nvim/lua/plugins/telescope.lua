@@ -19,7 +19,7 @@ return {
     config = function()
         require("telescope").setup({
             defaults = {
-                mappings = require("custom.keymaps").telescope_get_setup_mappings(),
+                mappings = require("custom.keymaps").telescope_defaults_mappings(),
                 file_ignore_patterns = { "%.git/" },
                 vimgrep_arguments = {
                     "rg",
@@ -32,6 +32,12 @@ return {
                     "--hidden",
                 }
             },
+            pickers = {
+                buffers = {
+                    sort_lastused = true,
+                    mappings = require("custom.keymaps").telescope_buffers_mappings()
+                }
+            }
         })
 
         -- Enable telescope fzf native, if installed

@@ -130,18 +130,30 @@ function M.telescope()
     map("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 end
 
-function M.telescope_get_setup_mappings()
+function M.telescope_defaults_mappings()
     local actions = require("telescope.actions")
     return {
         i = {
-            -- ['<C-u>'] = false,
-            -- ['<C-d>'] = false, -- Did I set these?
-            -- ["<esc>"] = actions.close,
-            ["jk"] = actions.close,
-            ["<C-h>"] = actions.which_key,
+            ["<c-c>"] = actions.close,
+            ["<c-x>"] = false, -- select_horizontal by default, remapped to delete_buffer below
+            ["<c-h>"] = actions.select_horizontal,
         },
         n = {
             ["<c-c>"] = actions.close,
+            ["<c-x>"] = false, -- select_horizontal by default, remapped to delete_buffer below
+            ["<c-h>"] = actions.select_horizontal,
+        },
+    }
+end
+
+function M.telescope_buffers_mappings()
+    local actions = require("telescope.actions")
+    return {
+        i = {
+            ["<c-x>"] = actions.delete_buffer
+        },
+        n = {
+            ["d"] = actions.delete_buffer
         },
     }
 end
