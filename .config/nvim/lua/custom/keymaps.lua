@@ -6,22 +6,30 @@ local M = {}
 
 local map = vim.keymap.set
 
-local function bind_buffer(fn, buffer)
-    return function(modes, lhs, rhs, opts)
-        fn(modes, lhs, rhs, vim.tbl_extend("force", opts, { buffer = buffer }))
-    end
-end
+ local function bind_buffer(fn, buffer)
+     return function(modes, lhs, rhs, opts)
+        opts = opts or {}
+        opts.buffer = buffer
+        fn(modes, lhs, rhs, opts)
+     end
+ end
 
-local function bind_group(fn, prefix, group_name)
-    local ok, wk = pcall(require, "which-key")
-    if ok then
-        wk.register({
-            [prefix] = { name = group_name },
-        })
-    end
-
+local function bind_group(fn, prefix, group_name, buffer)
     return function(modes, lhs, rhs, opts)
-        fn(modes, prefix .. lhs, rhs, opts)
+        local ok, wk = pcall(require, "which-key")
+        if ok then
+            wk.register(
+                {
+                    [prefix] = { name = group_name },
+                },
+                {
+                    mode = modes,
+                    buffer = buffer,
+                }
+            )
+        end
+
+        bind_buffer(fn, buffer)(modes, prefix .. lhs, rhs, opts)
     end
 end
 
@@ -189,8 +197,7 @@ function M.telescope_buffers_mappings()
 end
 
 function M.lsp_common(bufnr)
-    local map_with_buffer = bind_buffer(map, bufnr)
-    local map_with_leader_l = bind_group(map_with_buffer, "<leader>l", "LSP")
+    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", bufnr)
 
     map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
@@ -206,6 +213,7 @@ function M.lsp_common(bufnr)
     map_with_leader_l("n", "d", vim.diagnostic.open_float, { desc = "LSP: open floating [d]iagnostic message" })
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
 
+    local map_with_buffer = bind_buffer(map, bufnr)
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
@@ -228,9 +236,7 @@ function M.lsp_common(bufnr)
 end
 
 function M.lsp_rust(bufnr)
-    local map_with_buffer = bind_buffer(map, bufnr)
-    local map_with_leader_l = bind_group(map_with_buffer, "<leader>l", "LSP")
-
+    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", bufnr)
     map_with_leader_l("n", "a", function()
         vim.cmd.RustLsp("codeAction")
     end, { desc = "LSP: code [a]ction" })
@@ -238,6 +244,7 @@ function M.lsp_rust(bufnr)
         vim.cmd.RustLsp("renderDiagnostic")
     end, { desc = "LSP: open floating [d]iagnostic message" })
 
+    local map_with_buffer = bind_buffer(map, bufnr)
     map_with_buffer("n", "<s-J>", function()
         vim.cmd.RustLsp("joinLines")
     end, { desc = "LSP: open floating [d]iagnostic message" })
