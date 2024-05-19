@@ -1,0 +1,2 @@
+bindkey "^p" up-history
+bindkey "^n" down-history
