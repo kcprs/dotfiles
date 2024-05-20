@@ -220,8 +220,6 @@ function M.lsp_common(buffer)
     map_with_buffer("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP: [g]o to [r]eferences" })
     map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations, { desc = "LSP: [g]o to [i]mplementation" })
 
-    -- See `:help K` for why this keymap
-    map_with_buffer("n", "K", vim.lsp.buf.hover, { desc = "LSP: hover documentation" })
     map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
 
     -- TODO Navbuddy keymaps
