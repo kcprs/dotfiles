@@ -245,7 +245,7 @@ function M.lsp_rust(buffer)
     local map_with_buffer = bind_buffer(map, buffer)
     map_with_buffer("n", "<s-J>", function()
         vim.cmd.RustLsp("joinLines")
-    end, { desc = "LSP: open floating [d]iagnostic message" })
+    end, { desc = "[J]oin lines" })
 end
 
 function M.harpoon()
