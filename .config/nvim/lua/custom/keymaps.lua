@@ -210,7 +210,6 @@ function M.lsp_common(buffer)
 
     map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
 
-    map_with_leader_l("n", "d", vim.diagnostic.open_float, { desc = "LSP: open floating [d]iagnostic message" })
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
 
     local map_with_buffer = bind_buffer(map, buffer)
@@ -238,11 +237,11 @@ function M.lsp_rust(buffer)
     map_with_leader_l("n", "a", function()
         vim.cmd.RustLsp("codeAction")
     end, { desc = "LSP: code [a]ction" })
-    map_with_leader_l("n", "d", function()
-        vim.cmd.RustLsp("renderDiagnostic")
-    end, { desc = "LSP: open floating [d]iagnostic message" })
 
     local map_with_buffer = bind_buffer(map, buffer)
+    map_with_buffer("n", "<c-w>d", function()
+        vim.cmd.RustLsp("renderDiagnostic")
+    end, { desc = "Show diagnostics under the cursor" }) -- Note: description here matches description for default <c-w>d mapping
     map_with_buffer("n", "<s-J>", function()
         vim.cmd.RustLsp("joinLines")
     end, { desc = "[J]oin lines" })
