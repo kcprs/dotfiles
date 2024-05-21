@@ -17,6 +17,7 @@ alias gpl="git pull"
 alias gps="git push"
 alias gsh="git show -q HEAD"
 alias gstat="git status"
+alias gmb="git merge-base"
 function git-find-merge() {
     # Usage: git-find-merge <commit-SHA> [<branch>]
     # Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
