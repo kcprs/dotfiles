@@ -32,6 +32,7 @@ vim.o.cursorline = true
 vim.o.scrolloff = 8
 
 vim.o.splitright = true
+vim.o.splitbelow = true
 
 vim.o.exrc = true
 
