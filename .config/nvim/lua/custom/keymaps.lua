@@ -56,7 +56,7 @@ function M.setup_basic()
     map("n", "j", "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
 
     -- Easily exit terminal mode
-    map("t", [[<c-\>]], [[<c-\><c-n>]])
+    map("t", "jk", [[<c-\><c-n>]])
 
     -- Move selected range up and down, stolen from the Primeagen
     map("v", "J", ":m '>+1<CR>gv=gv")
