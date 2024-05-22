@@ -21,6 +21,7 @@ fpath=($fpath "$ZDOTDIR/completions")
 export VI_MODE_ESC_INSERT="jk" && plug "zap-zsh/vim" # Should be sourced first because otherwise it overwrites previously set keybinds
 
 plug "zap-zsh/supercharge" # Set basic zsh options to sensible defaults
+bindkey -r '^x'            # Set by supercharge but I don't want it
 setopt INC_APPEND_HISTORY  # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY       # Share history between all sessions.
 unsetopt NOMATCH           # Causes problems sometimes
