@@ -1,5 +1,6 @@
 alias md='mkdir -p'
 alias cl='clear'
+alias cd=z
 
 # confirm before overwriting something
 alias cp="cp -i"

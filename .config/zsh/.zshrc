@@ -39,7 +39,7 @@ source "$ZDOTDIR/zsh-local-config"
 # Init tools
 eval "$(fzf --zsh)"
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh --cmd cd)"
+eval "$(zoxide init zsh)"
 # eval "$(zellij setup --generate-auto-start zsh)" # Open zellij when opening shell
 
 plug "zsh-users/zsh-syntax-highlighting" # Should be sourced at the end of the .zshrc file
