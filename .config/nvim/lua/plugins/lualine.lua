@@ -8,24 +8,19 @@ return {
         -- TODO integrate trouble?
         winbar = {
             lualine_c = {
+                "filename",
                 {
-                    function()
-                        return require("nvim-navic").get_location()
-                    end,
-                    draw_empty = true,
-                },
+                    "navic",
+                    navic_opts = {
+                        separator =  "  "
+                    }
+                }
             },
         },
         inactive_winbar = {
             lualine_c = {
-                {
-                    -- This is to avoid buffer contents jumping one line down when the window becomes active
-                    function()
-                        return ""
-                    end,
-                    draw_empty = true,
-                }
-            }
+                "filename",
+            },
         },
         extensions = {
             "oil",
