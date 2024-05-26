@@ -6,13 +6,13 @@ local M = {}
 
 local map = vim.keymap.set
 
- local function bind_buffer(fn, buffer)
-     return function(modes, lhs, rhs, opts)
+local function bind_buffer(fn, buffer)
+    return function(modes, lhs, rhs, opts)
         opts = opts or {}
         opts.buffer = buffer
         fn(modes, lhs, rhs, opts)
-     end
- end
+    end
+end
 
 local function bind_group(fn, prefix, group_name, buffer)
     return function(modes, lhs, rhs, opts)
@@ -112,9 +112,7 @@ function M.telescope()
     local map_with_leader_f = bind_group(map, "<leader>f", "find")
 
     map_with_leader_f("n", "d", custom.project_files, { desc = "[f]in[d] project files (git with fallback)" })
-    map_with_leader_f("n", "D", function()
-        builtin.find_files({ hidden = true, no_ignore = true })
-    end, { desc = "[f]in[D] ALL files" })
+    map_with_leader_f("n", "D", require("custom.telescope").find_all_files, { desc = "[f]in[D] ALL files" })
     map_with_leader_f("n", "g", builtin.git_files, { desc = "[f]ind [g]it files" })
     map_with_leader_f("n", "b", builtin.buffers, { desc = "[f]ind existing [b]uffers" })
     map_with_leader_f("n", "r", builtin.live_grep, { desc = "[f]ind by g[r]ep" })
@@ -171,7 +169,7 @@ end
 
 function M.telescope_git_files_mappings()
     local function switch_to_find_files(prompt_buffer)
-        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").find_files)
+        require("custom.telescope").switch_picker(prompt_buffer, require("custom.telescope").find_all_files)
     end
 
     return {
@@ -202,7 +200,7 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
     map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
-    map_with_leader_l("n", "h", function ()
+    map_with_leader_l("n", "h", function()
         ---@diagnostic disable-next-line: missing-parameter (line taken directly from help docs)
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP: toggle inlay [h]ints" })
@@ -211,7 +209,8 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "c", require("telescope.builtin").lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
 
     map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
-    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "LSP: workspace [S]ymbols" })
+    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols,
+        { desc = "LSP: workspace [S]ymbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
 
@@ -220,7 +219,8 @@ function M.lsp_common(buffer)
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
     map_with_buffer("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP: [g]o to [r]eferences" })
-    map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations, { desc = "LSP: [g]o to [i]mplementation" })
+    map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
+        { desc = "LSP: [g]o to [i]mplementation" })
 
     map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
 

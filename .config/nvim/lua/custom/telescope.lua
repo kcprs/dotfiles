@@ -4,6 +4,11 @@ local M = {}
 -- Process creation is expensive in Windows, so this reduces latency
 local is_inside_work_tree = {}
 
+function M.find_all_files(opts)
+    opts = vim.tbl_extend("force", opts, { hidden = true, no_ignore = true })
+    require("telescope.builtin").find_files(opts)
+end
+
 function M.project_files()
     local cwd = vim.fn.getcwd()
     if is_inside_work_tree[cwd] == nil then
@@ -14,7 +19,7 @@ function M.project_files()
     if is_inside_work_tree[cwd] then
         require("telescope.builtin").git_files()
     else
-        require("telescope.builtin").find_files()
+        require("custom.telescope").find_all_files()
     end
 end
 
