@@ -10,3 +10,4 @@ export VISUAL="$EDITOR"
 # export TERMINAL="alacritty"
 # export BROWSER="firefox"
 export CMAKE_GENERATOR=Ninja
+export CMAKE_EXPORT_COMPILE_COMMANDS=1
