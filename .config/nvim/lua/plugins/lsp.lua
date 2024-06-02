@@ -1,5 +1,11 @@
 local servers = {
-    clangd = {},
+    clangd = {
+        --TODO: keymap for command ClangdSwitchSourceHeader
+        args = {
+            "--clang-tidy",
+            "--header-insertion=never"
+        }
+    },
     pyright = {},
     rust_analyzer = {}, -- Note - configured using rustaceanvim
 
@@ -88,9 +94,15 @@ return {
 
         require("mason-lspconfig").setup_handlers({
             function(server_name)
+                local default_config = require('lspconfig')[server_name].document_config.default_config
+
+                local cmd = default_config.cmd
+                vim.list_extend(cmd, (servers[server_name] or {}).args or {})
+
                 require("lspconfig")[server_name].setup({
                     capabilities = capabilities,
                     on_attach = on_attach,
+                    cmd = cmd,
                     settings = servers[server_name],
                     filetypes = (servers[server_name] or {}).filetypes,
                 })
