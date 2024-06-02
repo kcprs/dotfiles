@@ -61,6 +61,9 @@ function M.setup_basic()
     -- Move selected range up and down, stolen from the Primeagen
     map("v", "J", ":m '>+1<CR>gv=gv")
     map("v", "K", ":m '<-2<CR>gv=gv")
+
+    -- Paste without overwriting default register
+    map("v", "<leader>p", '"_dP')
 end
 
 function M.oil_set()
