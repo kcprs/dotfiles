@@ -245,6 +245,7 @@ function M.lsp_rust(buffer)
     end, { desc = "LSP: code [a]ction" })
 
     local map_with_buffer = bind_buffer(map, buffer)
+    -- TODO: map more from https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#books-usage--features
     map_with_buffer("n", "<c-w>d", function()
         vim.cmd.RustLsp("renderDiagnostic")
     end, { desc = "Show diagnostics under the cursor" }) -- Note: description here matches description for default <c-w>d mapping
