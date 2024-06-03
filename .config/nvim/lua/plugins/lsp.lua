@@ -6,18 +6,20 @@ local servers = {
             "--header-insertion=never"
         }
     },
-    pyright = {},
-    rust_analyzer = {}, -- Note - configured using rustaceanvim
-
-    -- tsserver = {},
-    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-
+    cmake = {},
     lua_ls = {
         Lua = {
             workspace = { checkThirdParty = false },
             telemetry = { enable = false },
         },
     },
+    pyright = {},
+    rust_analyzer = {}, -- Note - configured using rustaceanvim
+    taplo = {},
+    tsserver = {},
+    yamlls = {},
+
+    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
 
 local function on_attach(client, bufnr)
