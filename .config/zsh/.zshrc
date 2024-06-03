@@ -35,7 +35,6 @@ plug "MichaelAquilina/zsh-you-should-use" # Reminds of existing aliases
 source "$ZDOTDIR/zsh-exports"
 source "$ZDOTDIR/zsh-aliases"
 source "$ZDOTDIR/zsh-keybinds"
-source "$ZDOTDIR/zsh-local-config"
 
 # Init tools
 eval "$(fzf --zsh)"

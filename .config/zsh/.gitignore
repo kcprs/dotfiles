@@ -4,4 +4,3 @@
 .zsh_history
 completions/*
 !completions/.gitkeep
-zsh-local-config
