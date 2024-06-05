@@ -243,9 +243,14 @@ function M.lsp_rust(buffer)
     map_with_leader_l("n", "a", function()
         vim.cmd.RustLsp("codeAction")
     end, { desc = "LSP: code [a]ction" })
+    map_with_leader_l("n", "d", function()
+        vim.cmd.RustLsp("openDocs")
+    end, { desc = "LSP: open [d]ocs" })
+    map_with_leader_l("n", "d", function()
+        vim.cmd.RustLsp("openDocs")
+    end, { desc = "LSP: open [d]ocs" })
 
     local map_with_buffer = bind_buffer(map, buffer)
-    -- TODO: map more from https://github.com/mrcjkb/rustaceanvim?tab=readme-ov-file#books-usage--features
     map_with_buffer("n", "<c-w>d", function()
         vim.cmd.RustLsp("renderDiagnostic")
     end, { desc = "Show diagnostics under the cursor" }) -- Note: description here matches description for default <c-w>d mapping
