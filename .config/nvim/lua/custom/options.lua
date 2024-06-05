@@ -8,6 +8,7 @@ vim.o.relativenumber = true
 -- Enable mouse mode
 vim.o.mouse = "a"
 
+-- TODO: enable in selected file types, e.g. markdown
 -- Disable line wrapping
 vim.o.wrap = false
 

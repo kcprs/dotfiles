@@ -18,6 +18,7 @@ function M.project_files()
     end
 
     if is_inside_work_tree[cwd] then
+        -- TODO this doesn't include git submodules!
         require("telescope.builtin").git_files()
     else
         require("custom.telescope").find_all_files()
