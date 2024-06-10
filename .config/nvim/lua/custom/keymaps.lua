@@ -64,6 +64,9 @@ function M.setup_basic()
 
     -- Paste without overwriting default register
     map("v", "<leader>p", '"_dP')
+
+    -- Close tabs easier
+    map("n", "<c-w>t", "<cmd>tabc<cr>")
 end
 
 function M.oil_set()
@@ -331,6 +334,13 @@ function M.gitsigns(buffer)
     map_with_leader_g("n", "b", function()
         gs.blame_line({ full = true })
     end, { desc = "[g]it show [b]lame" })
+end
+
+function M.diffview()
+    local map_with_leader_g = bind_group(map, "<leader>g", "git")
+
+    map_with_leader_g("n", "d", require("diffview").open, { desc = "[g]it [d]iff"})
+    map_with_leader_g("n", "b", require("custom.diffview").open_with_merge_base_of_main, { desc = "[g]it diff merge [b]ase"})
 end
 
 return M
