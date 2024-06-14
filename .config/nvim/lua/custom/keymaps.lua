@@ -343,4 +343,29 @@ function M.diffview()
     map_with_leader_g("n", "m", require("custom.diffview").open_with_merge_base_of_main, { desc = "[g]it diff [m]erge base"})
 end
 
+function M.dap()
+    local dap = require("dap")
+
+
+    map("n", "<F5>", dap.continue, { desc = "debug: continue" })
+    map("n", "<F6>", dap.step_over, { desc = "debug: step over" })
+    map("n", "<F7>", dap.step_into, { desc = "debug: step into" })
+    map("n", "<S-F7>", dap.step_out, { desc = "debug: step out" })
+
+    local map_with_leader_d = bind_group(map, "<leader>d", "debug")
+    map_with_leader_d("n", "b", dap.toggle_breakpoint, { desc = "debug: toggle [b]reakpoint" })
+    map_with_leader_d("n", "c", dap.clear_breakpoints, { desc = "debug: [c]lear breakpoints" })
+    map_with_leader_d("n", "s", dap.continue, { desc = "debug: [s]tart/continue" })
+    map_with_leader_d("n", "r", dap.restart, { desc = "debug: [r]estart" })
+    map_with_leader_d("n", "t", dap.terminate, { desc = "debug: [t]erminate" })
+    map_with_leader_d("n", "l", dap.run_last, { desc = "debug: run [l]ast" })
+    map_with_leader_d("n", "c", dap.run_to_cursor, { desc = "debug: run to [c]ursor" })
+
+    local dapui = require("dapui")
+    map_with_leader_d({ "n", "v" }, "d", function()
+        --- @diagnostic disable-next-line: missing-fields
+        dapui.eval(nil, { enter = true })
+    end, { desc = "debug: eval under cursor" })
+end
+
 return M

@@ -5,7 +5,7 @@ return {
             "mfussenegger/nvim-dap",
         },
         config = function()
-            require("nvim-dap-virtual-text").setup()
+            require("nvim-dap-virtual-text").setup({})
         end
     },
     {
@@ -17,6 +17,8 @@ return {
         config = function()
             local dap, dapui = require("dap"), require("dapui")
             dapui.setup()
+
+            require("custom.keymaps").dap()
 
             dap.listeners.before.attach.dapui_config = function()
                 dapui.open()
@@ -30,6 +32,25 @@ return {
             dap.listeners.before.event_exited.dapui_config = function()
                 dapui.close()
             end
+
+            dap.adapters.codelldb = {
+                type = "server",
+                port = "${port}",
+                executable = {
+                    command = "codelldb",
+                    args = {"--port", "${port}"},
+                }
+            }
         end
-    }
+    },
+    {
+        "mfussenegger/nvim-dap-python",
+        dependencies = {
+            "mfussenegger/nvim-dap",
+        },
+        config = function()
+            local python_path = "python3"
+            require("dap-python").setup(python_path)
+        end
+    },
 }
