@@ -340,7 +340,7 @@ function M.diffview()
     local map_with_leader_g = bind_group(map, "<leader>g", "git")
 
     map_with_leader_g("n", "d", require("diffview").open, { desc = "[g]it [d]iff"})
-    map_with_leader_g("n", "b", require("custom.diffview").open_with_merge_base_of_main, { desc = "[g]it diff merge [b]ase"})
+    map_with_leader_g("n", "m", require("custom.diffview").open_with_merge_base_of_main, { desc = "[g]it diff [m]erge base"})
 end
 
 return M
