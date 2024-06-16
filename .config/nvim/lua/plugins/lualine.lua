@@ -5,6 +5,14 @@ return {
         options = {
             disabled_filetypes = { "DiffviewFiles" },
         },
+        sections = {
+            lualine_c = {
+                {
+                    "filename",
+                    path = 1, -- 1: Relative path
+                }
+            }
+        },
         -- TODO integrate trouble?
         winbar = {
             lualine_c = {
@@ -12,7 +20,7 @@ return {
                 {
                     "navic",
                     navic_opts = {
-                        separator =  "  "
+                        separator = "  "
                     }
                 }
             },
