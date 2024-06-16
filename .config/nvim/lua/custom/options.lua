@@ -48,3 +48,5 @@ vim.o.softtabstop = 0
 vim.o.laststatus = 3
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'NONE' })
 
+-- In diff view, fill deleted areas with '/'
+vim.opt.fillchars:append { diff = "╱" }
