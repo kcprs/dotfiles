@@ -20,6 +20,14 @@ return {
 
             require("custom.keymaps").dap()
 
+            -- Create an autocommand using the Lua API for Rust filetype
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = "rust",
+                callback = function()
+                    require("custom.keymaps").dap_rust()
+                end,
+            })
+
             dap.listeners.before.attach.dapui_config = function()
                 dapui.open()
             end

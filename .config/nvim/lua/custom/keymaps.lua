@@ -349,6 +349,8 @@ function M.dap()
 
     map("n", "<F5>", dap.continue, { desc = "debug: continue" })
     map("n", "<F6>", dap.step_over, { desc = "debug: step over" })
+    -- TODO: shift + f keys doesn't work
+    map("n", "<S-F6>", dap.run_to_cursor, { desc = "debug: run to [c]ursor" })
     map("n", "<F7>", dap.step_into, { desc = "debug: step into" })
     map("n", "<S-F7>", dap.step_out, { desc = "debug: step out" })
 
@@ -366,6 +368,21 @@ function M.dap()
         --- @diagnostic disable-next-line: missing-fields
         dapui.eval(nil, { enter = true })
     end, { desc = "debug: eval under cursor" })
+end
+
+function M.dap_rust()
+    if vim.cmd.RustLsp == nil then
+        return
+    end
+
+    local map_with_leader_d = bind_group(map, "<leader>d", "debug", vim.api.nvim_get_current_buf())
+
+    map_with_leader_d("n", "s", function()
+        vim.cmd.RustLsp("debuggables")
+    end, { desc = "debug: [s]tart/continue" })
+    map_with_leader_d("n", "S", function()
+        vim.cmd.RustLsp("debug")
+    end, { desc = "debug: [S]tart current debuggable" })
 end
 
 return M
