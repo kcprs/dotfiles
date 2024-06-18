@@ -38,6 +38,4 @@ alias docker=podman
 alias pm=podman
 alias nv=nvim
 alias ng="nvim '+:Neogit kind=replace'"
-alias mr="mise run" 
-alias mt="mise tasks"
-alias me="mise env"
+alias mr="mise run --" 
