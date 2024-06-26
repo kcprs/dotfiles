@@ -67,6 +67,12 @@ function M.setup_basic()
 
     -- Close tabs easier
     map("n", "<c-w>t", "<cmd>tabc<cr>")
+
+    -- Copying paths
+    local map_with_leader_c = bind_group(map, "<leader>c", "copy")
+    map_with_leader_c("n", "a", "<cmd>CopyAbsolutePath<cr>", { desc = "[c]opy [a]bsolute path" })
+    map_with_leader_c("n", "r", "<cmd>CopyRelativePath<cr>", { desc = "[c]opy [r]elative path" })
+    map_with_leader_c("n", "f", "<cmd>CopyFileName<cr>", { desc = "[c]opy [f]ile name" })
 end
 
 function M.oil_set()
