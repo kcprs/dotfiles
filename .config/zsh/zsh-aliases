@@ -39,3 +39,4 @@ alias pm=podman
 alias nv=nvim
 alias ng="nvim '+:Neogit kind=replace'"
 alias mr="mise run --" 
+alias cg=cargo
