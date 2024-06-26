@@ -340,6 +340,9 @@ function M.gitsigns(buffer)
     map_with_leader_g("n", "b", function()
         gs.blame_line({ full = true })
     end, { desc = "[g]it show [b]lame" })
+    map_with_leader_g("n", "B", function()
+        gs.toggle_current_line_blame(nil)
+    end, { desc = "[g]it toggle inline [B]lame" })
 end
 
 function M.diffview()
