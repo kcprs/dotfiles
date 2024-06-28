@@ -358,14 +358,12 @@ function M.dap()
 
     map("n", "<F5>", dap.continue, { desc = "debug: continue" })
     map("n", "<F6>", dap.step_over, { desc = "debug: step over" })
-    -- TODO: shift + f keys doesn't work
-    map("n", "<S-F6>", dap.run_to_cursor, { desc = "debug: run to [c]ursor" })
     map("n", "<F7>", dap.step_into, { desc = "debug: step into" })
-    map("n", "<S-F7>", dap.step_out, { desc = "debug: step out" })
+    map("n", "<F8>", dap.step_out, { desc = "debug: step out" })
 
     local map_with_leader_d = bind_group(map, "<leader>d", "debug")
     map_with_leader_d("n", "b", dap.toggle_breakpoint, { desc = "debug: toggle [b]reakpoint" })
-    map_with_leader_d("n", "c", dap.clear_breakpoints, { desc = "debug: [c]lear breakpoints" })
+    map_with_leader_d("n", "B", dap.clear_breakpoints, { desc = "debug: [c]lear breakpoints" })
     map_with_leader_d("n", "s", dap.continue, { desc = "debug: [s]tart/continue" })
     map_with_leader_d("n", "r", dap.restart, { desc = "debug: [r]estart" })
     map_with_leader_d("n", "t", dap.terminate, { desc = "debug: [t]erminate" })
