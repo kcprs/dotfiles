@@ -1,28 +1,4 @@
-local servers = {
-    clangd = {
-        --TODO: keymap for command ClangdSwitchSourceHeader
-        args = {
-            "--clang-tidy",
-            "--header-insertion=never"
-        }
-    },
-    cmake = {},
-    lua_ls = {
-        Lua = {
-            workspace = { checkThirdParty = false },
-            telemetry = { enable = false },
-        },
-    },
-    pyright = {},
-    rust_analyzer = {}, -- Note - configured using rustaceanvim
-    taplo = {},
-    tsserver = {},
-    yamlls = {},
-
-    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
-}
-
-local function on_attach(client, bufnr)
+local function default_on_attach(client, bufnr)
     require("custom.keymaps").lsp_common(bufnr)
 
     -- Breadcrumbs plugin
@@ -35,11 +11,44 @@ local function on_attach(client, bufnr)
 end
 
 local function rust_on_attach(client, bufnr)
-    on_attach(client, bufnr)
+    default_on_attach(client, bufnr)
 
     -- Overwrite Rust-specific keymaps
     require("custom.keymaps").lsp_rust(bufnr)
 end
+
+local function clangd_on_attach(client, bufnr)
+    default_on_attach(client, bufnr)
+
+    -- Overwrite clangd-specific keymaps
+    require("custom.keymaps").lsp_clangd(bufnr)
+end
+
+local servers = {
+    clangd = {
+        args = {
+            "--clang-tidy",
+            "--header-insertion=never"
+        },
+        on_attach = clangd_on_attach,
+    },
+    cmake = {},
+    lua_ls = {
+        settings = {
+            Lua = {
+                workspace = { checkThirdParty = false },
+                telemetry = { enable = false },
+            },
+        }
+    },
+    pyright = {},
+    rust_analyzer = {}, -- Note - configured using rustaceanvim
+    taplo = {},
+    tsserver = {},
+    yamlls = {},
+
+    -- html = { filetypes = { 'html', 'twig', 'hbs'} },
+}
 
 return {
     "neovim/nvim-lspconfig",
@@ -97,16 +106,17 @@ return {
         require("mason-lspconfig").setup_handlers({
             function(server_name)
                 local default_config = require('lspconfig')[server_name].document_config.default_config
+                local server_config = (servers[server_name] or {})
 
                 local cmd = default_config.cmd
-                vim.list_extend(cmd, (servers[server_name] or {}).args or {})
+                vim.list_extend(cmd, server_config.args or {})
 
                 require("lspconfig")[server_name].setup({
                     capabilities = capabilities,
-                    on_attach = on_attach,
+                    on_attach = server_config.on_attach or default_on_attach,
                     cmd = cmd,
-                    settings = servers[server_name],
-                    filetypes = (servers[server_name] or {}).filetypes,
+                    settings = server_config.settings,
+                    filetypes = server_config.filetypes,
                 })
             end,
 

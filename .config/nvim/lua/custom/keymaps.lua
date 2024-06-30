@@ -268,6 +268,11 @@ function M.lsp_rust(buffer)
     end, { desc = "[J]oin lines" })
 end
 
+function M.lsp_clangd(buffer)
+    local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
+    map_with_leader_l("n", "h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "LSP: switch source/[h]eader" })
+end
+
 function M.harpoon()
     local map_with_leader_h = bind_group(map, "<leader>h", "harpoon")
 
