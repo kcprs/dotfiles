@@ -380,6 +380,7 @@ end
 
 function M.dap()
     local dap = require("dap")
+    local dapui = require("dapui")
 
     map("n", "<F5>", dap.continue, { desc = "debug: continue" })
     map("n", "<F6>", dap.step_over, { desc = "debug: step over" })
@@ -392,14 +393,15 @@ function M.dap()
     map_with_leader_d("n", "s", dap.continue, { desc = "debug: [s]tart/continue" })
     map_with_leader_d("n", "r", dap.restart, { desc = "debug: [r]estart" })
     map_with_leader_d("n", "t", dap.terminate, { desc = "debug: [t]erminate" })
-    map_with_leader_d("n", "l", dap.run_last, { desc = "debug: run [l]ast" })
-    map_with_leader_d("n", "c", dap.run_to_cursor, { desc = "debug: run to [c]ursor" })
+    map_with_leader_d("n", "d", dap.run_last, { desc = "debug: re-run last" })
+    map_with_leader_d("n", "l", dap.run_to_cursor, { desc = "debug: run to cursor/[l]ine" })
+    map_with_leader_d("n", "o", dapui.open, { desc = "debug: [o]pen UI" })
+    map_with_leader_d("n", "c", dapui.close, { desc = "debug: [c]lose UI" })
 
-    local dapui = require("dapui")
-    map_with_leader_d({ "n", "v" }, "d", function()
+    map_with_leader_d({ "n", "v" }, "i", function()
         --- @diagnostic disable-next-line: missing-fields
         dapui.eval(nil, { enter = true })
-    end, { desc = "debug: eval under cursor" })
+    end, { desc = "debug: [i]nspect under cursor" })
 end
 
 function M.dap_rust()

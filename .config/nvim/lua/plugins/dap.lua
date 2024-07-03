@@ -34,19 +34,20 @@ return {
             dap.listeners.before.launch.dapui_config = function()
                 dapui.open()
             end
-            dap.listeners.before.event_terminated.dapui_config = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited.dapui_config = function()
-                dapui.close()
-            end
+            -- Prefer to close manually, e.g. to read terminal after debuggee crashes
+            -- dap.listeners.before.event_terminated.dapui_config = function()
+            --     dapui.close()
+            -- end
+            -- dap.listeners.before.event_exited.dapui_config = function()
+            --     dapui.close()
+            -- end
 
             dap.adapters.codelldb = {
                 type = "server",
                 port = "${port}",
                 executable = {
                     command = "codelldb",
-                    args = {"--port", "${port}"},
+                    args = { "--port", "${port}" },
                 }
             }
         end
