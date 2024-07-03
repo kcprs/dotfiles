@@ -46,6 +46,7 @@ local servers = {
     taplo = {},
     tsserver = {},
     yamlls = {},
+    bashls = {},
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
