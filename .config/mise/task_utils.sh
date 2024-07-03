@@ -6,7 +6,8 @@ run_cmd() {
 }
 
 print_args() {
-	for arg in "${@:1}"; do
+	shift # Discard cmd
+	for arg in "$@"; do
 		printf "%s\n" "$arg"
 	done
 }
