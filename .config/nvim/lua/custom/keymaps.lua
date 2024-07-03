@@ -45,8 +45,6 @@ function M.setup_leader()
 end
 
 function M.setup_basic()
-    -- Keymaps for better default experience
-    -- See `:help vim.keymap.set()`
     map({ "n", "v" }, "<Space>", "<Nop>", { silent = true })
 
     map("i", "jk", "<ESC>", { noremap = true })
@@ -148,6 +146,7 @@ function M.telescope()
     map_with_leader_f("n", "b", builtin.buffers, { desc = "[f]ind existing [b]uffers" })
     map_with_leader_f("n", "r", builtin.live_grep, { desc = "[f]ind by g[r]ep" })
     map_with_leader_f("n", "h", builtin.help_tags, { desc = "[f]ind in [h]elp" })
+    -- TODO: switch old and ALL old with <c-f>
     map_with_leader_f("n", "o", function()
         builtin.oldfiles({ only_cwd = true })
     end, { desc = "[f]ind [o]ld opened files in cwd" })
