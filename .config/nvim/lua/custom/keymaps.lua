@@ -128,15 +128,20 @@ function M.telescope()
     local map_with_leader_f = bind_group(map, "<leader>f", "find")
 
     map_with_leader_f("n", "d", custom.project_files, { desc = "[f]in[d] project files (git with fallback)" })
-    map_with_leader_f("n", "D", require("custom.telescope").find_all_files, { desc = "[f]in[D] ALL files" })
+    map_with_leader_f("n", "D", custom.find_all_files, { desc = "[f]in[D] ALL files" })
     map_with_leader_f("n", "g", builtin.git_files, { desc = "[f]ind [g]it files" })
     map_with_leader_f("n", "b", builtin.buffers, { desc = "[f]ind existing [b]uffers" })
     map_with_leader_f("n", "r", builtin.live_grep, { desc = "[f]ind by g[r]ep" })
     map_with_leader_f("n", "h", builtin.help_tags, { desc = "[f]ind in [h]elp" })
-    map_with_leader_f("n", "o", builtin.oldfiles, { desc = "[f]ind [o]ld opened files" })
+    map_with_leader_f("n", "o", function()
+        builtin.oldfiles({ only_cwd = true })
+    end, { desc = "[f]ind [o]ld opened files in cwd" })
+    map_with_leader_f("n", "O", builtin.oldfiles, { desc = "[f]ind all [O]ld opened files" })
     map_with_leader_f("n", "k", builtin.keymaps, { desc = "[f]ind [k]eymaps" })
     map_with_leader_f("n", "c", builtin.commands, { desc = "[f]ind [c]ommands" })
     map_with_leader_f("n", "s", builtin.grep_string, { desc = "[f]ind [s]tring" })
+    map_with_leader_f("n", "i", builtin.diagnostics, { desc = "[f]ind d[i]agnostics" })
+    map_with_leader_f("n", "q", builtin.quickfix, { desc = "[f]ind in [q]uickfix" })
     map_with_leader_f("n", "f", builtin.resume, { desc = "Resume previous search" })
 
 
@@ -147,9 +152,6 @@ function M.telescope()
             previewer = false,
         }))
     end, { desc = "[/] Fuzzily search in current buffer" })
-
-    -- TODO: change this
-    map("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
 end
 
 function M.telescope_defaults_mappings()

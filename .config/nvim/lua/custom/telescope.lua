@@ -6,7 +6,7 @@ local is_inside_work_tree = {}
 
 function M.find_all_files(opts)
     opts = opts or {}
-    opts = vim.tbl_extend("force", opts, { hidden = true, no_ignore = true })
+    opts = vim.tbl_extend("force", opts, { hidden = true, no_ignore = true, no_ignore_parent = true })
     require("telescope.builtin").find_files(opts)
 end
 
