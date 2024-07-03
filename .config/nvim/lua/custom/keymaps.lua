@@ -77,6 +77,21 @@ function M.setup_basic()
     -- Window management
     map("n", "<c-w>a", "<cmd>:bufdo bd<cr>", { desc = "Close all buffers" })
     map("n", "<c-w>A", "<cmd>:bufdo bd!<cr>", { desc = "Force-close all buffers" })
+
+    -- Quickfix list
+    local map_with_leader_q = bind_group(map, "<leader>q", "quickfix")
+    map_with_leader_q("n", "o", function()
+        local windows = vim.fn.getwininfo()
+        for _, win in pairs(windows) do
+            if win.quickfix == 1 then
+                vim.cmd('cclose')
+                return
+            end
+        end
+        vim.cmd('copen')
+    end, { desc = "[q]uickfix t[o]ggle" })
+    map_with_leader_q("n", "n", "<cmd>cnext<cr>", { desc = "[q]uickfix [n]ext" })
+    map_with_leader_q("n", "p", "<cmd>cprev<cr>", { desc = "[q]uickfix [p]rev" })
 end
 
 function M.oil_set()
