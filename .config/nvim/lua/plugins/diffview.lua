@@ -8,6 +8,12 @@ return {
                     position = "right",
                 },
             },
+            hooks = {
+                diff_buf_win_enter = function()
+                    vim.opt_local.foldmethod = "manual"
+                    vim.opt_local.foldlevel = 99
+                end,
+            }
         })
 
         require("custom.keymaps").diffview()
