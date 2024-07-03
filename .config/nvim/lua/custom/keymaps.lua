@@ -69,6 +69,11 @@ function M.setup_basic()
     map_with_leader_c("n", "r", "<cmd>CopyRelativePath<cr>", { desc = "[c]opy [r]elative path" })
     map_with_leader_c("n", "f", "<cmd>CopyFileName<cr>", { desc = "[c]opy [f]ile name" })
 
+    -- Sourcing files
+    local map_with_leader_s = bind_group(map, "<leader>s", "source")
+    map_with_leader_s("n", "s", "<cmd>source %<cr>", { desc = "[s]ource current file" })
+    map_with_leader_s("n", "n", "<cmd>source .nvim.lua<cr>", { desc = "[s]ource .nvim.lua" })
+
     -- Close tabs easier
     map("n", "<c-w>t", "<cmd>tabc<cr>", { desc = "Close current tab" })
 
