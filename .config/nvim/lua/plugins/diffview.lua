@@ -10,16 +10,15 @@ return {
             -- },
             hooks = {
                 view_opened = function()
-                    -- Set move cursor to current file as opposed to tree view
-                    print("DiffviewOpen autocmd triggered")
+                    -- Move cursor to current version of opened file as opposed to tree view
                     vim.cmd([[
                         wincmd l
                         wincmd l
                     ]])
                 end,
                 diff_buf_win_enter = function()
-                    vim.opt_local.foldmethod = "manual"
-                    vim.opt_local.foldlevel = 99
+                    -- Folds are reset to all closed on file change - fix by unfolding
+                    vim.cmd('normal! zR')
                 end,
             }
         })
