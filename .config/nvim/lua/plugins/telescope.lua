@@ -21,17 +21,17 @@ return {
         require("telescope").setup({
             defaults = {
                 mappings = require("custom.keymaps").telescope_defaults_mappings(),
-                file_ignore_patterns = { "%.git/" },
-                vimgrep_arguments = {
-                    "rg",
-                    "--color=never",
-                    "--no-heading",
-                    "--with-filename",
-                    "--line-number",
-                    "--column",
-                    "--smart-case",
-                    "--hidden",
-                }
+                -- file_ignore_patterns = { "%.git/" },
+                -- vimgrep_arguments = {
+                --     "rg",
+                --     "--color=never",
+                --     "--no-heading",
+                --     "--with-filename",
+                --     "--line-number",
+                --     "--column",
+                --     "--smart-case",
+                --     "--hidden",
+                -- }
             },
             pickers = {
                 buffers = {
@@ -43,6 +43,12 @@ return {
                 },
                 git_files = {
                     mappings = require("custom.keymaps").telescope_git_files_mappings()
+                },
+                live_grep = {
+                    mappings = require("custom.keymaps").telescope_live_grep_mappings()
+                },
+                oldfiles = {
+                    mappings = require("custom.keymaps").telescope_oldfiles_mappings()
                 },
             }
         })

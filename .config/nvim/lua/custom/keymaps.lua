@@ -151,7 +151,6 @@ function M.telescope()
     map_with_leader_f("n", "b", builtin.buffers, { desc = "[f]ind existing [b]uffers" })
     map_with_leader_f("n", "r", builtin.live_grep, { desc = "[f]ind by g[r]ep" })
     map_with_leader_f("n", "h", builtin.help_tags, { desc = "[f]ind in [h]elp" })
-    -- TODO: switch old and ALL old with <c-f>
     map_with_leader_f("n", "o", function()
         builtin.oldfiles({ only_cwd = true })
     end, { desc = "[f]ind [o]ld opened files in cwd" })
@@ -227,6 +226,42 @@ function M.telescope_buffers_mappings()
         },
         n = {
             ["d"] = actions.delete_buffer
+        },
+    }
+end
+
+function M.telescope_live_grep_mappings()
+    local include_hidden = false;
+    local function toggle_include_hidden(prompt_buffer)
+        include_hidden = not include_hidden
+        local opts = include_hidden and { additional_args = { "--hidden", "--no-ignore" } } or nil
+        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").live_grep, opts)
+    end
+
+    return {
+        i = {
+            ["<c-f>"] = toggle_include_hidden
+        },
+        n = {
+            ["<c-f>"] = toggle_include_hidden
+        },
+    }
+end
+
+function M.telescope_oldfiles_mappings()
+    local only_cwd = true;
+    local function toggle_only_cwd(prompt_buffer)
+        only_cwd = not only_cwd
+        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").oldfiles,
+            { only_cwd = only_cwd })
+    end
+
+    return {
+        i = {
+            ["<c-f>"] = toggle_only_cwd
+        },
+        n = {
+            ["<c-f>"] = toggle_only_cwd
         },
     }
 end
