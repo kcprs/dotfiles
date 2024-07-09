@@ -9,7 +9,7 @@ function M.open_with_merge_base_of_main()
     for _, branch in ipairs(branches) do
         local res = vim.system({"git", "merge-base", branch, "@"}, { text = true }):wait()
         if res.code == 0 then
-            require("diffview").open(vim.trim(res.stdout))
+            require("diffview").open({ vim.trim(res.stdout) })
             return
         end
     end
