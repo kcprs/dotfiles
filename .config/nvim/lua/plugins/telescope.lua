@@ -21,7 +21,7 @@ return {
         require("telescope").setup({
             defaults = {
                 mappings = require("custom.keymaps").telescope_defaults_mappings(),
-                -- file_ignore_patterns = { "%.git/" },
+                file_ignore_patterns = { "%.git/" },
                 -- vimgrep_arguments = {
                 --     "rg",
                 --     "--color=never",
