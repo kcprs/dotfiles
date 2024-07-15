@@ -1,3 +1,4 @@
 !.clangd
 !.clang-tidy
 .config/containers
+.config/wireshark
