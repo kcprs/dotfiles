@@ -330,7 +330,7 @@ end
 
 function M.lsp_clangd(buffer)
     local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
-    map_with_leader_l("n", "h", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "LSP: switch source/[h]eader" })
+    map_with_leader_l("n", "o", "<cmd>ClangdSwitchSourceHeader<cr>", { desc = "LSP: switch source/header" })
 end
 
 function M.harpoon()
