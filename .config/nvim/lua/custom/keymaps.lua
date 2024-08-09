@@ -277,7 +277,6 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
     map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
     map_with_leader_l("n", "h", function()
-        ---@diagnostic disable-next-line: missing-parameter (line taken directly from help docs)
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP: toggle inlay [h]ints" })
 
