@@ -288,6 +288,7 @@ function M.lsp_common(buffer)
         { desc = "LSP: workspace [S]ymbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
+    map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics, { desc = "LSP: toggle diagnostics [v]irtual text" })
 
     local map_with_buffer = bind_buffer(map, buffer)
 
@@ -439,6 +440,7 @@ function M.diffview_view()
         { "n", "<leader>cB",  nil },
         { "n", "<leader>cA",  nil },
 
+        -- Old version with "o" for "ours", "t" for "theirs", etc.
         -- { "n", prefix .. "o",  actions.conflict_choose("ours"),        { desc = "Choose the OURS version of a conflict" } },
         -- { "n", prefix .. "t",  actions.conflict_choose("theirs"),      { desc = "Choose the THEIRS version of a conflict" } },
         -- { "n", prefix .. "b",  actions.conflict_choose("base"),        { desc = "Choose the BASE version of a conflict" } },
