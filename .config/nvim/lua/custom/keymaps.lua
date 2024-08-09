@@ -414,12 +414,50 @@ function M.gitsigns(buffer)
     end, { desc = "[g]it toggle inline [B]lame" })
 end
 
-function M.diffview()
+function M.diffview_global()
     local map_with_leader_g = bind_group(map, "<leader>g", "git")
 
     map_with_leader_g("n", "d", require("diffview").open, { desc = "[g]it [d]iff" })
     map_with_leader_g("n", "m", require("custom.diffview").open_with_merge_base_of_main,
         { desc = "[g]it diff [m]erge base" })
+end
+
+function M.diffview_conflict_prefix()
+    return "<leader>x"
+end
+
+function M.diffview_view()
+    local actions = require("diffview.actions")
+    local prefix = M.diffview_conflict_prefix()
+
+    return {
+        { "n", "<leader>co",  nil },
+        { "n", "<leader>ct",  nil },
+        { "n", "<leader>cb",  nil },
+        { "n", "<leader>ca",  nil },
+        { "n", "<leader>cO",  nil },
+        { "n", "<leader>cT",  nil },
+        { "n", "<leader>cB",  nil },
+        { "n", "<leader>cA",  nil },
+
+        -- { "n", prefix .. "o",  actions.conflict_choose("ours"),        { desc = "Choose the OURS version of a conflict" } },
+        -- { "n", prefix .. "t",  actions.conflict_choose("theirs"),      { desc = "Choose the THEIRS version of a conflict" } },
+        -- { "n", prefix .. "b",  actions.conflict_choose("base"),        { desc = "Choose the BASE version of a conflict" } },
+        -- { "n", prefix .. "a",  actions.conflict_choose("all"),         { desc = "Choose all the versions of a conflict" } },
+        -- { "n", prefix .. "O",  actions.conflict_choose_all("ours"),    { desc = "Choose the OURS version of a conflict for the whole file" } },
+        -- { "n", prefix .. "T",  actions.conflict_choose_all("theirs"),  { desc = "Choose the THEIRS version of a conflict for the whole file" } },
+        -- { "n", prefix .. "B",  actions.conflict_choose_all("base"),    { desc = "Choose the BASE version of a conflict for the whole file" } },
+        -- { "n", prefix .. "A",  actions.conflict_choose_all("all"),     { desc = "Choose all the versions of a conflict for the whole file" } },
+
+        { "n", prefix .. "h", actions.conflict_choose("ours"),       { desc = "Conflict: choose left (OURS)" } },
+        { "n", prefix .. "l", actions.conflict_choose("theirs"),     { desc = "Conflict: choose right (THEIRS)" } },
+        { "n", prefix .. "b", actions.conflict_choose("base"),       { desc = "Conflict: choose BASE" } },
+        { "n", prefix .. "a", actions.conflict_choose("all"),        { desc = "Conflict: choose ALL" } },
+        { "n", prefix .. "H", actions.conflict_choose_all("ours"),   { desc = "Conflict: choose (file-wide) left (OURS)" } },
+        { "n", prefix .. "L", actions.conflict_choose_all("theirs"), { desc = "Conflict: choose (file-wide) right (THEIRS)" } },
+        { "n", prefix .. "B", actions.conflict_choose_all("base"),   { desc = "Conflict: choose (file-wide) BASE" } },
+        { "n", prefix .. "A", actions.conflict_choose_all("all"),    { desc = "Conflict: choose (file-wide) ALL" } },
+    }
 end
 
 function M.dap()

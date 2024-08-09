@@ -8,6 +8,9 @@ return {
             --         position = "right",
             --     },
             -- },
+            keymaps = {
+                view = require("custom.keymaps").diffview_view()
+            },
             hooks = {
                 view_opened = function()
                     -- Move cursor to current version of opened file as opposed to tree view
@@ -20,9 +23,23 @@ return {
                     -- Folds are reset to all closed on file change - fix by unfolding
                     vim.cmd('normal! zR')
                 end,
+                diff_buf_read = function(bufnr)
+                    local ok, wk = pcall(require, "which-key")
+                    if ok then
+                        wk.register(
+                            {
+                                [require("custom.keymaps").diffview_conflict_prefix()] = { name = "conflict" },
+                            },
+                            {
+                                mode = "n",
+                                buffer = bufnr,
+                            }
+                        )
+                    end
+                end,
             }
         })
 
-        require("custom.keymaps").diffview()
+        require("custom.keymaps").diffview_global()
     end,
 }
