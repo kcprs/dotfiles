@@ -117,6 +117,10 @@ function M.cmp_get_mapping()
             }),
             { "i" }
         ),
+        ["<c-space>"] = cmp.mapping(
+            cmp.mapping.complete({ reason = "manual" }),
+            { "i" }
+        )
     }
 end
 
