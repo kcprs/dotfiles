@@ -481,6 +481,9 @@ function M.dap()
     map_with_leader_d("n", "o", dapui.open, { desc = "debug: [o]pen UI" })
     map_with_leader_d("n", "c", dapui.close, { desc = "debug: [c]lose UI" })
 
+    map_with_leader_d("n", "k", dap.up, { desc = "debug: go up in current stacktrace" })
+    map_with_leader_d("n", "j", dap.down, { desc = "debug: go down in current stacktrace" })
+
     map_with_leader_d({ "n", "v" }, "i", function()
         --- @diagnostic disable-next-line: missing-fields
         dapui.eval(nil, { enter = true })
