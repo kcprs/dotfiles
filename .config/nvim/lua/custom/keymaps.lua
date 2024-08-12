@@ -288,7 +288,7 @@ function M.lsp_common(buffer)
         { desc = "LSP: workspace [S]ymbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
-    map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics, { desc = "LSP: toggle diagnostics [v]irtual text" })
+    map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text, { desc = "LSP: toggle diagnostics [v]irtual text" })
 
     local map_with_buffer = bind_buffer(map, buffer)
 

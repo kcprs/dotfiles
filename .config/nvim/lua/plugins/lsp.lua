@@ -1,4 +1,9 @@
 local function default_on_attach(client, bufnr)
+    vim.diagnostic.config({
+        virtual_text = require("custom.lsp").is_virtual_text_enabled(),
+        update_in_insert = true,
+    })
+
     require("custom.keymaps").lsp_common(bufnr)
 
     -- Breadcrumbs plugin
@@ -144,11 +149,6 @@ return {
                     filetypes = server_config.filetypes,
                 })
             end,
-        })
-
-        vim.diagnostic.config({
-            virtual_text = true,
-            update_in_insert = true,
         })
     end,
 }
