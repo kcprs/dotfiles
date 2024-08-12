@@ -1,51 +1,51 @@
 -- Set highlight on search
-vim.o.hlsearch = false
+vim.opt.hlsearch = false
 
 -- Line numbers
-vim.o.number = true
-vim.o.relativenumber = true
+vim.opt.number = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode
-vim.o.mouse = "a"
+vim.opt.mouse = "a"
 
 -- TODO: enable in selected file types, e.g. markdown
 -- Disable line wrapping
-vim.o.wrap = false
+vim.opt.wrap = false
 
 -- Save undo history
-vim.o.undofile = true
+vim.opt.undofile = true
 
 -- Case-insensitive searching UNLESS \C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 
 -- Keep one signcolumn on by default
-vim.wo.signcolumn = "yes"
+vim.opt.signcolumn = "yes"
 
 -- Decrease update time
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
 
 -- NOTE: You should make sure your terminal supports this
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 -- Cursor stuff
-vim.o.cursorline = true
-vim.o.scrolloff = 8
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8
 
 -- Window splitting
-vim.o.splitright = true
-vim.o.splitbelow = true
+vim.opt.splitright = true
+vim.opt.splitbelow = true
 
-vim.o.exrc = true
+vim.opt.exrc = true
 
 -- Indentation
-vim.o.tabstop = 4
-vim.o.shiftwidth = 0
-vim.o.softtabstop = 0
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 0
+vim.opt.softtabstop = 0
 
 -- Configure status line to be global
-vim.o.laststatus = 3
+vim.opt.laststatus = 3
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'NONE' })
 
 -- In diff view, fill deleted areas with '/'
