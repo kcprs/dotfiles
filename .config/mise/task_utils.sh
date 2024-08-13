@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-run_cmd() {
+print_cmd() {
 	printf "\n%s\n" "$*"
+}
+
+run_cmd() {
+	print_cmd "$@"
 	"$@"
 }
 
@@ -16,10 +20,12 @@ mise_task_utils_main() {
 	set -e
 
 	local print_args_flag=false
+	local print_cmd_flag=false
 
-	while getopts ":a" opt; do
+	while getopts ":a:p" opt; do
 		case ${opt} in
 		a) print_args_flag=true ;;
+		p) print_cmd_flag=true ;;
 		\?)
 			echo "Invalid option: -$OPTARG" 1>&2
 			return 1
@@ -42,7 +48,10 @@ mise_task_utils_main() {
 	fi
 
 	# Now we can call a subcommand
-	if [ "$print_args_flag" = true ]; then
+	if [ "$print_cmd_flag" = true ]; then
+		print_cmd "${fwd_args[@]}"
+		return
+	elif [ "$print_args_flag" = true ]; then
 		print_args "${fwd_args[@]}"
 		return
 	fi
