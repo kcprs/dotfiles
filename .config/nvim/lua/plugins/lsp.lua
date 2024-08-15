@@ -69,6 +69,7 @@ local servers = {
     },
     yamlls = {},
     bashls = {},
+    marksman = {},
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
