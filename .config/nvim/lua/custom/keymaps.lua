@@ -95,6 +95,11 @@ function M.setup_basic()
     end, { desc = "[q]uickfix t[o]ggle" })
     map_with_leader_q("n", "n", "<cmd>cnext<cr>", { desc = "[q]uickfix [n]ext" })
     map_with_leader_q("n", "p", "<cmd>cprev<cr>", { desc = "[q]uickfix [p]rev" })
+
+    -- Evaluate selection and replace
+    -- Using ":" instead of "<cmd>" here is important for passing visual
+    -- selection to the command. Details are beyond my understanding.
+    map("v", "<leader>=", ":EvaluateSelectionAndReplace<cr>", { noremap = true, silent = true })
 end
 
 function M.oil_set()
