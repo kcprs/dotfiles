@@ -46,7 +46,7 @@ local servers = {
         },
         on_attach = clangd_on_attach,
     },
-    cmake = {},
+    neocmake = {},
     lua_ls = {
         settings = {
             Lua = {
