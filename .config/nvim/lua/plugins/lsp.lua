@@ -6,13 +6,13 @@ local function default_on_attach(client, bufnr)
 
     require("custom.keymaps").lsp_common(bufnr)
 
-    -- Breadcrumbs plugin
     if client.server_capabilities.documentSymbolProvider then
+        -- Breadcrumbs plugin
         require("nvim-navic").attach(client, bufnr)
-    end
 
-    -- Symbols navigator
-    require("nvim-navbuddy").attach(client, bufnr)
+        -- Symbols navigator
+        require("nvim-navbuddy").attach(client, bufnr)
+    end
 end
 
 local function rust_on_attach(client, bufnr)
