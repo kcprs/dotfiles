@@ -103,7 +103,8 @@ function M.setup_basic()
 end
 
 function M.oil_set()
-    map("n", "<leader>o", require("oil").toggle_float, { desc = "Open [o]il" })
+    map("n", "<leader>o", function() require("oil").toggle_float(vim.fn.getcwd()) end, { desc = "Open [o]il in cwd" })
+    map("n", "<leader>O", require("oil").toggle_float, { desc = "Open [O]il in current file's dir" })
 end
 
 function M.toggleterm_get_open_mapping()
