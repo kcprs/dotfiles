@@ -478,6 +478,7 @@ function M.dap()
 
     local map_with_leader_d = bind_group(map, "<leader>d", "debug")
     map_with_leader_d("n", "b", dap.toggle_breakpoint, { desc = "debug: toggle [b]reakpoint" })
+    map_with_leader_d("n", "f", require("custom.dap").set_conditional_breakpoint, { desc = "debug: toggle conditional breakpoint" })
     map_with_leader_d("n", "B", dap.clear_breakpoints, { desc = "debug: clear [B]reakpoints" })
     map_with_leader_d("n", "s", dap.continue, { desc = "debug: [s]tart/continue" })
     map_with_leader_d("n", "r", dap.restart, { desc = "debug: [r]estart" })
