@@ -53,3 +53,4 @@ vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'NONE' })
 vim.opt.fillchars:append { diff = "╱" }
 
 vim.opt.diffopt:append("vertical")
+vim.opt.diffopt:append("algorithm:patience")
