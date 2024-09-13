@@ -278,6 +278,7 @@ end
 
 function M.lsp_common(buffer)
     local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
+    local map_with_buffer = bind_buffer(map, buffer)
 
     map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
@@ -292,12 +293,13 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
     map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols,
         { desc = "LSP: workspace [S]ymbols" })
+    map_with_leader_l("n", "n", function() require("nvim-navbuddy").open(buffer) end, { desc = "LSP: [n]avigate symbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
     map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text,
         { desc = "LSP: toggle diagnostics [v]irtual text" })
-
-    local map_with_buffer = bind_buffer(map, buffer)
+    map_with_buffer("n", "]D", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "LSP: go to next error" })
+    map_with_buffer("n", "[D", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "LSP: go to previous error" })
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
@@ -306,8 +308,6 @@ function M.lsp_common(buffer)
         { desc = "LSP: [g]o to [i]mplementation" })
 
     map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
-
-    -- TODO Navbuddy keymaps
 
     -- Lesser used LSP functionality
 
