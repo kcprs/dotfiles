@@ -32,6 +32,7 @@ vim.opt.termguicolors = true
 -- Cursor stuff
 vim.opt.cursorline = true
 vim.opt.scrolloff = 8
+vim.opt.sidescrolloff = 8
 
 -- Window splitting
 vim.opt.splitright = true
