@@ -6,8 +6,10 @@ _venv/
 _bin/
 _cc/
 
-.mise.toml
-.mise/
+.env
+.envrc
+.direnv/
+.justfile
 .nvim.lua
 
 razel.jsonl
