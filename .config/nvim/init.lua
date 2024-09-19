@@ -40,6 +40,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 require("custom.treesitter")
+require("custom.autocommands")
 require("custom.commands")
 
 -- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
