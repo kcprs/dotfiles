@@ -30,6 +30,7 @@ function git-show-merge() {
 
 alias ls="eza --all"
 alias la="eza --all --long --header --total-size --git"
+alias lt="eza --all -T -L"
 alias tree="eza --tree"
 alias cat=bat
 alias zj=zellij
@@ -42,3 +43,4 @@ alias cg=cargo
 alias jt=just
 alias jc="just --choose"
 alias da="direnv allow"
+alias de="direnv export"
