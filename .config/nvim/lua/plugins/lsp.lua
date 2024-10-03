@@ -29,13 +29,8 @@ local function clangd_on_attach(client, bufnr)
     require("custom.keymaps").lsp_clangd(bufnr)
 end
 
-local function use_deno()
-    local env_value = os.getenv("USE_DENO_LSP")
-    if env_value then
-        return true
-    else
-        return false
-    end
+local function is_lsp_enabled_via_env(name)
+    return string.find(os.getenv("NVIM_LSP") or "",name)
 end
 
 local servers = {
@@ -62,10 +57,13 @@ local servers = {
     },
     taplo = {},
     tsserver = {
-        condition = function() return not use_deno() end,
+        condition = function() return os.getenv("NVIM_LSP") == nil or is_lsp_enabled_via_env("tsserver") end,
     },
     denols = {
-        condition = use_deno
+        condition = function() return is_lsp_enabled_via_env("denols") end,
+    },
+    eslint = {
+        condition = function() return is_lsp_enabled_via_env("eslint") end,
     },
     yamlls = {},
     bashls = {},
