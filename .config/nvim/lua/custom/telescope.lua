@@ -32,4 +32,43 @@ function M.switch_picker(prompt_bufnr, new_picker, opts)
     new_picker(opts)
 end
 
+--- @class GrepIncludeArgs
+--- @field hidden? boolean Whether to include hidden files in grep searches (default is false)
+--- @field ignored? boolean Whether to include ignored files in grep searches (default is false)
+
+--- @param args GrepIncludeArgs
+function M.set_grep_include(args)
+    local ok, telescope = pcall(require, "telescope")
+    if ok then
+        local vimgrep_arguments = require("telescope.config").values.vimgrep_arguments or {}
+
+        if args.hidden then
+            table.insert(vimgrep_arguments, "--hidden")
+        end
+        if args.ignored then
+            table.insert(vimgrep_arguments, "--no-ignore")
+        end
+
+        telescope.setup {
+            defaults = {
+                vimgrep_arguments = vimgrep_arguments
+            }
+        }
+    end
+end
+
+--- @param ... string Lua regex patterns to ignore
+function M.add_file_ignore_patterns(...)
+    local ok, telescope = pcall(require, "telescope")
+    if ok then
+        local file_ignore_patterns = require("telescope.config").values.file_ignore_patterns or {}
+        vim.list_extend(file_ignore_patterns, {...})
+        telescope.setup {
+            defaults = {
+                file_ignore_patterns = file_ignore_patterns
+            }
+        }
+    end
+end
+
 return M
