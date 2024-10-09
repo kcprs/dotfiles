@@ -22,6 +22,10 @@ return {
             defaults = {
                 mappings = require("custom.keymaps").telescope_defaults_mappings(),
                 file_ignore_patterns = { "%.git/" },
+                layout_config = {
+                    prompt_position = "top",
+                },
+                sorting_strategy = "ascending",
             },
             pickers = {
                 buffers = {
