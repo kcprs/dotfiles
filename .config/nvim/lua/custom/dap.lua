@@ -12,6 +12,12 @@ local dap_templates = {
         type = "codelldb",
         stoponentry = false,
     },
+    cpp = {
+        request = "launch",
+        cwd = "${workspaceFolder}",
+        type = "codelldb",
+        stoponentry = false,
+    },
     python = {
         request = "launch",
         cwd = "${workspaceFolder}",
