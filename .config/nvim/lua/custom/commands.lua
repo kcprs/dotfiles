@@ -1,5 +1,7 @@
+-- Remove trailing whitespace in file
 vim.api.nvim_create_user_command("RemoveAllTrailingWhitespace", [[%s/\s\+$//e]], {})
 
+-- Copying paths
 local function copy_absolute_path_to_clipboard()
   local filepath = vim.fn.expand("%:p")
   vim.fn.setreg("*", filepath)
