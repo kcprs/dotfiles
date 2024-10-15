@@ -11,3 +11,4 @@ export VISUAL="$EDITOR"
 # export BROWSER="firefox"
 export CMAKE_GENERATOR=Ninja
 export CMAKE_EXPORT_COMPILE_COMMANDS=1
+export CMAKE_BUILD_TYPE=Debug
