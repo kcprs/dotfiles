@@ -100,6 +100,8 @@ function M.setup_basic()
     -- Using ":" instead of "<cmd>" here is important for passing visual
     -- selection to the command. Details are beyond my understanding.
     map("v", "<leader>=", ":EvaluateSelectionAndReplace<cr>", { noremap = true, silent = true })
+
+    map("n", "<leader>cx", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
 end
 
 function M.oil_set()
