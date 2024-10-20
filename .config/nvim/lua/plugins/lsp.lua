@@ -56,8 +56,8 @@ local servers = {
         condition = function() return false end,
     },
     taplo = {},
-    tsserver = {
-        condition = function() return os.getenv("NVIM_LSP") == nil or is_lsp_enabled_via_env("tsserver") end,
+    ts_ls = {
+        condition = function() return os.getenv("NVIM_LSP") == nil or is_lsp_enabled_via_env("ts_ls") end,
     },
     denols = {
         condition = function() return is_lsp_enabled_via_env("denols") end,

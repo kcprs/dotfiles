@@ -18,13 +18,14 @@ local function bind_group(fn, prefix, group_name, buffer)
     return function(modes, lhs, rhs, opts)
         local ok, wk = pcall(require, "which-key")
         if ok then
-            wk.register(
+            wk.add(
                 {
-                    [prefix] = { name = group_name },
-                },
-                {
-                    mode = modes,
-                    buffer = buffer,
+                    prefix,
+                    {
+                        group = group_name,
+                        mode = modes,
+                        buffer = buffer,
+                    },
                 }
             )
         end
@@ -295,13 +296,16 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
     map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols,
         { desc = "LSP: workspace [S]ymbols" })
-    map_with_leader_l("n", "n", function() require("nvim-navbuddy").open(buffer) end, { desc = "LSP: [n]avigate symbols" })
+    map_with_leader_l("n", "n", function() require("nvim-navbuddy").open(buffer) end,
+        { desc = "LSP: [n]avigate symbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
     map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text,
         { desc = "LSP: toggle diagnostics [v]irtual text" })
-    map_with_buffer("n", "]D", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "LSP: go to next error" })
-    map_with_buffer("n", "[D", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "LSP: go to previous error" })
+    map_with_buffer("n", "]D", function() vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR }) end,
+        { desc = "LSP: go to next error" })
+    map_with_buffer("n", "[D", function() vim.diagnostic.goto_prev({ severity = vim.diagnostic.severity.ERROR }) end,
+        { desc = "LSP: go to previous error" })
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
