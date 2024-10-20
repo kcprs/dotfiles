@@ -11,7 +11,7 @@ keybinds clear-defaults=true {
         bind "i" { SwitchToMode "Resize"; }
         bind "r" { SwitchToMode "RenameTab"; }
 
-        bind "'" { NewPane; SwitchToMode "Normal"; }
+        bind "'" "Ctrl '" { NewPane; SwitchToMode "Normal"; }
         bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "v" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "t" { NewTab; SwitchToMode "Normal"; }
@@ -21,10 +21,10 @@ keybinds clear-defaults=true {
         bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
         bind "n" { GoToNextTab; SwitchToMode "Normal"; }
 
-        bind "h" { MoveFocus "Left"; SwitchToMode "Normal"; }
-        bind "l" { MoveFocus "Right"; SwitchToMode "Normal"; }
-        bind "j" { MoveFocus "Down"; SwitchToMode "Normal"; }
-        bind "k" { MoveFocus "Up"; SwitchToMode "Normal"; }
+        bind "h" "Ctrl h" { MoveFocus "Left"; SwitchToMode "Normal"; }
+        bind "l" "Ctrl l" { MoveFocus "Right"; SwitchToMode "Normal"; }
+        bind "j" "Ctrl j" { MoveFocus "Down"; SwitchToMode "Normal"; }
+        bind "k" "Ctrl k" { MoveFocus "Up"; SwitchToMode "Normal"; }
 
         bind ";" "Ctrl ;" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
@@ -37,7 +37,7 @@ keybinds clear-defaults=true {
         bind "d" { Detach; }
         bind "q" { Quit; }
 
-        bind "w" {
+        bind "w" "Ctrl w" {
             LaunchOrFocusPlugin "zellij:session-manager" {
                 floating true
                 move_to_focused_tab true
