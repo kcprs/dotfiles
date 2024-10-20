@@ -5,6 +5,9 @@ vim.opt.hlsearch = false
 vim.opt.number = true
 vim.opt.relativenumber = true
 
+-- Vertical rule
+vim.opt.colorcolumn = "100"
+
 -- Enable mouse mode
 vim.opt.mouse = "a"
 
