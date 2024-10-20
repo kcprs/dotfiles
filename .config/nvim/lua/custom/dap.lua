@@ -5,6 +5,37 @@ function M.set_conditional_breakpoint()
     require("dap").set_breakpoint(condition)
 end
 
+-- Waiting for https://github.com/rcarriga/nvim-dap-ui/issues/326
+-- function M.select_active_session()
+--     local dap = require("dap")
+--     local active_sessions = dap.sessions()
+--
+--     if #active_sessions == 0 then
+--         print("No active debug sessions")
+--         return
+--     end
+--
+--     local session_names = {}
+--     for _, session in ipairs(active_sessions) do
+--         table.insert(session_names, session.config.name)
+--     end
+--
+--     vim.ui.select(session_names, {
+--         prompt = "Select active debug session:",
+--     }, function(selected)
+--         if selected then
+--             for _, session in ipairs(active_sessions) do
+--                 if session.config.name == selected then
+--                     -- This function doesn't exist, ChatGPT!
+--                     dap.set_session(session)
+--                     print("Selected session: " .. selected)
+--                     break
+--                 end
+--             end
+--         end
+--     end)
+-- end
+
 local dap_templates = {
     c = {
         request = "launch",
