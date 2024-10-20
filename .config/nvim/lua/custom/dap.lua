@@ -41,8 +41,8 @@ end
 ---Generate a DAP config for the last command of a given just recipe
 ---
 ---@param recipe_name string Name of the recipe
----@param config table? DAP config to extend (see `:h dap-configuration`). Keys `name`, `program` and `args` will be populated from the given just recipe.
----@return table # Resulting DAP config
+---@param config table? DAP config to extend (see `:h dap-configuration`). Keys `name`, `program` and `args` will be populated from the given just recipe if not already present.
+---@return table # Resulting DAP config.
 function M.config_from_just(recipe_name, config)
     local result = vim.fn.system("just -n " .. recipe_name)
 
@@ -70,8 +70,17 @@ function M.config_from_just(recipe_name, config)
             end
         end
     end
+    
+    -- Add `name` and `args` if not already in `config`
+    config = vim.tbl_extend("keep", config or {}, { name = recipe_name, args = args })
 
-    return vim.tbl_extend("force", config or {}, { name = recipe_name, program = exe, args = args })
+    -- Special logic for `program`: `program`, `module` and `code` are mutually exclusive,
+    -- so only extend if none of them are present.
+    if config.program == nil and config.module == nil and config.code == nil then
+        config = vim.tbl_extend("error", config, { program = exe })
+    end
+
+    return config
 end
 
 return M
