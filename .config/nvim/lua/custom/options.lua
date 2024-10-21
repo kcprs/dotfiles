@@ -57,3 +57,6 @@ vim.opt.fillchars:append { diff = "╱" }
 
 vim.opt.diffopt:append("vertical")
 vim.opt.diffopt:append("algorithm:patience")
+
+-- Disable styling set by the rust_ft plugin
+vim.g.rust_recommended_style = 0
