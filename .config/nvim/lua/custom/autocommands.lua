@@ -4,6 +4,11 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = ".envrc",
     command = "setfiletype sh"
 })
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup_ft,
+    pattern = ".lldbinit",
+    command = "setfiletype config"
+})
 
 local augroup_cindent = vim.api.nvim_create_augroup("CIndentation", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
