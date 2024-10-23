@@ -3,7 +3,7 @@ return {
     -- "tpope/vim-fugitive",
 
     -- Detect tabstop and shiftwidth automatically
-    "tpope/vim-sleuth",
+    -- "tpope/vim-sleuth",
 
     "mbbill/undotree",
 }

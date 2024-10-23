@@ -44,6 +44,7 @@ vim.opt.splitbelow = true
 vim.opt.exrc = true
 
 -- Indentation
+vim.opt.expandtab = true
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
 vim.opt.softtabstop = 0
