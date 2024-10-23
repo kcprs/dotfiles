@@ -69,6 +69,21 @@ function M.config(lang, config)
     return vim.tbl_extend("force", template, config or {})
 end
 
+--- Convenience per-language wrapper of custom.dap.config
+function M.c(config)
+	return M.config("c", config)
+end
+---
+--- Convenience per-language wrapper of custom.dap.config
+function M.cpp(config)
+	return M.config("cpp", config)
+end
+
+--- Convenience per-language wrapper of custom.dap.config
+function M.python(config)
+	return M.config("python", config)
+end
+
 ---Generate a DAP config for the last command of a given just recipe
 ---
 ---@param recipe_name string Name of the recipe
