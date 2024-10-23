@@ -38,9 +38,10 @@ alias p3=python3
 alias docker=podman
 alias pm=podman
 alias nv=nvim
-alias ng="nvim '+:Neogit kind=replace'"
+alias ng='nvim "+:Neogit kind=replace"'
 alias cg=cargo
 alias jt=just
 alias jc="just --choose"
 alias da="direnv allow"
 alias de="direnv export"
+alias jsonl_to_json='jq -R -s '\''split("\n") | map(select(length > 0) | fromjson)'\'''
