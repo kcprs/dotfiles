@@ -4,7 +4,7 @@ keybinds clear-defaults=true {
         // bind "Alt c" { Copy; }
     }
     tmux {
-        bind "Esc" "Ctrl b" "Ctrl c"  { SwitchToMode "Normal"; }
+        bind "Esc" "Ctrl b" "Ctrl c" { SwitchToMode "Normal"; }
 
         bind "s" { SwitchToMode "Search"; }
         bind "m" { SwitchToMode "Move"; }
