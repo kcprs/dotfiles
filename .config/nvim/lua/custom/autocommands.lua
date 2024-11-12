@@ -2,12 +2,23 @@ local augroup_ft = vim.api.nvim_create_augroup("FileTypeDetection", { clear = tr
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup_ft,
     pattern = ".envrc",
-    command = "setfiletype sh"
+    callback = function()
+        vim.bo.filetype = "sh"
+    end
 })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup_ft,
     pattern = ".lldbinit",
-    command = "setfiletype config"
+    callback = function()
+        vim.bo.filetype = "config"
+    end
+})
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    group = augroup_ft,
+    pattern = "*.jsonl",
+    callback = function()
+        vim.bo.filetype = "json"
+    end
 })
 
 local augroup_cindent = vim.api.nvim_create_augroup("CIndentation", { clear = true })
