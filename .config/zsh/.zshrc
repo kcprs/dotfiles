@@ -4,9 +4,9 @@ case $(uname) in
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
     ;;
     Darwin)
-        if [[ $(uname -m) -eq arm64  ]]; then
+        if [[ $(uname -m) -eq "arm64"  ]]; then
         eval "$(/opt/homebrew/bin/brew shellenv)"
-    else if [[ $(uname -m) -eq arm64  ]]
+    else
         return 1 # TODO: use intel mac path here
     fi
     ;;
