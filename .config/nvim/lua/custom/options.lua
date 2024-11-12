@@ -25,10 +25,6 @@ vim.opt.smartcase = true
 -- Keep one signcolumn on by default
 vim.opt.signcolumn = "yes"
 
--- Decrease update time
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-
 -- NOTE: You should make sure your terminal supports this
 vim.opt.termguicolors = true
 
