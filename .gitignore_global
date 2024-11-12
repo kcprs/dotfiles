@@ -2,15 +2,13 @@
 
 _dev/
 _build*/
-_venv/
 _bin/
-_cc/
 
-.env
 .envrc
 .direnv/
 .justfile
 .nvim.lua
+.luarc.json
 
 razel.jsonl
 razel-out/
@@ -19,6 +17,7 @@ compile_commands.json
 .clang-tidy
 .clangd
 .lldbinit
+
 bacon.toml
 
 __pycache__/
