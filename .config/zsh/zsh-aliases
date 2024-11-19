@@ -29,11 +29,13 @@ function git-show-merge() {
 }
 
 alias ls="eza --all"
-alias la="eza --all --long --header --total-size --git"
+alias la="eza --all --long --header --total-size"
+alias lg="la --git"
 alias lt="eza --all -T -L"
 alias tree="eza --tree"
 alias cat=bat
 alias zj=zellij
+alias zjw="zellij -l welcome"
 alias p3=python3
 alias docker=podman
 alias pm=podman
