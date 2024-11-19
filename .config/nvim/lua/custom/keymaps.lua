@@ -309,6 +309,7 @@ function M.lsp_common(buffer)
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
+    map_with_leader_l("n", "t", vim.lsp.buf.type_definition, { desc = "LSP: go to [t]ype definition" })
     map_with_buffer("n", "gr", require("telescope.builtin").lsp_references, { desc = "LSP: [g]o to [r]eferences" })
     map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
         { desc = "LSP: [g]o to [i]mplementation" })
