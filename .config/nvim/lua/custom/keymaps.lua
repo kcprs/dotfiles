@@ -521,4 +521,8 @@ function M.dap_rust()
     end, { desc = "debug: [S]tart current debuggable" })
 end
 
+function M.undotree()
+    map("n", "<leader>u", "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>", { desc = "[u]ndotree toggle" })
+end
+
 return M
