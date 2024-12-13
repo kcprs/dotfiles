@@ -7,6 +7,9 @@ return
     opts = {
         heading = {
             icons = { "󰎤  ", "󰎧  ", "󰎪  ", "󰎭  ", "󰎱  ", "󰎳  " },
-        }
+        },
+        latex = {
+            enabled = false,
+        },
     },
 }
