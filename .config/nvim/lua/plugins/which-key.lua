@@ -3,6 +3,7 @@ return {
     opts = {
         icons = {
             mappings = false
-        }
+        },
+        notify = false,
     }
 }
