@@ -44,7 +44,10 @@ return {
                 oldfiles = {
                     mappings = require("custom.keymaps").telescope_oldfiles_mappings()
                 },
-            }
+            },
+            extensions = {
+                fzf = {},
+            },
         })
 
         -- Extensions
