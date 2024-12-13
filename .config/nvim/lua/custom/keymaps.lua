@@ -15,21 +15,11 @@ local function bind_buffer(fn, buffer)
 end
 
 local function bind_group(fn, prefix, group_name, buffer)
+    local ok, wk = pcall(require, "which-key")
+    if ok then
+        wk.add({ prefix, group = group_name, buffer = buffer })
+    end
     return function(modes, lhs, rhs, opts)
-        local ok, wk = pcall(require, "which-key")
-        if ok then
-            wk.add(
-                {
-                    prefix,
-                    {
-                        group = group_name,
-                        mode = modes,
-                        buffer = buffer,
-                    },
-                }
-            )
-        end
-
         bind_buffer(fn, buffer)(modes, prefix .. lhs, rhs, opts)
     end
 end
