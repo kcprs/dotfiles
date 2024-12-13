@@ -29,10 +29,11 @@ function git-show-merge() {
 }
 
 alias ls="eza --all"
-alias la="eza --all --long --header --total-size"
-alias lg="la --git"
+alias la="eza --all --long --header --total-size --git"
 alias lt="eza --all -T -L"
 alias tree="eza --tree"
+alias fda="fd -HI"
+alias rgc="rg -C 5"
 alias cat=bat
 alias zj=zellij
 alias zjw="zellij -l welcome"
@@ -47,3 +48,14 @@ alias jc="just --choose"
 alias da="direnv allow"
 alias de="direnv export"
 alias jsonl_to_json='jq -R -s '\''split("\n") | map(select(length > 0) | fromjson)'\'''
+
+function unln() {
+    for unln_path in "$@"; do
+        local unln_name=$(basename "$unln_path")
+        local unln_tmp="/tmp/$unln_name"
+
+        # Using directly from /bin to avoid problems with `alias cp="cp -i"`
+        /bin/cp -Lf "$unln_path" "$unln_tmp"
+        /bin/mv -f "$unln_tmp" "$unln_path"
+    done
+}
