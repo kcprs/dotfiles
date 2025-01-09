@@ -53,6 +53,7 @@ return {
         -- Extensions
         pcall(require("telescope").load_extension, "fzf")
         require("telescope").load_extension("ui-select")
+        -- TODO: set up telescope-frecency: https://github.com/nvim-telescope/telescope-frecency.nvim
 
         require("custom.keymaps").telescope()
     end,
