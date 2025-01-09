@@ -123,7 +123,7 @@ function M.cmp_get_mapping()
     }
 end
 
-function M.completion_set()
+function M.luasnip_set()
     local ls = require("luasnip")
 
     map("i", "<c-k>", function()
