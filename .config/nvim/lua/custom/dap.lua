@@ -49,11 +49,36 @@ local dap_templates = {
         type = "codelldb",
         stoponentry = false,
     },
+    rust = {
+        request = "launch",
+        cwd = "${workspaceFolder}",
+        type = "codelldb",
+        stoponentry = false,
+        -- initCommands = function()
+        --     -- Find out where to look for the pretty printer Python module
+        --     local rustc_sysroot = vim.fn.trim(vim.fn.system('rustc --print sysroot'))
+        --
+        --     local script_import = 'command script import "' .. rustc_sysroot .. '/lib/rustlib/etc/lldb_lookup.py"'
+        --     local commands_file = rustc_sysroot .. '/lib/rustlib/etc/lldb_commands'
+        --
+        --     local commands = {}
+        --     local file = io.open(commands_file, 'r')
+        --     if file then
+        --         for line in file:lines() do
+        --             table.insert(commands, line)
+        --         end
+        --         file:close()
+        --     end
+        --     table.insert(commands, 1, script_import)
+        --
+        --     return commands
+        -- end,
+    },
     python = {
         request = "launch",
         cwd = "${workspaceFolder}",
         type = "python",
-    }
+    },
 }
 
 ---Generate a DAP config from a per-language template
@@ -71,17 +96,22 @@ end
 
 --- Convenience per-language wrapper of custom.dap.config
 function M.c(config)
-	return M.config("c", config)
+    return M.config("c", config)
 end
----
+
 --- Convenience per-language wrapper of custom.dap.config
 function M.cpp(config)
-	return M.config("cpp", config)
+    return M.config("cpp", config)
+end
+
+--- Convenience per-language wrapper of custom.dap.config
+function M.rust(config)
+    return M.config("rust", config)
 end
 
 --- Convenience per-language wrapper of custom.dap.config
 function M.python(config)
-	return M.config("python", config)
+    return M.config("python", config)
 end
 
 ---Generate a DAP config for the last command of a given just recipe
@@ -116,7 +146,7 @@ function M.config_from_just(recipe_name, config)
             end
         end
     end
-    
+
     -- Add `name` and `args` if not already in `config`
     config = vim.tbl_extend("keep", config or {}, { name = recipe_name, args = args })
 
