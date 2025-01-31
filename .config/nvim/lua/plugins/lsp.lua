@@ -92,12 +92,7 @@ return {
                 "MunifTanjim/nui.nvim",
             },
         },
-        -- "nvim-navic",
-        -- "nvim-navbuddy",
-
-        -- completion
-        "saghen/blink.cmp",
-
+        "hrsh7th/cmp-nvim-lsp",
         {
             "mrcjkb/rustaceanvim",
             version = "^4",
@@ -123,9 +118,9 @@ return {
         -- Setup neovim lua configuration
         require("neodev").setup()
 
-        -- blink supports additional completion capabilities, so broadcast that to servers
+        -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
         local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+        capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
         require("mason-lspconfig").setup_handlers({
             function(server_name)

@@ -1,5 +1,6 @@
 return {
     "saghen/blink.cmp",
+    enabled = false, -- Still too buggy, let's wait untils it's developed further
 
     -- use a release tag to download pre-built binaries
     version = "*",
