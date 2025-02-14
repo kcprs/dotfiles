@@ -10,7 +10,7 @@ alias mv='mv -i'
 alias gs="git switch"
 alias gc="git commit"
 alias gb="git branch"
-alias gsu="git submodule update"
+alias gsu="git submodule update --init --recursive"
 alias gf="git fetch"
 alias gst="git stash"
 alias gpl="git pull"
@@ -18,6 +18,7 @@ alias gps="git push"
 alias gsh="git show -q HEAD"
 alias gstat="git status"
 alias gmb="git merge-base"
+alias gw="git worktree"
 function git-find-merge() {
     # Usage: git-find-merge <commit-SHA> [<branch>]
     # Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
