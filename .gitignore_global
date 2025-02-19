@@ -9,6 +9,7 @@ _bin/
 .justfile
 .nvim.lua
 .luarc.json
+.ripgreprc
 
 razel.jsonl
 razel-out/
