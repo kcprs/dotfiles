@@ -6,3 +6,5 @@ mouse-hide-while-typing = true
 
 title = "Ghostty"
 macos-titlebar-proxy-icon = hidden
+
+macos-option-as-alt = true
