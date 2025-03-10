@@ -32,7 +32,7 @@ function git-show-merge() {
 
 alias ls="eza --all"
 alias la="eza --all --long --header --total-size --git"
-alias lt="eza --all -T -L"
+alias lt="eza -T -L"
 alias tree="eza --tree"
 alias fda="fd -HI"
 alias rgc="rg -C 5"
