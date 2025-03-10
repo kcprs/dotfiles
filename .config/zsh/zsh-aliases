@@ -1,4 +1,5 @@
 alias md='mkdir -p'
+function mcd(){ mkdir -p "$1" && cd "$1"; }
 alias cl='clear'
 
 # confirm before overwriting something
