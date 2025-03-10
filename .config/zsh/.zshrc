@@ -25,6 +25,7 @@ bindkey -r '^x'            # Set by supercharge but I don't want it
 setopt INC_APPEND_HISTORY  # Write to the history file immediately, not when the shell exits.
 setopt SHARE_HISTORY       # Share history between all sessions.
 unsetopt NOMATCH           # Causes problems sometimes
+unsetopt AUTO_CD           # Problematic when a dir shares a name with a command
 
 plug "zap-zsh/completions"
 plug "zsh-users/zsh-autosuggestions" && bindkey '^y' autosuggest-accept
