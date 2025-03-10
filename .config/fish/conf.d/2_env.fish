@@ -1,0 +1,4 @@
+set -gx EDITOR nvim
+set -gx CMAKE_GENERATOR Ninja
+set -gx CMAKE_EXPORT_COMPILE_COMMANDS 1
+set -gx CMAKE_BUILD_TYPE Debug

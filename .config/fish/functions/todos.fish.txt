@@ -1,0 +1,22 @@
+
+function git-find-merge() {
+    # Usage: git-find-merge <commit-SHA> [<branch>]
+    # Find SHA of merge commit, which merged <commit> into <branch> (or HEAD if <branch> not given)
+    commit=$1 && branch=${2:-HEAD} && (git rev-list "$commit".."$branch" --ancestry-path | cat -n; git rev-list "$commit".."$branch" --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2
+}
+
+function git-show-merge() {
+    # Same as above, but shows more detail apart from just SHA
+    merge=$(git-find-merge "$1" "$2") && [ -n "$merge" ] && git show "$merge" 
+}
+
+function unln() {
+    for unln_path in "$@"; do
+        local unln_name=$(basename "$unln_path")
+        local unln_tmp="/tmp/$unln_name"
+
+        # Using directly from /bin to avoid problems with `alias cp="cp -i"`
+        /bin/cp -Lf "$unln_path" "$unln_tmp"
+        /bin/mv -f "$unln_tmp" "$unln_path"
+    done
+}
