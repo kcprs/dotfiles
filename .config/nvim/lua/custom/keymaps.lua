@@ -468,6 +468,7 @@ end
 function M.dap()
     local dap = require("dap")
     local dapui = require("dapui")
+    local dapui_util = require("dapui.util")
     local custom = require("custom.dap")
 
     map("n", "<F5>", dap.continue, { desc = "debug: continue" })
@@ -484,16 +485,19 @@ function M.dap()
     map_with_leader_d("n", "t", dap.terminate, { desc = "debug: [t]erminate" })
     map_with_leader_d("n", "d", dap.run_last, { desc = "debug: re-run last" })
     map_with_leader_d("n", "l", dap.run_to_cursor, { desc = "debug: run to cursor/[l]ine" })
-    map_with_leader_d("n", "o", dapui.open, { desc = "debug: [o]pen UI" })
-    map_with_leader_d("n", "c", dapui.close, { desc = "debug: [c]lose UI" })
+    map_with_leader_d("n", "o", dapui.toggle, { desc = "debug: t[o]ggle UI" })
     -- map_with_leader_d("n", "a", custom.select_active_session, { desc = "debug: select [a]ctive session" })
 
     map_with_leader_d("n", "k", dap.up, { desc = "debug: go up in current stacktrace" })
     map_with_leader_d("n", "j", dap.down, { desc = "debug: go down in current stacktrace" })
 
     map_with_leader_d({ "n", "v" }, "i", function()
+        -- Hack to fix C pointers
+        local expr = dapui_util.get_current_expr()
+        expr = expr:gsub("->", ".")
+
         --- @diagnostic disable-next-line: missing-fields
-        dapui.eval(nil, { enter = true })
+        dapui.eval(expr, { enter = true })
     end, { desc = "debug: [i]nspect under cursor" })
 end
 
