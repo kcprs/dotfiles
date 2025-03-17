@@ -1,10 +1,9 @@
 abbr --add md mkdir -p
-abbr --add cl clear
 
 # confirm before overwriting something
 abbr --add cp cp -i
 abbr --add mv mv -i
-# abbr --add rm rm -i
+abbr --add rm rm -i
  
 # git
 abbr --add gs git switch
@@ -35,6 +34,8 @@ abbr --add pm podman
 abbr --add nv nvim
 abbr --add ng nvim \'+:Neogit kind=replace\'
 abbr --add cg cargo
+abbr --add --command cargo f fmt
+abbr --add --command cargo cl clippy
 abbr --add jt just
 abbr --add jc just --choose
 abbr --add da direnv allow
