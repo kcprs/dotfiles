@@ -45,11 +45,22 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 0
 vim.opt.softtabstop = 0
 
+-- Whitespace
+vim.opt.list = true
+--- @diagnostic disable-next-line: missing-fields
+vim.opt.listchars = {
+  tab = '→ ',
+  trail = '·',
+  extends = '>',
+  precedes = '<',
+}
+
 -- Configure status line to be global
 vim.opt.laststatus = 3
 vim.api.nvim_set_hl(0, 'WinSeparator', { bg = 'NONE' })
 
 -- In diff view, fill deleted areas with '/'
+--- @diagnostic disable-next-line: param-type-mismatch
 vim.opt.fillchars:append { diff = "╱" }
 
 vim.opt.diffopt:append("vertical")
