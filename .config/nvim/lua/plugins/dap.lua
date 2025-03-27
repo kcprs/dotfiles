@@ -5,6 +5,7 @@ return {
             "mfussenegger/nvim-dap",
         },
         config = function()
+            ---@diagnostic disable-next-line: missing-fields
             require("nvim-dap-virtual-text").setup({})
         end
     },
@@ -34,21 +35,10 @@ return {
             dap.listeners.before.launch.dapui_config = function()
                 dapui.open()
             end
-            -- Prefer to close manually, e.g. to read terminal after debuggee crashes
-            -- dap.listeners.before.event_terminated.dapui_config = function()
-            --     dapui.close()
-            -- end
-            -- dap.listeners.before.event_exited.dapui_config = function()
-            --     dapui.close()
-            -- end
 
             dap.adapters.codelldb = {
-                type = "server",
-                port = "${port}",
-                executable = {
-                    command = "codelldb",
-                    args = { "--port", "${port}" },
-                }
+                type = "executable",
+                command = "codelldb",
             }
         end
     },
