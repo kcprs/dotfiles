@@ -1,9 +1,5 @@
 abbr --add md mkdir -p
 
-# confirm before overwriting something
-abbr --add cp cp -i
-abbr --add mv mv -i
-abbr --add rm rm -i
  
 # git
 abbr --add gs git switch
