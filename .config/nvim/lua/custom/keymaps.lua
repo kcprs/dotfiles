@@ -93,6 +93,11 @@ function M.setup_basic()
     map("v", "<leader>=", ":EvaluateSelectionAndReplace<cr>", { noremap = true, silent = true })
 
     map("n", "<leader>cx", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
+
+    map("n", "<leader>;j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
+    map("n", "<leader>;e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
+    map("n", "<leader>;n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
+    map("n", "<leader>;s", "<cmd>mks! .session.vim<cr>", { desc = "Edit .envrc in current workspace" })
 end
 
 function M.oil_set()
