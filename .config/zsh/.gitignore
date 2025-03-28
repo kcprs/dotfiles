@@ -1,6 +1,0 @@
-.zcompdump
-.zsh_sessions
-.zcompcache
-.zsh_history
-completions/*
-!completions/.gitkeep
