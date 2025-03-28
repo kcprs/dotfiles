@@ -49,10 +49,10 @@ vim.opt.softtabstop = 0
 vim.opt.list = true
 --- @diagnostic disable-next-line: missing-fields
 vim.opt.listchars = {
-  tab = '→ ',
-  trail = '·',
-  extends = '>',
-  precedes = '<',
+    tab = '→ ',
+    trail = '·',
+    extends = '>',
+    precedes = '<',
 }
 
 -- Configure status line to be global
@@ -68,3 +68,6 @@ vim.opt.diffopt:append("algorithm:patience")
 
 -- Disable styling set by the rust_ft plugin
 vim.g.rust_recommended_style = 0
+
+-- Enable virtual text by default
+vim.diagnostic.config({ virtual_text = true })
