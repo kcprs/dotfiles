@@ -68,6 +68,3 @@ vim.opt.diffopt:append("algorithm:patience")
 
 -- Disable styling set by the rust_ft plugin
 vim.g.rust_recommended_style = 0
-
--- Enable virtual text by default
-vim.diagnostic.config({ virtual_text = true })

@@ -279,7 +279,7 @@ function M.lsp_common(buffer)
     local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
     local map_with_buffer = bind_buffer(map, buffer)
 
-    map_with_leader_l("n", "r", vim.lsp.buf.rename, { desc = "LSP: [r]ename" })
+    map_with_leader_l("n", "n", vim.lsp.buf.rename, { desc = "LSP: re[n]ame" })
     map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
     map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
     map_with_leader_l("n", "h", function()
@@ -298,6 +298,8 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
     map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text,
         { desc = "LSP: toggle diagnostics [v]irtual text" })
+    map_with_leader_l("n", "x", require("custom.lsp").toggle_diagnostics_virtual_lines,
+        { desc = "LSP: toggle diagnostics virtual lines" })
     map_with_buffer("n", "]D", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end,
         { desc = "LSP: go to next error" })
     map_with_buffer("n", "[D", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end,
@@ -306,7 +308,7 @@ function M.lsp_common(buffer)
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
     map_with_leader_l("n", "t", vim.lsp.buf.type_definition, { desc = "LSP: go to [t]ype definition" })
-    map_with_leader_l("n", "e", require("telescope.builtin").lsp_references, { desc = "LSP: [g]o to [r]eferences" })
+    map_with_leader_l("n", "r", require("telescope.builtin").lsp_references, { desc = "LSP: go to [r]eferences" })
     map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
         { desc = "LSP: [g]o to [i]mplementation" })
 

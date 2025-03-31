@@ -1,9 +1,14 @@
-local function default_on_attach(client, bufnr)
-    vim.diagnostic.config({
-        virtual_text = require("custom.lsp").is_virtual_text_enabled(),
-        update_in_insert = true,
-    })
+-- Default diagnostics settings
+vim.diagnostic.config({
+    severity_sort = true,
+    update_in_insert = true,
+    virtual_lines = {
+        current_line = true,
+    },
+    virtual_text = true,
+})
 
+local function default_on_attach(client, bufnr)
     require("custom.keymaps").lsp_common(bufnr)
 
     if client.server_capabilities.documentSymbolProvider then
@@ -30,7 +35,7 @@ local function clangd_on_attach(client, bufnr)
 end
 
 local function is_lsp_enabled_via_env(name)
-    return string.find(os.getenv("NVIM_LSP") or "",name)
+    return string.find(os.getenv("NVIM_LSP") or "", name)
 end
 
 local servers = {
