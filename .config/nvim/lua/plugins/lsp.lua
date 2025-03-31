@@ -2,10 +2,38 @@
 vim.diagnostic.config({
     severity_sort = true,
     update_in_insert = true,
-    virtual_lines = {
-        current_line = true,
-    },
     virtual_text = true,
+})
+
+
+-- Override the default virtual text handler to hide diagnostics on the current line
+local orig_virtual_text_handler = vim.diagnostic.handlers.virtual_text
+vim.diagnostic.handlers.virtual_text = {
+    show = function(namespace, bufnr, diagnostics, opts)
+        local filtered_diagnostics = diagnostics;
+        if vim.diagnostic.config().virtual_lines then
+            local cursor_line = vim.api.nvim_win_get_cursor(0)[1] - 1 -- current line (zero-indexed)
+            filtered_diagnostics = {}
+            for _, diagnostic in ipairs(diagnostics) do
+                if not (diagnostic.lnum <= cursor_line and cursor_line <= diagnostic.end_lnum) then
+                    table.insert(filtered_diagnostics, diagnostic)
+                end
+            end
+        end
+        orig_virtual_text_handler.show(namespace, bufnr, filtered_diagnostics, opts)
+    end,
+    hide = function(namespace, bufnr)
+        orig_virtual_text_handler.hide(namespace, bufnr)
+    end,
+}
+
+-- Refresh diagnostics when the cursor moves
+local augroup_cursor = vim.api.nvim_create_augroup("Cursor", { clear = true })
+vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
+    group = augroup_cursor,
+    callback = function()
+        vim.diagnostic.show(nil, 0)
+    end,
 })
 
 local function default_on_attach(client, bufnr)
