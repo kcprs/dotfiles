@@ -22,7 +22,7 @@ return {
                 use_nvim_cmp_as_default = true,
                 -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                 -- Adjusts spacing to ensure icons are aligned
-                nerd_font_variant = "mono"
+                nerd_font_variant = "mono",
             },
 
             completion = {
@@ -30,7 +30,7 @@ return {
                 documentation = { auto_show = true, auto_show_delay_ms = 500 },
             },
 
-            snippets = { preset = 'luasnip' },
+            snippets = { preset = "luasnip" },
 
             -- Experimental signature help support
             signature = { enabled = true },
@@ -56,5 +56,4 @@ return {
 
         require("custom.keymaps").luasnip_set()
     end,
-
 }

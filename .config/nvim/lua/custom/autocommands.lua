@@ -4,21 +4,21 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     pattern = ".envrc",
     callback = function()
         vim.bo.filetype = "sh"
-    end
+    end,
 })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup_ft,
     pattern = ".lldbinit",
     callback = function()
         vim.bo.filetype = "config"
-    end
+    end,
 })
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     group = augroup_ft,
     pattern = "*.jsonl",
     callback = function()
         vim.bo.filetype = "json"
-    end
+    end,
 })
 
 local augroup_cindent = vim.api.nvim_create_augroup("CIndentation", { clear = true })

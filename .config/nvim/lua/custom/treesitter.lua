@@ -8,7 +8,7 @@ require("nvim-treesitter.configs").setup({
     indent = {
         enable = true,
         -- Indent via treesitter seems broken for c and cpp. Will use vim's cindent instead.
-        disable = { "c", "cpp" }
+        disable = { "c", "cpp" },
     },
     incremental_selection = {
         enable = true,

@@ -30,19 +30,19 @@ return {
             pickers = {
                 buffers = {
                     sort_lastused = true,
-                    mappings = require("custom.keymaps").telescope_buffers_mappings()
+                    mappings = require("custom.keymaps").telescope_buffers_mappings(),
                 },
                 find_files = {
-                    mappings = require("custom.keymaps").telescope_find_files_mappings()
+                    mappings = require("custom.keymaps").telescope_find_files_mappings(),
                 },
                 git_files = {
-                    mappings = require("custom.keymaps").telescope_git_files_mappings()
+                    mappings = require("custom.keymaps").telescope_git_files_mappings(),
                 },
                 live_grep = {
-                    mappings = require("custom.keymaps").telescope_live_grep_mappings()
+                    mappings = require("custom.keymaps").telescope_live_grep_mappings(),
                 },
                 oldfiles = {
-                    mappings = require("custom.keymaps").telescope_oldfiles_mappings()
+                    mappings = require("custom.keymaps").telescope_oldfiles_mappings(),
                 },
             },
             extensions = {

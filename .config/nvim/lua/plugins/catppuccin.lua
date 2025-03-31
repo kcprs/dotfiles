@@ -9,9 +9,9 @@ return {
                 return {
                     -- LineNr = { fg = colors.surface1 } -- Original
                     -- LineNr = { fg = colors.surface2 } -- Slightly brighter
-                    LineNr = { fg = colors.lavender } -- Same as line with cursor
+                    LineNr = { fg = colors.lavender }, -- Same as line with cursor
                 }
-            end
+            end,
         })
         vim.cmd.colorscheme("catppuccin-mocha")
     end,

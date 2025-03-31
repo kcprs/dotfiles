@@ -5,12 +5,11 @@ vim.diagnostic.config({
     virtual_text = true,
 })
 
-
 -- Override the default virtual text handler to hide diagnostics on the current line
 local orig_virtual_text_handler = vim.diagnostic.handlers.virtual_text
 vim.diagnostic.handlers.virtual_text = {
     show = function(namespace, bufnr, diagnostics, opts)
-        local filtered_diagnostics = diagnostics;
+        local filtered_diagnostics = diagnostics
         if vim.diagnostic.config().virtual_lines then
             local cursor_line = vim.api.nvim_win_get_cursor(0)[1] - 1 -- current line (zero-indexed)
             filtered_diagnostics = {}
@@ -70,7 +69,7 @@ local servers = {
     clangd = {
         args = {
             "--clang-tidy",
-            "--header-insertion=never"
+            "--header-insertion=never",
         },
         on_attach = clangd_on_attach,
     },
@@ -81,22 +80,30 @@ local servers = {
                 workspace = { checkThirdParty = false },
                 telemetry = { enable = false },
             },
-        }
+        },
     },
     pyright = {},
     rust_analyzer = {
         -- Never explicitly call setup() - done by rustaceanvim
-        condition = function() return false end,
+        condition = function()
+            return false
+        end,
     },
     taplo = {},
     ts_ls = {
-        condition = function() return os.getenv("NVIM_LSP") == nil or is_lsp_enabled_via_env("ts_ls") end,
+        condition = function()
+            return os.getenv("NVIM_LSP") == nil or is_lsp_enabled_via_env("ts_ls")
+        end,
     },
     denols = {
-        condition = function() return is_lsp_enabled_via_env("denols") end,
+        condition = function()
+            return is_lsp_enabled_via_env("denols")
+        end,
     },
     eslint = {
-        condition = function() return is_lsp_enabled_via_env("eslint") end,
+        condition = function()
+            return is_lsp_enabled_via_env("eslint")
+        end,
     },
     yamlls = {},
     bashls = {},
@@ -164,7 +171,7 @@ return {
                     return
                 end
 
-                local default_config = require('lspconfig')[server_name].document_config.default_config
+                local default_config = require("lspconfig")[server_name].document_config.default_config
 
                 -- Add args to cmd
                 local cmd = default_config.cmd

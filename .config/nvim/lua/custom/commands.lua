@@ -67,7 +67,7 @@ local function evaluate_selection(replace)
         lines[#lines] = string.sub(lines[#lines], 1, end_col)
     end
 
-    local processed_text = evaluate_string(table.concat(lines, '\n'))
+    local processed_text = evaluate_string(table.concat(lines, "\n"))
     if not processed_text then
         return
     end
@@ -79,5 +79,9 @@ local function evaluate_selection(replace)
         vim.notify(processed_text, vim.log.levels.INFO)
     end
 end
-vim.api.nvim_create_user_command("EvaluateSelection", function() evaluate_selection(false) end, { range = true })
-vim.api.nvim_create_user_command("EvaluateSelectionAndReplace", function() evaluate_selection(true) end, { range = true })
+vim.api.nvim_create_user_command("EvaluateSelection", function()
+    evaluate_selection(false)
+end, { range = true })
+vim.api.nvim_create_user_command("EvaluateSelectionAndReplace", function()
+    evaluate_selection(true)
+end, { range = true })

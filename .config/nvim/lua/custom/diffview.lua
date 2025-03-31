@@ -7,7 +7,7 @@ function M.open_with_merge_base_of_main()
     }
 
     for _, branch in ipairs(branches) do
-        local res = vim.system({"git", "merge-base", branch, "@"}, { text = true }):wait()
+        local res = vim.system({ "git", "merge-base", branch, "@" }, { text = true }):wait()
         if res.code == 0 then
             require("diffview").open({ vim.trim(res.stdout) })
             return
@@ -16,6 +16,5 @@ function M.open_with_merge_base_of_main()
 
     vim.notify("Failed to open diffview with merge-base of main", vim.log.levels.ERROR)
 end
-
 
 return M

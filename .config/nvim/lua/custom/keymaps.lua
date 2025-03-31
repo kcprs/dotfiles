@@ -99,13 +99,15 @@ function M.setup_basic()
     map_with_leader_semi("n", "e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
     map_with_leader_semi("n", "n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
     map_with_leader_semi("n", "s", function()
-        vim.cmd('mks! .session.vim')
-        vim.notify('Session saved to .session.vim', vim.log.levels.INFO)
+        vim.cmd("mks! .session.vim")
+        vim.notify("Session saved to .session.vim", vim.log.levels.INFO)
     end, { desc = "Save current session to .session.vim" })
 end
 
 function M.oil_set()
-    map("n", "<leader>o", function() require("oil").toggle_float(vim.fn.getcwd()) end, { desc = "Open [o]il in cwd" })
+    map("n", "<leader>o", function()
+        require("oil").toggle_float(vim.fn.getcwd())
+    end, { desc = "Open [o]il in cwd" })
     map("n", "<leader>O", require("oil").toggle_float, { desc = "Open [O]il in current file's dir" })
 end
 
@@ -125,10 +127,7 @@ function M.cmp_get_mapping()
             }),
             { "i" }
         ),
-        ["<c-space>"] = cmp.mapping(
-            cmp.mapping.complete({ reason = "manual" }),
-            { "i" }
-        )
+        ["<c-space>"] = cmp.mapping(cmp.mapping.complete({ reason = "manual" }), { "i" }),
     }
 end
 
@@ -174,7 +173,6 @@ function M.telescope()
     map_with_leader_f("n", "q", builtin.quickfix, { desc = "[f]ind in [q]uickfix" })
     map_with_leader_f("n", "f", builtin.resume, { desc = "Resume previous search" })
 
-
     map("n", "<leader>/", function()
         -- You can pass additional configuration to telescope to change theme, layout, etc.
         require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
@@ -207,10 +205,10 @@ function M.telescope_find_files_mappings()
 
     return {
         i = {
-            ["<c-f>"] = switch_to_git_files
+            ["<c-f>"] = switch_to_git_files,
         },
         n = {
-            ["<c-f>"] = switch_to_git_files
+            ["<c-f>"] = switch_to_git_files,
         },
     }
 end
@@ -222,10 +220,10 @@ function M.telescope_git_files_mappings()
 
     return {
         i = {
-            ["<c-f>"] = switch_to_find_files
+            ["<c-f>"] = switch_to_find_files,
         },
         n = {
-            ["<c-f>"] = switch_to_find_files
+            ["<c-f>"] = switch_to_find_files,
         },
     }
 end
@@ -234,16 +232,16 @@ function M.telescope_buffers_mappings()
     local actions = require("telescope.actions")
     return {
         i = {
-            ["<c-x>"] = actions.delete_buffer
+            ["<c-x>"] = actions.delete_buffer,
         },
         n = {
-            ["d"] = actions.delete_buffer
+            ["d"] = actions.delete_buffer,
         },
     }
 end
 
 function M.telescope_live_grep_mappings()
-    local include_hidden = false;
+    local include_hidden = false
     local function toggle_include_hidden(prompt_buffer)
         include_hidden = not include_hidden
         local opts = include_hidden and { additional_args = { "--hidden", "--no-ignore" } } or nil
@@ -252,28 +250,27 @@ function M.telescope_live_grep_mappings()
 
     return {
         i = {
-            ["<c-f>"] = toggle_include_hidden
+            ["<c-f>"] = toggle_include_hidden,
         },
         n = {
-            ["<c-f>"] = toggle_include_hidden
+            ["<c-f>"] = toggle_include_hidden,
         },
     }
 end
 
 function M.telescope_oldfiles_mappings()
-    local only_cwd = true;
+    local only_cwd = true
     local function toggle_only_cwd(prompt_buffer)
         only_cwd = not only_cwd
-        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").oldfiles,
-            { only_cwd = only_cwd })
+        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").oldfiles, { only_cwd = only_cwd })
     end
 
     return {
         i = {
-            ["<c-f>"] = toggle_only_cwd
+            ["<c-f>"] = toggle_only_cwd,
         },
         n = {
-            ["<c-f>"] = toggle_only_cwd
+            ["<c-f>"] = toggle_only_cwd,
         },
     }
 end
@@ -293,20 +290,20 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "c", require("telescope.builtin").lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
 
     -- map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
-    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols,
-        { desc = "LSP: workspace [S]ymbols" })
-    map_with_leader_l("n", "n", function() require("nvim-navbuddy").open(buffer) end,
-        { desc = "LSP: [n]avigate symbols" })
+    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "LSP: workspace [S]ymbols" })
+    map_with_leader_l("n", "n", function()
+        require("nvim-navbuddy").open(buffer)
+    end, { desc = "LSP: [n]avigate symbols" })
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
-    map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text,
-        { desc = "LSP: toggle diagnostics [v]irtual text" })
-    map_with_leader_l("n", "x", require("custom.lsp").toggle_diagnostics_virtual_lines,
-        { desc = "LSP: toggle diagnostics virtual lines" })
-    map_with_buffer("n", "]D", function() vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR }) end,
-        { desc = "LSP: go to next error" })
-    map_with_buffer("n", "[D", function() vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR }) end,
-        { desc = "LSP: go to previous error" })
+    map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text, { desc = "LSP: toggle diagnostics [v]irtual text" })
+    map_with_leader_l("n", "x", require("custom.lsp").toggle_diagnostics_virtual_lines, { desc = "LSP: toggle diagnostics virtual lines" })
+    map_with_buffer("n", "]D", function()
+        vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
+    end, { desc = "LSP: go to next error" })
+    map_with_buffer("n", "[D", function()
+        vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
+    end, { desc = "LSP: go to previous error" })
 
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
@@ -434,8 +431,7 @@ function M.diffview_global()
     local map_with_leader_g = bind_group(map, "<leader>g", "git")
 
     map_with_leader_g("n", "d", require("diffview").open, { desc = "[g]it [d]iff" })
-    map_with_leader_g("n", "m", require("custom.diffview").open_with_merge_base_of_main,
-        { desc = "[g]it diff [m]erge base" })
+    map_with_leader_g("n", "m", require("custom.diffview").open_with_merge_base_of_main, { desc = "[g]it diff [m]erge base" })
 end
 
 function M.diffview_conflict_prefix()
@@ -447,14 +443,14 @@ function M.diffview_view()
     local prefix = M.diffview_conflict_prefix()
 
     return {
-        { "n", "<leader>co",  nil },
-        { "n", "<leader>ct",  nil },
-        { "n", "<leader>cb",  nil },
-        { "n", "<leader>ca",  nil },
-        { "n", "<leader>cO",  nil },
-        { "n", "<leader>cT",  nil },
-        { "n", "<leader>cB",  nil },
-        { "n", "<leader>cA",  nil },
+        { "n", "<leader>co", nil },
+        { "n", "<leader>ct", nil },
+        { "n", "<leader>cb", nil },
+        { "n", "<leader>ca", nil },
+        { "n", "<leader>cO", nil },
+        { "n", "<leader>cT", nil },
+        { "n", "<leader>cB", nil },
+        { "n", "<leader>cA", nil },
 
         -- Old version with "o" for "ours", "t" for "theirs", etc.
         -- { "n", prefix .. "o",  actions.conflict_choose("ours"),        { desc = "Choose the OURS version of a conflict" } },
@@ -466,14 +462,14 @@ function M.diffview_view()
         -- { "n", prefix .. "B",  actions.conflict_choose_all("base"),    { desc = "Choose the BASE version of a conflict for the whole file" } },
         -- { "n", prefix .. "A",  actions.conflict_choose_all("all"),     { desc = "Choose all the versions of a conflict for the whole file" } },
 
-        { "n", prefix .. "h", actions.conflict_choose("ours"),       { desc = "Conflict: choose left (OURS)" } },
-        { "n", prefix .. "l", actions.conflict_choose("theirs"),     { desc = "Conflict: choose right (THEIRS)" } },
-        { "n", prefix .. "b", actions.conflict_choose("base"),       { desc = "Conflict: choose BASE" } },
-        { "n", prefix .. "a", actions.conflict_choose("all"),        { desc = "Conflict: choose ALL" } },
-        { "n", prefix .. "H", actions.conflict_choose_all("ours"),   { desc = "Conflict: choose (file-wide) left (OURS)" } },
+        { "n", prefix .. "h", actions.conflict_choose("ours"), { desc = "Conflict: choose left (OURS)" } },
+        { "n", prefix .. "l", actions.conflict_choose("theirs"), { desc = "Conflict: choose right (THEIRS)" } },
+        { "n", prefix .. "b", actions.conflict_choose("base"), { desc = "Conflict: choose BASE" } },
+        { "n", prefix .. "a", actions.conflict_choose("all"), { desc = "Conflict: choose ALL" } },
+        { "n", prefix .. "H", actions.conflict_choose_all("ours"), { desc = "Conflict: choose (file-wide) left (OURS)" } },
         { "n", prefix .. "L", actions.conflict_choose_all("theirs"), { desc = "Conflict: choose (file-wide) right (THEIRS)" } },
-        { "n", prefix .. "B", actions.conflict_choose_all("base"),   { desc = "Conflict: choose (file-wide) BASE" } },
-        { "n", prefix .. "A", actions.conflict_choose_all("all"),    { desc = "Conflict: choose (file-wide) ALL" } },
+        { "n", prefix .. "B", actions.conflict_choose_all("base"), { desc = "Conflict: choose (file-wide) BASE" } },
+        { "n", prefix .. "A", actions.conflict_choose_all("all"), { desc = "Conflict: choose (file-wide) ALL" } },
     }
 end
 

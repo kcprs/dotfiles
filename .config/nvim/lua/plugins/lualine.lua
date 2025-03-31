@@ -10,8 +10,8 @@ return {
                 {
                     "filename",
                     path = 1, -- 1: Relative path
-                }
-            }
+                },
+            },
         },
         -- TODO integrate trouble?
         winbar = {
@@ -20,9 +20,9 @@ return {
                 {
                     "navic",
                     navic_opts = {
-                        separator = "  "
-                    }
-                }
+                        separator = "  ",
+                    },
+                },
             },
         },
         inactive_winbar = {
@@ -33,6 +33,6 @@ return {
         extensions = {
             "oil",
             "toggleterm",
-        }
+        },
     },
 }

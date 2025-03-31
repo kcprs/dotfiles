@@ -2,8 +2,8 @@ return {
     "folke/which-key.nvim",
     opts = {
         icons = {
-            mappings = false
+            mappings = false,
         },
         notify = false,
-    }
+    },
 }

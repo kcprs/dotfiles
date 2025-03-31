@@ -7,7 +7,7 @@ return {
         config = function()
             ---@diagnostic disable-next-line: missing-fields
             require("nvim-dap-virtual-text").setup({})
-        end
+        end,
     },
     {
         "rcarriga/nvim-dap-ui",
@@ -40,7 +40,7 @@ return {
                 type = "executable",
                 command = "codelldb",
             }
-        end
+        end,
     },
     {
         "mfussenegger/nvim-dap-python",
@@ -50,6 +50,6 @@ return {
         config = function()
             local python_path = "python3"
             require("dap-python").setup(python_path)
-        end
+        end,
     },
 }

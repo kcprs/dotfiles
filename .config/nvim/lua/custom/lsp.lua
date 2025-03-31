@@ -2,7 +2,7 @@ local M = {}
 
 function M.toggle_diagnostics_virtual_text()
     vim.diagnostic.config({
-        virtual_text = not vim.diagnostic.config().virtual_text
+        virtual_text = not vim.diagnostic.config().virtual_text,
     })
 end
 
@@ -12,7 +12,7 @@ local next_virtual_lines = {
     -- Custom format to avoid `source` being shown in the front
     format = function(diagnostic)
         return diagnostic.message
-    end
+    end,
 }
 function M.toggle_diagnostics_virtual_lines()
     local current_virtual_lines = vim.diagnostic.config().virtual_lines
