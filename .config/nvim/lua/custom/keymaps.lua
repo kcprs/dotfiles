@@ -73,19 +73,19 @@ function M.setup_basic()
     map("n", "<c-w>A", "<cmd>:bufdo bd!<cr>", { desc = "Force-close all buffers" })
 
     -- Quickfix list
-    local map_with_leader_q = bind_group(map, "<leader>q", "quickfix")
-    map_with_leader_q("n", "o", function()
-        local windows = vim.fn.getwininfo()
-        for _, win in pairs(windows) do
-            if win.quickfix == 1 then
-                vim.cmd('cclose')
-                return
-            end
-        end
-        vim.cmd('copen')
-    end, { desc = "[q]uickfix t[o]ggle" })
-    map_with_leader_q("n", "n", "<cmd>cnext<cr>", { desc = "[q]uickfix [n]ext" })
-    map_with_leader_q("n", "p", "<cmd>cprev<cr>", { desc = "[q]uickfix [p]rev" })
+    -- local map_with_leader_q = bind_group(map, "<leader>q", "quickfix")
+    -- map_with_leader_q("n", "o", function()
+    --     local windows = vim.fn.getwininfo()
+    --     for _, win in pairs(windows) do
+    --         if win.quickfix == 1 then
+    --             vim.cmd('cclose')
+    --             return
+    --         end
+    --     end
+    --     vim.cmd('copen')
+    -- end, { desc = "[q]uickfix t[o]ggle" })
+    -- map_with_leader_q("n", "n", "<cmd>cnext<cr>", { desc = "[q]uickfix [n]ext" })
+    -- map_with_leader_q("n", "p", "<cmd>cprev<cr>", { desc = "[q]uickfix [p]rev" })
 
     -- Evaluate selection and replace
     -- Using ":" instead of "<cmd>" here is important for passing visual
@@ -279,8 +279,8 @@ function M.lsp_common(buffer)
     local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
     local map_with_buffer = bind_buffer(map, buffer)
 
-    map_with_leader_l("n", "n", vim.lsp.buf.rename, { desc = "LSP: re[n]ame" })
-    map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
+    -- map_with_leader_l("n", "n", vim.lsp.buf.rename, { desc = "LSP: re[n]ame" })
+    -- map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
     map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
     map_with_leader_l("n", "h", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
@@ -289,7 +289,7 @@ function M.lsp_common(buffer)
     map_with_leader_l("n", "C", require("telescope.builtin").lsp_incoming_calls, { desc = "LSP: show [C]allers" })
     map_with_leader_l("n", "c", require("telescope.builtin").lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
 
-    map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
+    -- map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
     map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols,
         { desc = "LSP: workspace [S]ymbols" })
     map_with_leader_l("n", "n", function() require("nvim-navbuddy").open(buffer) end,
@@ -308,12 +308,13 @@ function M.lsp_common(buffer)
     map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
     map_with_leader_l("n", "t", vim.lsp.buf.type_definition, { desc = "LSP: go to [t]ype definition" })
-    map_with_leader_l("n", "r", require("telescope.builtin").lsp_references, { desc = "LSP: go to [r]eferences" })
-    map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
-        { desc = "LSP: [g]o to [i]mplementation" })
+    -- map_with_leader_l("n", "r", require("telescope.builtin").lsp_references, { desc = "LSP: go to [r]eferences" })
+    -- map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
+    --     { desc = "LSP: [g]o to [i]mplementation" })
 
-    map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
+    -- map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
 
+    --------------------------
     -- Lesser used LSP functionality
 
     -- keymap("n", '<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
