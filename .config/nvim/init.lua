@@ -42,9 +42,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 require("custom.treesitter")
 require("custom.autocommands")
 require("custom.commands")
-
--- local cmp_autopairs = require "nvim-autopairs.completion.cmp"
--- cmp.event:on(
---   "confirm_done",
---   cmp_autopairs.on_confirm_done()
--- )
