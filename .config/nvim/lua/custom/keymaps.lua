@@ -94,10 +94,11 @@ function M.setup_basic()
 
     map("n", "<leader>cx", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
 
-    map("n", "<leader>;j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
-    map("n", "<leader>;e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
-    map("n", "<leader>;n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
-    map("n", "<leader>;s", "<cmd>mks! .session.vim<cr>", { desc = "Edit .envrc in current workspace" })
+    local map_with_leader_semi = bind_group(map, "<leader>;", "Dotfiles in workspace")
+    map_with_leader_semi("n", "j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
+    map_with_leader_semi("n", "e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
+    map_with_leader_semi("n", "n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
+    map_with_leader_semi("n", "s", "<cmd>mks! .session.vim<cr>", { desc = "Save current session to .session.vim" })
 end
 
 function M.oil_set()
