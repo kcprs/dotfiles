@@ -14,7 +14,7 @@ function M.open_with_merge_base_of_main()
         end
     end
 
-    print("Failed to open diffview with merge-base of main")
+    vim.notify("Failed to open diffview with merge-base of main", vim.log.levels.ERROR)
 end
 
 

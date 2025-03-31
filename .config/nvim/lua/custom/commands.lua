@@ -6,7 +6,7 @@ local function copy_absolute_path_to_clipboard()
     local filepath = vim.fn.expand("%:p")
     vim.fn.setreg("*", filepath)
     vim.fn.setreg('"', filepath)
-    print("Copied absolute path: " .. filepath)
+    vim.notify("Copied absolute path: " .. filepath, vim.log.levels.INFO)
 end
 vim.api.nvim_create_user_command("CopyAbsolutePath", copy_absolute_path_to_clipboard, {})
 
@@ -15,7 +15,7 @@ local function copy_relative_path_to_clipboard()
     local relative_path = vim.fn.fnamemodify(filepath, ":~:.")
     vim.fn.setreg("*", relative_path)
     vim.fn.setreg('"', relative_path)
-    print("Copied relative path: " .. relative_path)
+    vim.notify("Copied relative path: " .. relative_path, vim.log.levels.INFO)
 end
 vim.api.nvim_create_user_command("CopyRelativePath", copy_relative_path_to_clipboard, {})
 
@@ -23,7 +23,7 @@ local function copy_file_name_to_clipboard()
     local filename = vim.fn.expand("%:t")
     vim.fn.setreg("*", filename)
     vim.fn.setreg('"', filename)
-    print("Copied file name: " .. filename)
+    vim.notify("Copied file name: " .. filename, vim.log.levels.INFO)
 end
 vim.api.nvim_create_user_command("CopyFileName", copy_file_name_to_clipboard, {})
 
@@ -76,7 +76,7 @@ local function evaluate_selection(replace)
         local new_lines = vim.split(processed_text, "\n")
         vim.api.nvim_buf_set_text(0, start_line - 1, start_col - 1, end_line - 1, end_col, new_lines)
     else
-        print(processed_text)
+        vim.notify(processed_text, vim.log.levels.INFO)
     end
 end
 vim.api.nvim_create_user_command("EvaluateSelection", function() evaluate_selection(false) end, { range = true })

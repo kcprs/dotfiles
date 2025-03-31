@@ -98,7 +98,10 @@ function M.setup_basic()
     map_with_leader_semi("n", "j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
     map_with_leader_semi("n", "e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
     map_with_leader_semi("n", "n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
-    map_with_leader_semi("n", "s", "<cmd>mks! .session.vim<cr>", { desc = "Save current session to .session.vim" })
+    map_with_leader_semi("n", "s", function()
+        vim.cmd('mks! .session.vim')
+        vim.notify('Session saved to .session.vim', vim.log.levels.INFO)
+    end, { desc = "Save current session to .session.vim" })
 end
 
 function M.oil_set()
