@@ -120,3 +120,5 @@ default_layout "compact"
 
 theme "catppuccin-mocha"
 
+show_startup_tips false
+
