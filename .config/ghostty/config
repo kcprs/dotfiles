@@ -8,3 +8,5 @@ title = "Ghostty"
 macos-titlebar-proxy-icon = hidden
 
 macos-option-as-alt = true
+
+cursor-text = #1E1E2D
