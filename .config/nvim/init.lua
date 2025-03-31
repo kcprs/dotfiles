@@ -2,7 +2,7 @@ require("custom.options")
 
 local keymaps = require("custom.keymaps")
 
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+-- NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 keymaps.setup_leader()
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -27,17 +27,6 @@ require("lazy").setup({
 })
 
 keymaps.setup_basic()
-
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
-vim.api.nvim_create_autocmd("TextYankPost", {
-    callback = function()
-        vim.highlight.on_yank()
-    end,
-    group = highlight_group,
-    pattern = "*",
-})
 
 require("custom.treesitter")
 require("custom.autocommands")
