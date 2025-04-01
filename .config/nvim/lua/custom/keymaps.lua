@@ -297,7 +297,7 @@ function M.lsp_common(buffer)
 
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
     map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text, { desc = "LSP: toggle diagnostics [v]irtual text" })
-    map_with_leader_l("n", "x", require("custom.lsp").toggle_diagnostics_virtual_lines, { desc = "LSP: toggle diagnostics virtual lines" })
+    map_with_leader_l("n", "x", require("custom.lsp").next_diagnostics_preset, { desc = "LSP: ne[x]t diagnostics preset" })
     map_with_buffer("n", "]D", function()
         vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
     end, { desc = "LSP: go to next error" })
