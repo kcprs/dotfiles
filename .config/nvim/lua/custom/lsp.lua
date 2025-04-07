@@ -16,16 +16,16 @@ end
 ---@type DiagnosticsPreset[]
 local diagnostics_presets = {
     {
-        name = "basic",
+        name = "virtual_text only",
         config = {
             severity_sort = true,
-            update_in_insert = true,
+            update_in_insert = false,
             virtual_text = true,
             virtual_lines = false,
         },
     },
     {
-        name = "virtual_lines always",
+        name = "virtual_lines only",
         config = {
             severity_sort = true,
             update_in_insert = false,

@@ -1,5 +1,5 @@
 -- Default diagnostics settings
-require("custom.lsp").set_diagnostics_preset(2)
+require("custom.lsp").set_diagnostics_preset(1)
 
 local function default_on_attach(client, bufnr)
     require("custom.keymaps").lsp_common(bufnr)
