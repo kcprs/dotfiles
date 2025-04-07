@@ -59,6 +59,7 @@ function M.setup_basic()
     map_with_leader_c("n", "a", "<cmd>CopyAbsolutePath<cr>", { desc = "[c]opy [a]bsolute path" })
     map_with_leader_c("n", "r", "<cmd>CopyRelativePath<cr>", { desc = "[c]opy [r]elative path" })
     map_with_leader_c("n", "f", "<cmd>CopyFileName<cr>", { desc = "[c]opy [f]ile name" })
+    map_with_leader_c("n", "xwh", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
 
     -- Sourcing files
     local map_with_leader_s = bind_group(map, "<leader>s", "source")
@@ -73,17 +74,16 @@ function M.setup_basic()
     map("n", "<c-w>A", "<cmd>:bufdo bd!<cr>", { desc = "Force-close all buffers" })
 
     -- Quickfix list
-    -- local map_with_leader_q = bind_group(map, "<leader>q", "quickfix")
-    -- map_with_leader_q("n", "o", function()
-    --     local windows = vim.fn.getwininfo()
-    --     for _, win in pairs(windows) do
-    --         if win.quickfix == 1 then
-    --             vim.cmd('cclose')
-    --             return
-    --         end
-    --     end
-    --     vim.cmd('copen')
-    -- end, { desc = "[q]uickfix t[o]ggle" })
+    map("n", "<leader>q", function()
+        local windows = vim.fn.getwininfo()
+        for _, win in pairs(windows) do
+            if win.quickfix == 1 then
+                vim.cmd("cclose")
+                return
+            end
+        end
+        vim.cmd("copen")
+    end, { desc = "Toggle [q]uickfix list" })
     -- map_with_leader_q("n", "n", "<cmd>cnext<cr>", { desc = "[q]uickfix [n]ext" })
     -- map_with_leader_q("n", "p", "<cmd>cprev<cr>", { desc = "[q]uickfix [p]rev" })
 
@@ -92,9 +92,13 @@ function M.setup_basic()
     -- selection to the command. Details are beyond my understanding.
     map("v", "<leader>=", ":EvaluateSelectionAndReplace<cr>", { noremap = true, silent = true })
 
-    map("n", "<leader>cx", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
+    -- Formatting with conform.nvim - doesn't necessarily require an LSP
+    local ok, conform = pcall(require, "conform")
+    if ok then
+        map("n", "<leader>lf", conform.format, { desc = "LSP: [f]ormat" })
+    end
 
-    local map_with_leader_semi = bind_group(map, "<leader>;", "Dotfiles in workspace")
+    local map_with_leader_semi = bind_group(map, "<leader>;", "dotfiles in workspace")
     map_with_leader_semi("n", "j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
     map_with_leader_semi("n", "e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
     map_with_leader_semi("n", "n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
@@ -281,7 +285,16 @@ function M.lsp_common(buffer)
 
     -- map_with_leader_l("n", "n", vim.lsp.buf.rename, { desc = "LSP: re[n]ame" })
     -- map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
-    map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
+    local ok, conform = pcall(require, "conform")
+    if ok then
+        map_with_leader_l("n", "f", function()
+            conform.format({
+                bufnr = buffer,
+            })
+        end, { desc = "LSP: [f]ormat" })
+    else
+        map_with_leader_l("n", "f", vim.lsp.buf.format, { desc = "LSP: [f]ormat" })
+    end
     map_with_leader_l("n", "h", function()
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP: toggle inlay [h]ints" })
@@ -477,10 +490,10 @@ function M.dap()
     local dapui_util = require("dapui.util")
     local custom = require("custom.dap")
 
-    map("n", "<F5>", dap.continue, { desc = "debug: continue" })
-    map("n", "<F6>", dap.step_over, { desc = "debug: step over" })
-    map("n", "<F7>", dap.step_into, { desc = "debug: step into" })
-    map("n", "<F8>", dap.step_out, { desc = "debug: step out" })
+    map("n", "<F8>", dap.continue, { desc = "debug: continue" })
+    map("n", "<F9>", dap.step_over, { desc = "debug: step over" })
+    map("n", "<F10>", dap.step_into, { desc = "debug: step into" })
+    map("n", "<F11>", dap.step_out, { desc = "debug: step out" })
 
     local map_with_leader_d = bind_group(map, "<leader>d", "debug")
     map_with_leader_d("n", "b", dap.toggle_breakpoint, { desc = "debug: toggle [b]reakpoint" })
