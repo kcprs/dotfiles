@@ -59,7 +59,7 @@ function M.setup_basic()
     map_with_leader_c("n", "a", "<cmd>CopyAbsolutePath<cr>", { desc = "[c]opy [a]bsolute path" })
     map_with_leader_c("n", "r", "<cmd>CopyRelativePath<cr>", { desc = "[c]opy [r]elative path" })
     map_with_leader_c("n", "f", "<cmd>CopyFileName<cr>", { desc = "[c]opy [f]ile name" })
-    map_with_leader_c("n", "xwh", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
+    map_with_leader_c("n", "x", "<cmd>let @+ = @0<cr>", { desc = "Copy 0 register into system clipboard" })
 
     -- Sourcing files
     local map_with_leader_s = bind_group(map, "<leader>s", "source")
