@@ -135,26 +135,6 @@ function M.cmp_get_mapping()
     }
 end
 
-function M.luasnip_set()
-    local ls = require("luasnip")
-
-    map("i", "<c-k>", function()
-        if ls.expand_or_jumpable() then
-            ls.expand_or_jump()
-        end
-    end)
-
-    map("i", "<c-j>", function()
-        if ls.jumpable(-1) then
-            ls.jump(-1)
-        end
-    end)
-
-    -- TODO: set up choice keymaps like here: https://youtu.be/Dn800rlPIho?si=HdY73pwpqaHHMEwD&t=656
-end
-
---- NEW ---
-
 function M.telescope()
     local custom = require("custom.telescope")
     local builtin = require("telescope.builtin")

@@ -1,25 +1,26 @@
 return {
     "saghen/blink.cmp",
-    enabled = false, -- Still too buggy, let's wait untils it's developed further
 
     -- use a release tag to download pre-built binaries
-    version = "*",
-
-    dependencies = { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
+    version = '1.*',
 
     config = function()
         require("blink.cmp").setup({
-            -- 'default' for mappings similar to built-in completion
-            -- 'super-tab' for mappings similar to vscode (tab to accept, arrow keys to navigate)
-            -- 'enter' for mappings similar to 'super-tab' but with 'enter' to accept
-            -- See the full "keymap" documentation for information on defining your own keymap.
-            keymap = { preset = "default" },
+            -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
+            -- 'super-tab' for mappings similar to vscode (tab to accept)
+            -- 'enter' for enter to accept
+            -- 'none' for no mappings
+            --
+            -- All presets have the following mappings:
+            -- C-space: Open menu or open docs if already open
+            -- C-n/C-p or Up/Down: Select next/previous item
+            -- C-e: Hide menu
+            -- C-k: Toggle signature help (if signature.enabled = true)
+            --
+            -- See :h blink-cmp-config-keymap for defining your own keymap
+            keymap = { preset = 'default' },
 
             appearance = {
-                -- Sets the fallback highlight groups to nvim-cmp's highlight groups
-                -- Useful for when your theme doesn't support blink.cmp
-                -- Will be removed in a future release
-                use_nvim_cmp_as_default = true,
                 -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
                 -- Adjusts spacing to ensure icons are aligned
                 nerd_font_variant = "mono",
@@ -30,30 +31,24 @@ return {
                 documentation = { auto_show = true, auto_show_delay_ms = 500 },
             },
 
-            snippets = { preset = "luasnip" },
+            -- Default list of enabled providers defined so that you can extend it
+            -- elsewhere in your config, without redefining it, due to `opts_extend`
+            sources = {
+                default = { 'lsp', 'path', 'snippets', 'buffer' },  -- TODO: tailwind-tools.nvim?
+                -- Provide path completions relative to cwd insted of current file path
+                -- providers = {
+                --     path = {
+                --         opts = {
+                --             get_cwd = function(_)
+                --                 return vim.fn.getcwd()
+                --             end,
+                --         }
+                --     }
+                -- }
+            },
 
-            -- Experimental signature help support
+             -- Experimental signature help support
             signature = { enabled = true },
         })
-
-        -- LuaSnip
-        local ls = require("luasnip")
-        ls.setup({
-            update_events = { "TextChanged", "TextChangedI" },
-            -- The four options below allow to jump back into snippets after they have been exited
-            keep_roots = true,
-            link_roots = true,
-            link_children = true,
-            exit_roots = false,
-        })
-
-        -- If opts.paths in [lazy]_load(opts) is not set runtimepath is searched for directories that contain snippets.
-        --
-        --     lua: the snippet-library has to be in a directory named "luasnippets".
-        --     snipmate: similar to lua, but the directory has to be "snippets".
-        --     vscode: any directory in runtimepath that contains a package.json contributing snippets.
-        require("luasnip.loaders.from_lua").lazy_load()
-
-        require("custom.keymaps").luasnip_set()
     end,
 }

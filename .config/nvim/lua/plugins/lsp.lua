@@ -98,7 +98,7 @@ return {
                 "MunifTanjim/nui.nvim",
             },
         },
-        "hrsh7th/cmp-nvim-lsp",
+        "saghen/blink.cmp",
         {
             "mrcjkb/rustaceanvim",
             version = "^4",
@@ -126,7 +126,7 @@ return {
 
         -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
         local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
+        capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
 
         require("mason-lspconfig").setup_handlers({
             function(server_name)
