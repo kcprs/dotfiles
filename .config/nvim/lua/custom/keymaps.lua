@@ -115,128 +115,27 @@ function M.oil_set()
     map("n", "<leader>O", require("oil").toggle_float, { desc = "Open [O]il in current file's dir" })
 end
 
-function M.telescope()
-    local custom = require("custom.telescope")
-    local builtin = require("telescope.builtin")
+function M.fzf_lua()
+    local fzf_lua = require("fzf-lua")
     local map_with_leader_f = bind_group(map, "<leader>f", "find")
 
-    map_with_leader_f("n", "d", custom.project_files, { desc = "[f]in[d] project files (git with fallback)" })
-    map_with_leader_f("n", "D", custom.find_all_files, { desc = "[f]in[D] ALL files" })
-    map_with_leader_f("n", "g", builtin.git_files, { desc = "[f]ind [g]it files" })
-    map_with_leader_f("n", "b", builtin.buffers, { desc = "[f]ind existing [b]uffers" })
-    map_with_leader_f("n", "r", builtin.live_grep, { desc = "[f]ind by g[r]ep" })
-    map_with_leader_f("n", "h", builtin.help_tags, { desc = "[f]ind in [h]elp" })
+    map_with_leader_f("n", "d", fzf_lua.files, { desc = "[f]in[d] files" })
+    map_with_leader_f("n", "b", fzf_lua.buffers, { desc = "[f]ind existing [b]uffers" })
+    map_with_leader_f("n", "r", fzf_lua.live_grep_native, { desc = "[f]ind by g[r]ep" })
+    map_with_leader_f("n", "h", fzf_lua.helptags, { desc = "[f]ind in [h]elp" })
     map_with_leader_f("n", "o", function()
-        builtin.oldfiles({ only_cwd = true })
+        fzf_lua.oldfiles({ cwd_only = true })
     end, { desc = "[f]ind [o]ld opened files in cwd" })
-    map_with_leader_f("n", "O", builtin.oldfiles, { desc = "[f]ind all [O]ld opened files" })
-    map_with_leader_f("n", "k", builtin.keymaps, { desc = "[f]ind [k]eymaps" })
-    map_with_leader_f("n", "c", builtin.commands, { desc = "[f]ind [c]ommands" })
-    map_with_leader_f("n", "s", builtin.grep_string, { desc = "[f]ind [s]tring" })
-    map_with_leader_f("n", "i", builtin.diagnostics, { desc = "[f]ind d[i]agnostics" })
-    map_with_leader_f("n", "q", builtin.quickfix, { desc = "[f]ind in [q]uickfix" })
-    map_with_leader_f("n", "f", builtin.resume, { desc = "Resume previous search" })
+    map_with_leader_f("n", "O", fzf_lua.oldfiles, { desc = "[f]ind all [O]ld opened files" })
+    map_with_leader_f("n", "k", fzf_lua.keymaps, { desc = "[f]ind [k]eymaps" })
+    map_with_leader_f("n", "c", fzf_lua.commands, { desc = "[f]ind [c]ommands" })
+    map_with_leader_f("v", "v", fzf_lua.grep_visual, { desc = "[f]ind [v]isual selection" })
+    map_with_leader_f("n", "w", fzf_lua.grep_cword, { desc = "[f]ind [w]ord" })
+    map_with_leader_f("n", "W", fzf_lua.grep_cWORD, { desc = "[f]ind [W]ORD" })
+    map_with_leader_f("n", "<space>", fzf_lua.builtin, { desc = "[f]ind builtin fzf-lua finders" })
+    map_with_leader_f("n", "f", fzf_lua.resume, { desc = "Resume previous search" })
 
-    map("n", "<leader>/", function()
-        -- You can pass additional configuration to telescope to change theme, layout, etc.
-        require("telescope.builtin").current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-            winblend = 10,
-            previewer = false,
-        }))
-    end, { desc = "[/] Fuzzily search in current buffer" })
-end
-
-function M.telescope_defaults_mappings()
-    local actions = require("telescope.actions")
-    return {
-        i = {
-            ["<c-c>"] = actions.close,
-            ["<c-x>"] = false, -- select_horizontal by default, remapped to delete_buffer below
-            ["<c-h>"] = actions.select_horizontal,
-        },
-        n = {
-            ["<c-c>"] = actions.close,
-            ["<c-x>"] = false, -- select_horizontal by default, remapped to delete_buffer below
-            ["<c-h>"] = actions.select_horizontal,
-        },
-    }
-end
-
-function M.telescope_find_files_mappings()
-    local function switch_to_git_files(prompt_buffer)
-        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").git_files)
-    end
-
-    return {
-        i = {
-            ["<c-f>"] = switch_to_git_files,
-        },
-        n = {
-            ["<c-f>"] = switch_to_git_files,
-        },
-    }
-end
-
-function M.telescope_git_files_mappings()
-    local function switch_to_find_files(prompt_buffer)
-        require("custom.telescope").switch_picker(prompt_buffer, require("custom.telescope").find_all_files)
-    end
-
-    return {
-        i = {
-            ["<c-f>"] = switch_to_find_files,
-        },
-        n = {
-            ["<c-f>"] = switch_to_find_files,
-        },
-    }
-end
-
-function M.telescope_buffers_mappings()
-    local actions = require("telescope.actions")
-    return {
-        i = {
-            ["<c-x>"] = actions.delete_buffer,
-        },
-        n = {
-            ["d"] = actions.delete_buffer,
-        },
-    }
-end
-
-function M.telescope_live_grep_mappings()
-    local include_hidden = false
-    local function toggle_include_hidden(prompt_buffer)
-        include_hidden = not include_hidden
-        local opts = include_hidden and { additional_args = { "--hidden", "--no-ignore" } } or nil
-        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").live_grep, opts)
-    end
-
-    return {
-        i = {
-            ["<c-f>"] = toggle_include_hidden,
-        },
-        n = {
-            ["<c-f>"] = toggle_include_hidden,
-        },
-    }
-end
-
-function M.telescope_oldfiles_mappings()
-    local only_cwd = true
-    local function toggle_only_cwd(prompt_buffer)
-        only_cwd = not only_cwd
-        require("custom.telescope").switch_picker(prompt_buffer, require("telescope.builtin").oldfiles, { only_cwd = only_cwd })
-    end
-
-    return {
-        i = {
-            ["<c-f>"] = toggle_only_cwd,
-        },
-        n = {
-            ["<c-f>"] = toggle_only_cwd,
-        },
-    }
+    map("n", "<leader>/", fzf_lua.grep_curbuf, { desc = "[/] Fuzzily search in current buffer" })
 end
 
 function M.lsp_common(buffer)
@@ -259,16 +158,6 @@ function M.lsp_common(buffer)
         vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { desc = "LSP: toggle inlay [h]ints" })
 
-    map_with_leader_l("n", "C", require("telescope.builtin").lsp_incoming_calls, { desc = "LSP: show [C]allers" })
-    map_with_leader_l("n", "c", require("telescope.builtin").lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
-
-    -- map_with_leader_l("n", "s", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document [s]ymbols" })
-    map_with_buffer("n", "gO", require("telescope.builtin").lsp_document_symbols, { desc = "LSP: document symbols" })
-    map_with_leader_l("n", "S", require("telescope.builtin").lsp_dynamic_workspace_symbols, { desc = "LSP: workspace [S]ymbols" })
-    map_with_leader_l("n", "n", function()
-        require("nvim-navbuddy").open(buffer)
-    end, { desc = "LSP: [n]avigate symbols" })
-
     map_with_leader_l("n", "D", vim.diagnostic.setloclist, { desc = "LSP: open [D]iagnostics list" })
     map_with_leader_l("n", "v", require("custom.lsp").toggle_diagnostics_virtual_text, { desc = "LSP: toggle diagnostics [v]irtual text" })
     map_with_leader_l("n", "x", require("custom.lsp").next_diagnostics_preset, { desc = "LSP: ne[x]t diagnostics preset" })
@@ -279,14 +168,26 @@ function M.lsp_common(buffer)
         vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })
     end, { desc = "LSP: go to previous error" })
 
-    map_with_buffer("n", "gd", require("telescope.builtin").lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
     map_with_leader_l("n", "t", vim.lsp.buf.type_definition, { desc = "LSP: go to [t]ype definition" })
-    -- map_with_leader_l("n", "r", require("telescope.builtin").lsp_references, { desc = "LSP: go to [r]eferences" })
-    -- map_with_buffer("n", "gi", require("telescope.builtin").lsp_implementations,
-    --     { desc = "LSP: [g]o to [i]mplementation" })
 
-    -- map_with_buffer({ "n", "i" }, "<c-h>", vim.lsp.buf.signature_help, { desc = "LSP: signature [h]elp" })
+    ---@diagnostic disable-next-line: redefined-local
+    local ok, fzf_lua = pcall(require, "fzf-lua")
+    if ok then
+        map_with_leader_l("n", "C", fzf_lua.lsp_incoming_calls, { desc = "LSP: show [C]allers" })
+        map_with_leader_l("n", "c", fzf_lua.lsp_outgoing_calls, { desc = "LSP: show [c]allees" })
+        map_with_buffer("n", "gO", fzf_lua.lsp_document_symbols, { desc = "LSP: document symbols" })
+        map_with_leader_l("n", "S", fzf_lua.lsp_live_workspace_symbols, { desc = "LSP: workspace [S]ymbols" })
+        map_with_buffer("n", "gd", fzf_lua.lsp_definitions, { desc = "LSP: [g]o to [d]efinition" })
+    end
+
+    ---@diagnostic disable-next-line: redefined-local
+    local ok, navbuddy = pcall(require, "nvim-navbuddy")
+    if ok then
+        map_with_leader_l("n", "n", function()
+            navbuddy.open(buffer)
+        end, { desc = "LSP: [n]avigate symbols" })
+    end
 
     --------------------------
     -- Lesser used LSP functionality
