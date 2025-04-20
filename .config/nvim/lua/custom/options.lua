@@ -15,6 +15,9 @@ vim.opt.mouse = "a"
 -- Disable line wrapping
 vim.opt.wrap = false
 
+-- If wrapping, continue broken lines with indentation
+vim.opt.breakindent = true
+
 -- Save undo history
 vim.opt.undofile = true
 
@@ -24,6 +27,12 @@ vim.opt.smartcase = true
 
 -- Keep one signcolumn on by default
 vim.opt.signcolumn = "yes"
+
+-- Don't show the mode, since it's already in the status line
+vim.opt.showmode = false
+
+-- Confirm save on exit insted of throwing error
+vim.opt.confirm = true
 
 -- NOTE: You should make sure your terminal supports this
 vim.opt.termguicolors = true
