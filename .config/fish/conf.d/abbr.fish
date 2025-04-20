@@ -31,7 +31,7 @@ abbr --add nv nvim
 abbr --add ng nvim \'+:Neogit kind=replace\'
 abbr --add cg cargo
 abbr --add --command cargo f fmt
-abbr --add --command cargo cl clippy
+abbr --add --command cargo cl clippy --all-targets
 abbr --add jt just
 abbr --add jc just --choose
 abbr --add da direnv allow
