@@ -115,26 +115,6 @@ function M.oil_set()
     map("n", "<leader>O", require("oil").toggle_float, { desc = "Open [O]il in current file's dir" })
 end
 
-function M.toggleterm_get_open_mapping()
-    return [[<c-\>]]
-end
-
-function M.cmp_get_mapping()
-    local cmp = require("cmp")
-    return {
-        ["<c-n>"] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<c-p>"] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
-        ["<c-y>"] = cmp.mapping(
-            cmp.mapping.confirm({
-                select = true,
-                behavior = cmp.ConfirmBehavior.Insert,
-            }),
-            { "i" }
-        ),
-        ["<c-space>"] = cmp.mapping(cmp.mapping.complete({ reason = "manual" }), { "i" }),
-    }
-end
-
 function M.telescope()
     local custom = require("custom.telescope")
     local builtin = require("telescope.builtin")
