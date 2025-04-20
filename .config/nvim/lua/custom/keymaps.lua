@@ -519,4 +519,61 @@ function M.undotree()
     map("n", "<leader>u", "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>", { desc = "[u]ndotree toggle" })
 end
 
+function M.treesitter_incremental_selection()
+    return {
+        init_selection = "<Enter>",
+        node_incremental = "<Enter>",
+        scope_incremental = false,
+        node_decremental = "<Backspace>",
+    }
+end
+
+function M.treesitter_textobjects_select()
+    return {
+        -- You can use the capture groups defined in textobjects.scm
+        ["aa"] = "@parameter.outer",
+        ["ia"] = "@parameter.inner",
+        ["af"] = "@function.outer",
+        ["if"] = "@function.inner",
+        ["ac"] = "@class.outer",
+        ["ic"] = "@class.inner",
+    }
+end
+
+function M.treesitter_textobjects_move()
+    return {
+        goto_next_start = {
+            ["]m"] = "@function.outer",
+            ["]]"] = "@class.outer",
+            ["]a"] = "@parameter.outer",
+        },
+        goto_next_end = {
+            ["]M"] = "@function.outer",
+            ["]["] = "@class.outer",
+            ["]A"] = "@parameter.outer",
+        },
+        goto_previous_start = {
+            ["[m"] = "@function.outer",
+            ["[["] = "@class.outer",
+            ["[a"] = "@parameter.outer",
+        },
+        goto_previous_end = {
+            ["[M"] = "@function.outer",
+            ["[]"] = "@class.outer",
+            ["[A"] = "@parameter.outer",
+        },
+    }
+end
+
+function M.treesitter_textobjects_swap()
+    return {
+        swap_next = {
+            ["<leader>ta"] = "@parameter.inner",
+        },
+        swap_previous = {
+            ["<leader>tA"] = "@parameter.inner",
+        },
+    }
+end
+
 return M

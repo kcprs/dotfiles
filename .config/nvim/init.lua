@@ -28,6 +28,5 @@ require("lazy").setup({
 
 keymaps.setup_basic()
 
-require("custom.treesitter")
 require("custom.autocommands")
 require("custom.commands")
