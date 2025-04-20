@@ -132,7 +132,7 @@ return {
             function(server_name)
                 local server_config = (servers[server_name] or {})
 
-                -- If condition was given an it evaluates to false, do not set up anything
+                -- If condition was given and it evaluates to false, do not set up anything
                 if server_config.condition and not server_config.condition() then
                     return
                 end
