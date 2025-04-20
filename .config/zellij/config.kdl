@@ -26,14 +26,14 @@ keybinds clear-defaults=true {
         bind "j" "Ctrl j" { MoveFocus "Down"; SwitchToMode "Normal"; }
         bind "k" "Ctrl k" { MoveFocus "Up"; SwitchToMode "Normal"; }
 
-        bind ";" "Ctrl ;" { ToggleFloatingPanes; SwitchToMode "Normal"; }
+        bind "Space" "Ctrl Space" { ToggleFloatingPanes; SwitchToMode "Normal"; }
         bind "a" { TogglePaneEmbedOrFloating; SwitchToMode "Normal"; }
 
         bind "z" { ToggleFocusFullscreen; SwitchToMode "Normal"; }
         bind "e" { EditScrollback; SwitchToMode "Normal"; }
 
         bind "f" { FocusNextPane; }
-        bind "Space" { NextSwapLayout; }
+        bind ";" { NextSwapLayout; }
         bind "d" { Detach; }
         bind "q" { Quit; }
 
