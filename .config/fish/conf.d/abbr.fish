@@ -14,6 +14,7 @@ abbr --add gsh git show -q HEAD
 abbr --add gstat git status
 abbr --add gmb git merge-base
 abbr --add gw git worktree
+abbr --add gcl git clean -dixff
 
 abbr --add ls eza --all
 abbr --add la eza --all --long --header --total-size --git
