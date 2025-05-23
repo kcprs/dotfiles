@@ -15,6 +15,7 @@ return {
                 },
             },
         })
+        require("fzf-lua.providers.ui_select").register()
         require("custom.keymaps").fzf_lua()
     end,
 }
