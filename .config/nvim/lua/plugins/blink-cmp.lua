@@ -2,7 +2,7 @@ return {
     "saghen/blink.cmp",
 
     -- use a release tag to download pre-built binaries
-    version = '1.*',
+    version = "1.*",
 
     config = function()
         require("blink.cmp").setup({
@@ -18,7 +18,7 @@ return {
             -- C-k: Toggle signature help (if signature.enabled = true)
             --
             -- See :h blink-cmp-config-keymap for defining your own keymap
-            keymap = { preset = 'default' },
+            keymap = { preset = "default" },
 
             appearance = {
                 -- Set to 'mono' for 'Nerd Font Mono' or 'normal' for 'Nerd Font'
@@ -34,7 +34,7 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { 'lsp', 'path', 'snippets', 'buffer' },  -- TODO: tailwind-tools.nvim?
+                default = { "lazydev", "lsp", "path", "snippets", "buffer" }, -- TODO: tailwind-tools.nvim?
                 -- Provide path completions relative to cwd insted of current file path
                 -- providers = {
                 --     path = {
@@ -45,9 +45,17 @@ return {
                 --         }
                 --     }
                 -- }
+                providers = {
+                    lazydev = {
+                        name = "LazyDev",
+                        module = "lazydev.integrations.blink",
+                        -- make lazydev completions top priority (see `:h blink.cmp`)
+                        score_offset = 100,
+                    },
+                },
             },
 
-             -- Experimental signature help support
+            -- Experimental signature help support
             signature = { enabled = true },
         })
     end,

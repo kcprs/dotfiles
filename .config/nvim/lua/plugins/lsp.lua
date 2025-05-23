@@ -27,10 +27,15 @@ local function clangd_on_attach(client, bufnr)
     require("custom.keymaps").lsp_clangd(bufnr)
 end
 
+---@return boolean
 local function is_lsp_enabled_via_env(name)
-    return string.find(os.getenv("NVIM_LSP") or "", name)
+    return string.find(os.getenv("NVIM_LSP") or "", name) ~= nil
 end
 
+---@class ServerConfig: vim.lsp.Config
+---@field condition? fun(): boolean
+
+---@type { [string]: ServerConfig }
 local servers = {
     clangd = {
         args = {
@@ -50,7 +55,7 @@ local servers = {
     },
     pyright = {},
     rust_analyzer = {
-        -- Never explicitly call setup() - done by rustaceanvim
+        -- Never explicitly call enable() - done by rustaceanvim
         condition = function()
             return false
         end,
@@ -80,16 +85,18 @@ local servers = {
 }
 
 return {
-    "neovim/nvim-lspconfig",
+    "mason-org/mason-lspconfig.nvim",
     dependencies = {
-        "williamboman/mason.nvim",
-        "williamboman/mason-lspconfig.nvim",
+        "neovim/nvim-lspconfig",
+        "mason-org/mason.nvim",
 
         -- Useful status updates for LSP
         { "j-hui/fidget.nvim", tag = "v1.4.0", opts = {} },
 
-        -- Additional lua configuration, makes nvim stuff amazing!
-        "folke/neodev.nvim",
+        {
+            "folke/lazydev.nvim",
+            ft = "lua",
+        },
 
         -- Breadcrumbs and navigating symbols
         {
@@ -102,7 +109,7 @@ return {
         "saghen/blink.cmp",
         {
             "mrcjkb/rustaceanvim",
-            version = "^4",
+            version = "^6",
             ft = { "rust" },
             config = function()
                 vim.g.rustaceanvim = {
@@ -120,38 +127,33 @@ return {
         require("mason-lspconfig").setup({
             -- Ensure the servers above are installed
             ensure_installed = vim.tbl_keys(servers),
+            automatic_enable = false,
         })
 
         -- Setup neovim lua configuration
-        require("neodev").setup()
+        require("lazydev").setup()
 
-        -- nvim-cmp supports additional completion capabilities, so broadcast that to servers
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+        for server, config in pairs(servers) do
+            local on_attach = config.on_attach or default_on_attach
 
-        require("mason-lspconfig").setup_handlers({
-            function(server_name)
-                local server_config = (servers[server_name] or {})
-
-                -- If condition was given and it evaluates to false, do not set up anything
-                if server_config.condition and not server_config.condition() then
-                    return
+            -- "merge" pre-existing on_attach function - it may come from nvim-lspconfig
+            if vim.lsp.config[server].on_attach ~= nil then
+                local on_attach_1 = vim.lsp.config[server].on_attach
+                local on_attach_2 = on_attach
+                on_attach = function (client, bufnr)
+                    ---@diagnostic disable-next-line: need-check-nil
+                    on_attach_1(client, bufnr)
+                    on_attach_2(client, bufnr)
                 end
+            end
 
-                local default_config = require("lspconfig")[server_name].document_config.default_config
+            config.on_attach = on_attach
 
-                -- Add args to cmd
-                local cmd = default_config.cmd
-                vim.list_extend(cmd, server_config.args or {})
+            vim.lsp.config(server, config)
 
-                require("lspconfig")[server_name].setup({
-                    capabilities = capabilities,
-                    on_attach = server_config.on_attach or default_on_attach,
-                    cmd = cmd,
-                    settings = server_config.settings,
-                    filetypes = server_config.filetypes,
-                })
-            end,
-        })
+            if not config.condition or config.condition() then
+                vim.lsp.enable(server)
+            end
+        end
     end,
 }
