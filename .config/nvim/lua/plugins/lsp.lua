@@ -74,6 +74,7 @@ local servers = {
     yamlls = {},
     bashls = {},
     marksman = {},
+    gitlab_ci_ls = {},
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
