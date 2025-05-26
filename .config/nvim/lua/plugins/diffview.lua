@@ -19,9 +19,12 @@ return {
                         wincmd l
                     ]])
                 end,
-                diff_buf_win_enter = function()
-                    -- Folds are reset to all closed on file change - fix by unfolding
-                    vim.cmd("normal! zR")
+                view_enter = function ()
+                    -- Avoid folding areas that are the same, see :h diffopt
+                    vim.opt.diffopt:append("context:99999")
+                end,
+                view_leave = function ()
+                    vim.opt.diffopt:remove("context:99999")
                 end,
                 diff_buf_read = function(bufnr)
                     local ok, wk = pcall(require, "which-key")
