@@ -38,7 +38,8 @@ end
 ---@type { [string]: ServerConfig }
 local servers = {
     clangd = {
-        args = {
+        cmd = {
+            "clangd",
             "--clang-tidy",
             "--header-insertion=never",
         },
