@@ -2,6 +2,12 @@ return {
     "nvim-treesitter/nvim-treesitter-textobjects",
     dependencies = {
         "nvim-treesitter/nvim-treesitter",
+        {
+            "nvim-treesitter/nvim-treesitter-context",
+            dependencies = {
+                "nvim-treesitter/nvim-treesitter",
+            }
+        },
     },
     build = ":TSUpdate",
     config = function()
@@ -35,6 +41,10 @@ return {
                     enable = true,
                 }, require("custom.keymaps").treesitter_textobjects_swap()),
             },
+        })
+
+        require("treesitter-context").setup({
+            multiwindow = true,
         })
     end,
 }
