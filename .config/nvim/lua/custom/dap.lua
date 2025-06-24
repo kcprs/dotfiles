@@ -107,9 +107,10 @@ function M.config_from_just(recipe_name, config)
     -- Find last command in recipe
     local last_command = nil
     for line in result:gmatch("[^\n]+") do
-        if line:match("%S") then -- Check if the line is not empty (contains non-whitespace characters)
+        -- Check if the line is not empty (contains non-whitespace characters)
+        -- and does not start with '#' after optional whitespace
+        if line:match("%S") and not line:match("^%s*#") then
             last_command = line
-        else
         end
     end
     if not last_command then
