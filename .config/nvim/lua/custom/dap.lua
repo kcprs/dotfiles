@@ -118,6 +118,7 @@ function M.config_from_just(recipe_name, config)
     end
 
     -- Split the last command on whitespace
+    -- TODO: Treat quoted strings as one element.
     local exe = nil
     local args = {}
     if last_command then
