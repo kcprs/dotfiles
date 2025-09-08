@@ -51,8 +51,9 @@ function M.setup_basic()
     map("v", "J", ":m '>+1<CR>gv=gv")
     map("v", "K", ":m '<-2<CR>gv=gv")
 
-    -- Paste without overwriting default register
-    map("v", "<leader>p", '"_dP')
+    -- Paste without overwriting default register. Changing into space instead of just deleting
+    -- properly handles pasting onto ends of lines, otherwise the cursor moves one column to the left.
+    map("v", "<leader>p", '"_c <ESC>vP')
 
     -- Copying paths
     local map_with_leader_c = bind_group(map, "<leader>c", "copy")
