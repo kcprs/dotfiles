@@ -46,6 +46,10 @@ vim.opt.sidescrolloff = 8
 vim.opt.splitright = true
 vim.opt.splitbelow = true
 
+-- Windows with borders please
+vim.opt.winborder = "single"
+
+-- Enable reading .nvim.lua file
 vim.opt.exrc = true
 
 -- Indentation
