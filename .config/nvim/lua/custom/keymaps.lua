@@ -100,7 +100,17 @@ function M.setup_basic()
     end
 
     local map_with_leader_semi = bind_group(map, "<leader>;", "dotfiles in workspace")
-    map_with_leader_semi("n", "j", "<cmd>e .justfile<cr>", { desc = "Edit .justfile in current workspace" })
+    map_with_leader_semi("n", "j", function()
+        ---@diagnostic disable-next-line undefined-field
+        if vim.uv.fs_stat(".justfile") then
+            vim.cmd("edit .justfile")
+        ---@diagnostic disable-next-line undefined-field
+        elseif vim.uv.fs_stat("justfile") then
+            vim.cmd("edit justfile")
+        else
+            vim.notify("No .justfile or justfile found in the current directory", vim.log.levels.WARN)
+        end
+    end, { desc = "Edit .justfile in current workspace" })
     map_with_leader_semi("n", "e", "<cmd>e .envrc<cr>", { desc = "Edit .envrc in current workspace" })
     map_with_leader_semi("n", "n", "<cmd>e .nvim.lua<cr>", { desc = "Edit .nvim.lua in current workspace" })
     map_with_leader_semi("n", "s", function()
