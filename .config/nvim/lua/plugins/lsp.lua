@@ -42,6 +42,7 @@ local servers = {
             "clangd",
             "--clang-tidy",
             "--header-insertion=never",
+            "--function-arg-placeholders=0",
         },
         on_attach = clangd_on_attach,
     },
