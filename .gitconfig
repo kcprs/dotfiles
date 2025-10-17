@@ -20,7 +20,6 @@
 [diff]
 	algorithm = histogram
 	colorMoved = plain
-	mnemonicPrefix = true
 	renames = true
 [help]
 	autocorrect = prompt
@@ -42,6 +41,13 @@
 [delta]
 	navigate = true
 	features = catppuccin-mocha
+[alias]
+	# Usage: git find-merge <commit-SHA> [<branch>]
+	# Find SHA of merge commit which merged <commit> into <branch> (or HEAD if <branch> not given)
+	find-merge = "!sh -c 'commit=$0 && branch=${1:-HEAD} && (git rev-list $commit..$branch --ancestry-path | cat -n; git rev-list $commit..$branch --first-parent | cat -n) | sort -k2 -s | uniq -f1 -d | sort -n | tail -1 | cut -f2'"
+	# Usage: git show-merge <commit-SHA> [<branch>]
+	# Show details of merge commit which merged <commit> into <branch> (or HEAD if <branch> not given)
+	show-merge = "!sh -c 'merge_commit=$(git find-merge \"$0\" \"$1\") && git show -q \"$merge_commit\"'"
 [include]
     path = ~/.config/delta/themes/catpuccin.gitconfig
     path = ~/.config/git/.gitconfig_local
