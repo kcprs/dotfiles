@@ -5,10 +5,10 @@ return {
         require("fzf-lua").setup({
             fzf_opts = { ["--cycle"] = true },
             keymap = {
-                builtin = {
-                    true,
-                    ["<c-/>"] = "toggle-help",
-                },
+                -- builtin = {
+                --     true,
+                --     ["<c-/>"] = "toggle-help", -- stopped working after update...
+                -- },
                 fzf = {
                     true,
                     ["ctrl-q"] = "select-all+accept",
