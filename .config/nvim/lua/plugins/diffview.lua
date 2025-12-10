@@ -41,5 +41,11 @@ return {
         })
 
         require("custom.keymaps").diffview_global()
+
+        vim.api.nvim_create_user_command("DiffDetach", function()
+            vim.opt_local.diff = false
+            vim.opt_local.scrollbind = false
+            vim.opt_local.cursorbind = false
+        end, {})
     end,
 }
