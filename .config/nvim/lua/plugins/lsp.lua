@@ -82,6 +82,7 @@ local servers = {
     bashls = {},
     marksman = {},
     gitlab_ci_ls = {},
+    jsonls = {},
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
