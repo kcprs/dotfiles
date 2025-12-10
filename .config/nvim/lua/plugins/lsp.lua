@@ -55,7 +55,7 @@ local servers = {
             },
         },
     },
-    pyright = {},
+    basedpyright = {},
     rust_analyzer = {
         -- Never explicitly call enable() - done by rustaceanvim
         condition = function()
