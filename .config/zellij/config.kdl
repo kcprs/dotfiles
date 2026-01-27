@@ -44,6 +44,9 @@ keybinds clear-defaults=true {
             };
             SwitchToMode "Normal"
         }
+
+        bind "Ctrl d"  { HalfPageScrollDown; }
+        bind "Ctrl u"  { HalfPageScrollUp; }
     }
 
     search {
