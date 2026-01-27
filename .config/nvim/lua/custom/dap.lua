@@ -1,13 +1,14 @@
+local dap = require("dap")
+
 local M = {}
 
 function M.set_conditional_breakpoint()
     local condition = vim.fn.input("Enter condition for breakpoint: ")
-    require("dap").set_breakpoint(condition)
+    dap.set_breakpoint(condition)
 end
 
 -- Waiting for https://github.com/rcarriga/nvim-dap-ui/issues/326
 -- function M.select_active_session()
---     local dap = require("dap")
 --     local active_sessions = dap.sessions()
 --
 --     if #active_sessions == 0 then
@@ -63,17 +64,33 @@ local dap_templates = {
     },
 }
 
+--- Methods attached to generated DAP configs
+---@class DapConfig: dap.Configuration
+local ConfigMethods = {} ---@type DapConfig
+
+--- Strip interpreter from DAP config.
+--- Moves interpreter from `args[1]` to `program` and removes it from `args`.
+---@param self DapConfig
+---@return DapConfig
+function ConfigMethods:strip_interpreter()
+    assert(self.program, "This method only works on program-based configs")
+    self.program = self.args[1]
+    table.remove(self.args, 1)
+    return self
+end
+
 ---Generate a DAP config from a per-language template
 ---
 ---@param lang string Language name as used in DAP
 ---@param config table? DAP config for extending template (see `:h dap-configuration`).
----@return table # Resulting DAP config
+---@return DapConfig
 function M.config(lang, config)
     local template = dap_templates[lang]
     if not template then
         error("No DAP config template for lang " .. lang)
     end
-    return vim.tbl_extend("force", template, config or {})
+    local result = vim.tbl_extend("force", template, config or {})
+    return setmetatable(result, { __index = ConfigMethods })
 end
 
 --- Convenience per-language wrapper of custom.dap.config
@@ -100,7 +117,7 @@ end
 ---
 ---@param recipe_name string Name of the recipe
 ---@param config table? DAP config to extend (see `:h dap-configuration`). Keys `name`, `program` and `args` will be populated from the given just recipe if not already present.
----@return table # Resulting DAP config.
+---@return DapConfig
 function M.config_from_just(recipe_name, config)
     local result = vim.fn.system("just -n " .. recipe_name)
 
@@ -140,7 +157,7 @@ function M.config_from_just(recipe_name, config)
         config = vim.tbl_extend("error", config, { program = exe })
     end
 
-    return config
+    return setmetatable(config, { __index = ConfigMethods })
 end
 
 return M
