@@ -50,4 +50,4 @@
 	show-merge = "!sh -c 'merge_commit=$(git find-merge \"$0\" \"$1\") && git show -q \"$merge_commit\"'"
 [include]
     path = ~/.config/delta/themes/catpuccin.gitconfig
-    path = ~/.config/git/.gitconfig_local
+    path = ~/.config/git/.gitconfig_local # contains user.email
