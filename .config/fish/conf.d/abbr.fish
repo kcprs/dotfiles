@@ -38,3 +38,4 @@ abbr --add jc just --choose
 abbr --add da direnv allow
 abbr --add de direnv export
 abbr --add jsonl_to_json "jq -R -s 'split(\"\\n\") | map(select(length > 0) | fromjson)'"
+abbr --add oc opencode

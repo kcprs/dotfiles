@@ -1,0 +1,24 @@
+{
+    "$schema": "https://opencode.ai/config.json",
+    "theme": "catppuccin",
+    "default_agent": "plan",
+
+    "provider": {
+        "FhGenie": {
+            "npm": "@ai-sdk/azure",
+            "name": "FhGenie",
+            "options": {
+                "baseURL": "https://{env:AZURE_OPENAI_RESOURCE}.openai.azure.com/openai",
+                "apiKey": "{env:AZURE_OPENAI_API_KEY}",
+            },
+            "models": {
+                // Available models listed: https://fraunhofer.sharepoint.com/sites/it-sicherheit/SitePages/en/FhGenie-API.aspx#models
+                "gpt-5.1-2025-11-13": { "name": "gpt-5.1" },
+                "gpt-5-mini-2025-08-07": { "name": "gpt-5-mini" },
+                "gpt-5-nano-2025-08-07": { "name": "gpt-5-nano" },
+            }
+        }
+    },
+    "model": "FhGenie/gpt-5.1-2025-11-13",
+    "small_model": "FhGenie/gpt-5-nano-2025-08-07"
+}

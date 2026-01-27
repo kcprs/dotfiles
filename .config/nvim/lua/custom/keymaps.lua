@@ -468,4 +468,32 @@ function M.treesitter_textobjects_swap()
     }
 end
 
+function M.opencode()
+    map({ "n" }, "<leader>A", function()
+        require("opencode").toggle()
+    end, { desc = "Toggle opencode" })
+
+    local map_with_leader_a = bind_group(map, "<leader>a", "AI")
+
+    map_with_leader_a({ "n", "v", "x" }, "a", function()
+        require("opencode").ask("@this: ", { submit = true })
+    end, { desc = "Ask opencode" })
+
+    map_with_leader_a({ "n", "v", "x" }, "x", function()
+        require("opencode").select()
+    end, { desc = "Execute opencode action…" })
+
+    map_with_leader_a({ "n", "v", "x" }, "s", function()
+        require("opencode").prompt("@this")
+    end, { desc = "Send to opencode" })
+
+    map_with_leader_a("n", "u", function()
+        require("opencode").command("session.half.page.up")
+    end, { desc = "opencode half page up" })
+
+    map_with_leader_a("n", "d", function()
+        require("opencode").command("session.half.page.down")
+    end, { desc = "opencode half page down" })
+end
+
 return M
