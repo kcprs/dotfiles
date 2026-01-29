@@ -30,14 +30,14 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-local augroup_terminal = vim.api.nvim_create_augroup("Terminal", { clear = true })
-vim.api.nvim_create_autocmd("TermOpen", {
-    group = augroup_terminal,
-    callback = function()
-        vim.wo.number = true
-        vim.wo.relativenumber = true
-    end,
-})
+-- local augroup_terminal = vim.api.nvim_create_augroup("Terminal", { clear = true })
+-- vim.api.nvim_create_autocmd("TermOpen", {
+--     group = augroup_terminal,
+--     callback = function()
+--         vim.wo.number = true
+--         vim.wo.relativenumber = true
+--     end,
+-- })
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
