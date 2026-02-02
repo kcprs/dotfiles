@@ -470,10 +470,36 @@ end
 
 function M.opencode()
     map({ "n" }, "<leader>A", function()
+        local function find_opencode_win()
+            for _, win in ipairs(vim.api.nvim_list_wins()) do
+                local buf = vim.api.nvim_win_get_buf(win)
+                if vim.bo[buf].buftype == "terminal" then
+                    local name = vim.api.nvim_buf_get_name(buf)
+                    if name:match("opencode") then
+                        return win
+                    end
+                end
+            end
+        end
+
+        local had_win = find_opencode_win() ~= nil
+
+        require("opencode").toggle()
+
+        vim.schedule(function()
+            local win = find_opencode_win()
+            if not had_win and win and vim.api.nvim_win_is_valid(win) then
+                vim.api.nvim_set_current_win(win)
+                vim.cmd("startinsert")
+            end
+        end)
+    end, { desc = "Toggle opencode and enter insert mode" })
+
+    map({ "n" }, "<leader><c-A>", function()
         require("opencode").toggle()
     end, { desc = "Toggle opencode" })
 
-    local map_with_leader_a = bind_group(map, "<leader>a", "AI")
+    local map_with_leader_a = bind_group(map, "<leader>a", "AI agent")
 
     map_with_leader_a({ "n", "v", "x" }, "a", function()
         require("opencode").ask("@this: ", { submit = true })
