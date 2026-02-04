@@ -497,7 +497,7 @@ function M.opencode()
 
     map({ "n" }, "<leader><c-A>", function()
         require("opencode").toggle()
-    end, { desc = "Toggle opencode" })
+    end, { desc = "Toggle opencode (no focus)" })
 
     local map_with_leader_a = bind_group(map, "<leader>a", "AI agent")
 

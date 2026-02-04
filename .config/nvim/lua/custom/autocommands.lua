@@ -30,14 +30,23 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
--- local augroup_terminal = vim.api.nvim_create_augroup("Terminal", { clear = true })
--- vim.api.nvim_create_autocmd("TermOpen", {
---     group = augroup_terminal,
---     callback = function()
---         vim.wo.number = true
---         vim.wo.relativenumber = true
---     end,
--- })
+local augroup_terminal = vim.api.nvim_create_augroup("Terminal", { clear = true })
+vim.api.nvim_create_autocmd("TermOpen", {
+    group = augroup_terminal,
+    callback = function(args)
+        local buf = args.buf
+        local name = vim.api.nvim_buf_get_name(buf)
+
+        if name:match("opencode") then
+            vim.wo.number = false
+            vim.wo.relativenumber = false
+            return
+        end
+
+        vim.wo.number = true
+        vim.wo.relativenumber = true
+    end,
+})
 
 local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -47,10 +56,9 @@ vim.api.nvim_create_autocmd("TextYankPost", {
     end,
 })
 
-
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.gitlab-ci*.{yml,yaml}",
-  callback = function()
-    vim.bo.filetype = "yaml.gitlab"
-  end,
+    pattern = "*.gitlab-ci*.{yml,yaml}",
+    callback = function()
+        vim.bo.filetype = "yaml.gitlab"
+    end,
 })
