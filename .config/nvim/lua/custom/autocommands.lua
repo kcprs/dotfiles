@@ -33,16 +33,7 @@ vim.api.nvim_create_autocmd("FileType", {
 local augroup_terminal = vim.api.nvim_create_augroup("Terminal", { clear = true })
 vim.api.nvim_create_autocmd("TermOpen", {
     group = augroup_terminal,
-    callback = function(args)
-        local buf = args.buf
-        local name = vim.api.nvim_buf_get_name(buf)
-
-        if name:match("opencode") then
-            vim.wo.number = false
-            vim.wo.relativenumber = false
-            return
-        end
-
+    callback = function()
         vim.wo.number = true
         vim.wo.relativenumber = true
     end,
