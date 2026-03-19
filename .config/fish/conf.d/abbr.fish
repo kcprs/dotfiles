@@ -1,5 +1,4 @@
 abbr --add md mkdir -p
-
  
 # git
 abbr --add gs git switch
@@ -21,7 +20,7 @@ abbr --add la eza --all --long --header --total-size --git
 abbr --add lt eza -T -L
 abbr --add tree eza --tree
 abbr --add fda fd -HI
-abbr --add rgc rg -C 5
+abbr --add rga rg --hidden --no-ignore
 abbr --add cat bat
 abbr --add zj zellij
 abbr --add zjw zellij -l welcome
