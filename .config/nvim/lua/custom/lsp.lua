@@ -18,6 +18,7 @@ local diagnostics_presets = {
     {
         name = "virtual_text only",
         config = {
+            signs = { priority = 5 },
             severity_sort = true,
             update_in_insert = false,
             virtual_text = true,
@@ -27,6 +28,7 @@ local diagnostics_presets = {
     {
         name = "virtual_lines only",
         config = {
+            signs = { priority = 5 },
             severity_sort = true,
             update_in_insert = false,
             virtual_text = false,

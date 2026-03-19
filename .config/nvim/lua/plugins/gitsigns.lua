@@ -9,6 +9,7 @@ return {
             -- topdelete = { text = "‾" },
             -- changedelete = { text = "~" },
         },
+        sign_priority = 10,
         current_line_blame = true,
         on_attach = require("custom.keymaps").gitsigns,
     },
