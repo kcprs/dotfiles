@@ -11,6 +11,7 @@ _bin/
 .session.vim
 .luarc.json
 .ripgreprc
+.opencode
 
 razel.jsonl
 razel-out/
