@@ -1,12 +1,5 @@
 theme = Catppuccin Mocha
-
-font-size = 12.5
-
+font-size = 12
 mouse-hide-while-typing = true
-
-title = "Ghostty"
-macos-titlebar-proxy-icon = hidden
-
 macos-option-as-alt = true
-
-cursor-text = #1E1E2D
+window-decoration = none
