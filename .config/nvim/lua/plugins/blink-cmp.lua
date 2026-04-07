@@ -4,6 +4,8 @@ return {
     -- use a release tag to download pre-built binaries
     version = "1.*",
 
+    dependencies = { "fang2hou/blink-copilot" },
+
     config = function()
         require("blink.cmp").setup({
             -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -34,7 +36,14 @@ return {
             -- Default list of enabled providers defined so that you can extend it
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
-                default = { "lazydev", "lsp", "path", "snippets", "buffer" }, -- TODO: tailwind-tools.nvim?
+                default = {
+                    "copilot",
+                    "lazydev",
+                    "lsp",
+                    "path",
+                    "snippets",
+                    "buffer",
+                },
                 -- Provide path completions relative to cwd insted of current file path
                 -- providers = {
                 --     path = {
@@ -46,6 +55,12 @@ return {
                 --     }
                 -- }
                 providers = {
+                    copilot = {
+                        name = "copilot",
+                        module = "blink-copilot",
+                        score_offset = 100,
+                        async = true,
+                    },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
