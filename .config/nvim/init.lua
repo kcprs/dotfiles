@@ -30,3 +30,4 @@ keymaps.setup_basic()
 
 require("custom.autocommands")
 require("custom.commands")
+require("custom.builtin-plugins")
