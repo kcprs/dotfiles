@@ -11,14 +11,23 @@
                 "apiKey": "{env:AZURE_OPENAI_API_KEY}",
             },
             "models": {
-                // Available models listed: https://fraunhofer.sharepoint.com/sites/it-sicherheit/SitePages/en/FhGenie-API.aspx#models
                 "gpt-5.1-2025-11-13": { "name": "gpt-5.1" },
                 "gpt-5-mini-2025-08-07": { "name": "gpt-5-mini" },
                 "gpt-5-nano-2025-08-07": { "name": "gpt-5-nano" },
-            }
-        }
+            },
+        },
+        "FhGenie-on-prem": {
+            "npm": "@ai-sdk/openai-compatible",
+            "name": "FhGenie on-prem",
+            "options": {
+                "baseURL": "{env:FHGENIE_ONPREM_URL}",
+                "apiKey": "{env:FHGENIE_ONPREM_API_KEY}",
+            },
+            "models": {
+                "Qwen/Qwen3-Coder-Next-FP8": { "name": "Qwen3 Coder Next FP8" },
+            },
+        },
     },
-    // "model": "FhGenie/gpt-5.1-2025-11-13",
     "model": "github-copilot/gpt-5.4",
-    "small_model": "FhGenie/gpt-5-nano-2025-08-07"
+    "small_model": "FhGenie/gpt-5-nano-2025-08-07",
 }
