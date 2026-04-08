@@ -1,28 +1,42 @@
 return {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    dependencies = {
-        "nvim-treesitter/nvim-treesitter",
-        {
-            "nvim-treesitter/nvim-treesitter-context",
-            dependencies = {
-                "nvim-treesitter/nvim-treesitter",
-            }
-        },
-    },
+    enabled = false,
+    "nvim-treesitter/nvim-treesitter",
+    lazy = false,
+    branch = "main",
     build = ":TSUpdate",
     config = function()
+        vim.api.nvim_create_autocmd("FileType", {
+            group = vim.api.nvim_create_augroup("CustomTreesitter", { clear = true }),
+            callback = function(args)
+                local ft = vim.bo[args.buf].filetype
+                local lang = vim.treesitter.language.get_lang(ft)
+                if not lang then
+                    return
+                end
+
+                -- Check if parser is already installed before attempting install
+                local ok = pcall(vim.treesitter.language.inspect, lang)
+                if not ok then
+                    require("nvim-treesitter").install({ lang })
+                end
+
+                -- Enable treesitter highlighting
+                vim.treesitter.start(args.buf)
+
+                -- Enable treesitter indent selectively
+                local disabled_indent = { "c", "cpp" }
+                if not vim.tbl_contains(disabled_indent, ft) then
+                    vim.bo[args.buf].indentexpr =
+                        "v:lua.require'nvim-treesitter'.indentexpr()"
+                end
+
+            end,
+        })
+
         ---@diagnostic disable-next-line: missing-fields
         require("nvim-treesitter.configs").setup({
-            ensure_installed = {}, -- All covered by auto-install
-            auto_install = true,
 
             -- Modules
-            highlight = { enable = true },
-            indent = {
-                enable = true,
-                -- Indent via treesitter seems broken for c and cpp. Will use vim's cindent instead.
-                disable = { "c", "cpp" },
-            },
             incremental_selection = {
                 enable = true,
                 keymaps = require("custom.keymaps").treesitter_incremental_selection(),
@@ -41,11 +55,6 @@ return {
                     enable = true,
                 }, require("custom.keymaps").treesitter_textobjects_swap()),
             },
-        })
-
-        require("treesitter-context").setup({
-            multiwindow = true,
-            max_lines = "30%",
         })
     end,
 }
