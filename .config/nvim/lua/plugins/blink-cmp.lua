@@ -4,8 +4,6 @@ return {
     -- use a release tag to download pre-built binaries
     version = "1.*",
 
-    -- dependencies = { "fang2hou/blink-copilot" },
-
     config = function()
         require("blink.cmp").setup({
             -- 'default' (recommended) for mappings similar to built-in completions (C-y to accept)
@@ -37,7 +35,6 @@ return {
             -- elsewhere in your config, without redefining it, due to `opts_extend`
             sources = {
                 default = {
-                    -- "copilot",
                     "lazydev",
                     "lsp",
                     "path",
@@ -55,12 +52,6 @@ return {
                 --     }
                 -- }
                 providers = {
-                    -- copilot = {
-                    --     name = "copilot",
-                    --     module = "blink-copilot",
-                    --     score_offset = 100,
-                    --     async = true,
-                    -- },
                     lazydev = {
                         name = "LazyDev",
                         module = "lazydev.integrations.blink",
