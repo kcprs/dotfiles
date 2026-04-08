@@ -417,6 +417,7 @@ function M.undotree()
     map("n", "<leader>u", "<cmd>UndotreeToggle<cr><cmd>UndotreeFocus<cr>", { desc = "[u]ndotree toggle" })
 end
 
+-- TODO: remove if no longer using treesitter-nvim
 function M.treesitter_incremental_selection()
     return {
         init_selection = "<Enter>",
@@ -426,6 +427,7 @@ function M.treesitter_incremental_selection()
     }
 end
 
+-- TODO: remove if no longer using treesitter-nvim
 function M.treesitter_textobjects_select()
     return {
         -- You can use the capture groups defined in textobjects.scm
@@ -438,6 +440,7 @@ function M.treesitter_textobjects_select()
     }
 end
 
+-- TODO: remove if no longer using treesitter-nvim
 function M.treesitter_textobjects_move()
     return {
         goto_next_start = {
@@ -463,6 +466,7 @@ function M.treesitter_textobjects_move()
     }
 end
 
+-- TODO: remove if no longer using treesitter-nvim
 function M.treesitter_textobjects_swap()
     return {
         swap_next = {
