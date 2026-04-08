@@ -83,6 +83,11 @@ local servers = {
     marksman = {},
     gitlab_ci_ls = {},
     jsonls = {},
+    copilot = {
+        condition = function()
+            return os.getenv("GH_COPILOT_ON") == "1"
+        end
+    },
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
@@ -143,7 +148,7 @@ return {
             if vim.lsp.config[server].on_attach ~= nil then
                 local on_attach_1 = vim.lsp.config[server].on_attach
                 local on_attach_2 = on_attach
-                on_attach = function (client, bufnr)
+                on_attach = function(client, bufnr)
                     ---@diagnostic disable-next-line: need-check-nil
                     on_attach_1(client, bufnr)
                     on_attach_2(client, bufnr)
@@ -158,5 +163,7 @@ return {
                 vim.lsp.enable(server)
             end
         end
+
+        vim.lsp.inline_completion.enable()
     end,
 }
