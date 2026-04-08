@@ -153,8 +153,6 @@ function M.lsp_common(buffer)
     local map_with_leader_l = bind_group(map, "<leader>l", "LSP", buffer)
     local map_with_buffer = bind_buffer(map, buffer)
 
-    -- map_with_leader_l("n", "n", vim.lsp.buf.rename, { desc = "LSP: re[n]ame" })
-    -- map_with_leader_l("n", "a", vim.lsp.buf.code_action, { desc = "LSP: code [a]ction" })
     local ok, conform = pcall(require, "conform")
     if ok then
         map_with_leader_l("n", "f", function()
@@ -180,7 +178,6 @@ function M.lsp_common(buffer)
     end, { desc = "LSP: go to previous error" })
 
     map_with_buffer("n", "gD", vim.lsp.buf.declaration, { desc = "LSP: [g]o to [D]eclaration" })
-    map_with_leader_l("n", "t", vim.lsp.buf.type_definition, { desc = "LSP: go to [t]ype definition" })
 
     ---@diagnostic disable-next-line: redefined-local
     local ok, fzf_lua = pcall(require, "fzf-lua")
