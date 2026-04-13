@@ -273,28 +273,25 @@ function M.harpoon()
     end, { desc = "[h]arpoon [n]ext" })
 end
 
+local git_blame_shown = nil
 function M.gitsigns(buffer)
     local map_with_leader_g = bind_group(map, "<leader>g", "git", buffer)
 
-    local gs = package.loaded.gitsigns
+    local gs = require("gitsigns")
 
     -- Navigation (don't override the built-in keymaps)
     map({ "n", "v" }, "]c", function()
         if vim.wo.diff then
             return "]c"
         end
-        vim.schedule(function()
-            gs.next_hunk()
-        end)
+        gs.nav_hunk("next")
         return "<Ignore>"
     end, { expr = true, desc = "Jump to next hunk" })
     map({ "n", "v" }, "[c", function()
         if vim.wo.diff then
             return "[c"
         end
-        vim.schedule(function()
-            gs.prev_hunk()
-        end)
+        gs.nav_hunk("prev")
         return "<Ignore>"
     end, { expr = true, desc = "Jump to previous hunk" })
 
@@ -308,10 +305,38 @@ function M.gitsigns(buffer)
         gs.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
     end, { desc = "[g]it [r]eset hunk" })
 
+    -------------------
+    -- Blame
+    -------------------
     map_with_leader_g("n", "b", function()
         gs.blame_line({ full = true })
     end, { desc = "[g]it show line [b]lame" })
-    map_with_leader_g("n", "B", gs.blame, { desc = "[g]it show file [B]lame" })
+
+    map_with_leader_g("n", "D", function()
+        if git_blame_shown == "smart" then
+            vim.notify("Can't show direct blame. Smart blame already cached.", vim.log.levels.WARN)
+        end
+
+        git_blame_shown = "direct"
+
+        gs.blame()
+    end, { desc = "[g]it show [D]irect blame" })
+
+    map_with_leader_g("n", "B", function()
+        -- TODO: would be nice to get around caching somehow
+        if not git_blame_shown then
+            vim.notify("Showing smart blame with -wCCC. This may take a while.", vim.log.levels.INFO)
+        elseif git_blame_shown == "direct" then
+            vim.notify("Can't show smart blame. Direct blame already cached", vim.log.levels.WARN)
+        end
+
+        git_blame_shown = "smart"
+
+        gs.blame({
+            -- See https://youtu.be/aolI_Rz0ZqY?si=pa-t8Uf4K9Q-iPxp&t=751
+            extra_opts = { "-wCCC" },
+        })
+    end, { desc = "[g]it show smart [B]lame" })
 end
 
 function M.diffview_global()
