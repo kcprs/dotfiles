@@ -85,7 +85,7 @@ local servers = {
     jsonls = {},
     copilot = {
         condition = function()
-            return os.getenv("GH_COPILOT_ON") == "1"
+            return os.getenv("GH_COPILOT_ON") == "true"
         end
     },
 

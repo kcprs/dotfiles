@@ -1,0 +1,24 @@
+services:
+  opencode:
+    image: ${OPENCODE_DOCKER_IMAGE:?}
+    platform: ${OPENCODE_DOCKER_PLATFORM:?}
+    command: ["opencode"]
+    working_dir: /src/${OPENCODE_WORKSPACE_NAME:?}
+    volumes:
+      - ${OPENCODE_WORKSPACE_PATH:?}:/src/${OPENCODE_WORKSPACE_NAME:?}:rw
+
+      # We do not want to mount the entire .config/opencode dir because it contains node_modules,
+      # which seems to severely degrade performance. Instead, we mount only the specific files and
+      # directories that are needed.
+      - $HOME/.config/opencode/AGENTS.md:/root/.config/opencode/AGENTS.md:rw
+      - $HOME/.config/opencode/commands:/root/.config/opencode/commands:rw
+      - $HOME/.config/opencode/opencode.jsonc:/root/.config/opencode/opencode.jsonc:rw
+      - $HOME/.config/opencode/skills:/root/.config/opencode/skills:rw
+      - $HOME/.config/opencode/tui.json:/root/.config/opencode/tui.json:rw
+
+      - $HOME/.local/share/opencode:/root/.local/share/opencode:rw
+      - $HOME/.local/state/opencode:/root/.local/state/opencode:rw
+    env_file:
+      - $HOME/.ai.env
+    stdin_open: true
+    tty: true
