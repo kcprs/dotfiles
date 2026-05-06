@@ -1,4 +1,5 @@
 abbr --add md mkdir -p
+abbr --add reload-config source ~/.config/fish/config.fish
  
 # git
 abbr --add gs git switch
