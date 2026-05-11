@@ -18,7 +18,7 @@ While working, if you come across any bugs, missing features, or other oddities 
 implementation, structure, or workflow, **add a concise description of them to SESSION.md** to defer
 solving such incidental tasks until later. You do not need to fix them all straight away unless they
 block your progress; writing them down is often sufficient. **Do not write your accomplishments into
-this file.**
+this file**. If the workspace has no SESSION.md, create one and add your notes there.
 
 ## General best practices
 
