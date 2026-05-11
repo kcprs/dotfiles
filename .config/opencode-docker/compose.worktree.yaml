@@ -1,0 +1,6 @@
+services:
+  opencode:
+    volumes:
+      # In a worktree setup, assume that the main repo and the worktree are siblings
+      # in a common parent directory.
+      - ${OPENCODE_MAIN_REPO_PATH:?}:/src/${OPENCODE_MAIN_REPO_NAME:?}:rw

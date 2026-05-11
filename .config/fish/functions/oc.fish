@@ -20,5 +20,18 @@ function oc --description 'Run opencode in a container for current workspace'
         return 1
     end
 
-    podman compose -f ~/.config/opencode-docker/compose.yaml run --rm opencode
+    # The core compose file
+    set compose_args -f ~/.config/opencode-docker/compose.yaml
+
+    # If in a worktree, also mount the main repo for full git functionality
+    set git_dir (git -C "$OPENCODE_WORKSPACE_PATH" rev-parse --path-format=absolute --git-dir 2>/dev/null)
+    set git_common_dir (git -C "$OPENCODE_WORKSPACE_PATH" rev-parse --path-format=absolute --git-common-dir 2>/dev/null)
+    if test -n "$git_dir"; and test -n "$git_common_dir"; and test "$git_dir" != "$git_common_dir"
+        set -gx OPENCODE_MAIN_REPO_PATH (path dirname "$git_common_dir")
+        set -gx OPENCODE_MAIN_REPO_NAME (basename "$OPENCODE_MAIN_REPO_PATH")
+        set compose_args $compose_args -f ~/.config/opencode-docker/compose.worktree.yaml
+    end
+
+    # Run the container
+    podman compose $compose_args run --rm opencode
 end
