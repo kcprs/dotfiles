@@ -1,5 +1,3 @@
-[user]
-	name = Kacper Sagnowski
 [pull]
 	rebase = true
 [init]
@@ -49,5 +47,7 @@
 	# Show details of merge commit which merged <commit> into <branch> (or HEAD if <branch> not given)
 	show-merge = "!sh -c 'merge_commit=$(git find-merge \"$0\" \"$1\") && git show -q \"$merge_commit\"'"
 [include]
-    path = ~/.config/delta/themes/catpuccin.gitconfig
-    path = ~/.config/git/.gitconfig_local # contains user.email
+	path = ~/.config/delta/themes/catpuccin.gitconfig
+	path = ~/.config/git/.gitconfig_local # contains user.name and user.email
+[wortree]
+	useRelativePaths = true
