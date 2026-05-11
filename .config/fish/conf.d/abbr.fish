@@ -15,6 +15,8 @@ abbr --add gstat git status
 abbr --add gmb git merge-base
 abbr --add gw git worktree
 abbr --add gcl git clean -dixff
+abbr --add grau git rebase --autosquash @{u}
+abbr --add griu git rebase -i @{u}
 
 abbr --add ls eza --all
 abbr --add la eza --all --long --header --total-size --git
@@ -36,5 +38,5 @@ abbr --add --command cargo cl clippy --all-targets
 abbr --add jt just
 abbr --add jc just --choose
 abbr --add da direnv allow
-abbr --add de direnv export
+abbr --add de direnv export fish
 abbr --add jsonl_to_json "jq -R -s 'split(\"\\n\") | map(select(length > 0) | fromjson)'"
