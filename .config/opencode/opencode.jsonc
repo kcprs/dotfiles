@@ -28,6 +28,6 @@
             },
         },
     },
-    "model": "github-copilot/gpt-5.4",
+    "model": "github-copilot/gpt-5.3-codex",
     "small_model": "FhGenie/gpt-5-nano-2025-08-07",
 }
