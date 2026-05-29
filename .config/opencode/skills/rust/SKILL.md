@@ -10,9 +10,8 @@ given. At each step, react to any errors or warnings before proceeding to the ne
 project-local instructions for AI agents may mention additional flags and arguments to use with
 these commands.
 
-- `cargo check --workspace`
-- `cargo test --workspace`
 - `cargo clippy --workspace`
+- `cargo test --workspace`
 - `cargo fmt`
 
 ## Documentation
@@ -21,7 +20,7 @@ these commands.
 
 ## Dependencies
 
-When adding dependencies to Rust projects, use `cargo add` instead or editing `Cargo.toml` directly.
+- When adding dependencies to Rust projects, use `cargo add` instead or editing `Cargo.toml` directly.
 
 ## Error handling
 
@@ -40,3 +39,8 @@ When adding dependencies to Rust projects, use `cargo add` instead or editing `C
 
 - For ad-hoc debugging, create a temporary Rust example in `examples/` and run it with `cargo run
   --example <name>`. Remove the example after use.
+
+## Imports
+
+- In test modules, always use `use super::*;` to import the parent module's items, rather than
+  repeating imports. Do not use `use super::...` in any other context.
