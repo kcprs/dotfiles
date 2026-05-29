@@ -7,8 +7,8 @@
             "npm": "@ai-sdk/azure",
             "name": "FhGenie",
             "options": {
-                "baseURL": "https://{env:AZURE_OPENAI_RESOURCE}.openai.azure.com/openai",
-                "apiKey": "{env:AZURE_OPENAI_API_KEY}",
+                "baseURL": "{env:FHGENIE_URL}",
+                "apiKey": "{env:FHGENIE_API_KEY}",
             },
             "models": {
                 "gpt-5.1-2025-11-13": { "name": "gpt-5.1" },
@@ -27,12 +27,12 @@
                 "Qwen/Qwen3-Coder-Next-FP8": { "name": "Qwen3 Coder Next FP8" },
             },
         },
-        "litellm": {
+        "ame-litellm": {
             "npm": "@ai-sdk/openai-compatible",
             "name": "LiteLLM",
             "options": {
-                "baseURL": "{env:LITELLM_URL}",
-                "apiKey": "{env:LITELLM_API_KEY}",
+                "baseURL": "{env:AME_LITELLM_URL}",
+                "apiKey": "{env:AME_LITELLM_API_KEY}",
             },
             "models": {
                 "gpt-5.4-nano": { "name": "OpenAI GPT-5.4" },
