@@ -1,6 +1,5 @@
-# htop config is rewritten by htop when settings are changed in the interface
-htop/
-
-# no config, just non-public data
-github-copilot/
-
+containers
+github-copilot
+htop
+raycast
+wireshark
