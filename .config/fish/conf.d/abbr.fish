@@ -40,4 +40,4 @@ abbr --add jc just --choose
 abbr --add da direnv allow
 abbr --add de direnv export fish
 abbr --add jsonl_to_json "jq -R -s 'split(\"\\n\") | map(select(length > 0) | fromjson)'"
-abbr --add oc nono run --allow-cwd --profile opencode -- opencode
+abbr --add oc nono run --allow-cwd --profile opencode-custom -- opencode
