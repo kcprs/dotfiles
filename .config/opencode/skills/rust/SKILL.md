@@ -16,7 +16,14 @@ these commands.
 
 ## Documentation
 
+### Writing
+
 - Always put documentation comments above any attributes (e.g. `#[derive(...)]`).
+
+### Reading
+
+- When searching for documentation of crates pulled in via cargo, prefer to look up the docs on
+  docs.rs rather than grepping in the local .cargo registry directory.
 
 ## Dependencies
 
@@ -25,7 +32,8 @@ these commands.
 ## Error handling
 
 - Prefer `expect()` over `unwrap()`. The `expect` message should be very concise, and should explain
-  why that expect call cannot fail.
+  why that expect call cannot fail. The only exception to this are tests, where `unwrap()` should
+  be preferred for brevity.
 - In code that uses `eyre` or `anyhow` `Result`s, consistently use `.context()` prior to every
   error-propagation with `?`. Context messages in `.context` should be simple present tense, such as
   to complete the sentence "while attempting to ...".
