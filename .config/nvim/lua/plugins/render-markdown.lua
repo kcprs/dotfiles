@@ -10,5 +10,8 @@ return {
         latex = {
             enabled = false,
         },
+        code = {
+            border = "thin",
+        },
     },
 }
