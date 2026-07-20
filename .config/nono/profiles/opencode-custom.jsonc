@@ -1,0 +1,37 @@
+{
+    "extends": "opencode",
+    "meta": {
+        "name": "opencode-custom",
+        "description": "Custom opencode profile with additional access to some tools"
+    },
+    "filesystem": {
+        "allow": [
+            // To allow editing prompts via nvim within opencode
+            "$HOME/.cache/nvim",
+            "$HOME/.local/share/nvim",
+            "$HOME/.local/state/nvim",
+
+            // For MCP servers runnning via npx
+            "$HOME/.npm"
+        ],
+        "read": [
+            // Allow reading nvim config for prompt editing
+            "$HOME/.config/nvim",
+
+            // Allow reading known_hosts for git and ssh (these are hashed anyway)
+            "$HOME/.shh/known_hosts",
+
+            // git is configured to use delta, which wants to load a theme
+            "$HOME/.config/delta/themes",
+
+            // Allow reading git config
+            "$HOME/.config/git",
+
+            // Models like to refer to dep source code. Nothing secret here.
+            "$HOME/.cargo/registry/src"
+        ],
+        "deny": [
+            ".envrc"
+        ]
+    }
+}
