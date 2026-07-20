@@ -2,8 +2,9 @@
     "$schema": "https://opencode.ai/config.json",
     "default_agent": "plan",
 
+    // Models
     "provider": {
-        "FhGenie": {
+        "fhgenie": {
             "npm": "@ai-sdk/azure",
             "name": "FhGenie",
             "options": {
@@ -11,12 +12,16 @@
                 "apiKey": "{env:FHGENIE_API_KEY}",
             },
             "models": {
-                "gpt-5.1-2025-11-13": { "name": "gpt-5.1" },
-                "gpt-5-mini-2025-08-07": { "name": "gpt-5-mini" },
-                "gpt-5-nano-2025-08-07": { "name": "gpt-5-nano" },
+                "gpt-5.5": { "name": "GPT-5.5" },
+                "gpt-5.4": { "name": "GPT-5.4" },
+                "gpt-5.1": { "name": "GPT-5.1" },
+                "gpt-5-mini": { "name": "GPT-5 mini" },
+                "gpt-5-nano": { "name": "GPT-5 nano" },
+
+                "mistral-large-3": { "name": "Mistral Large 3" }
             },
         },
-        "FhGenie-on-prem": {
+        "fhgenie-on-prem": {
             "npm": "@ai-sdk/openai-compatible",
             "name": "FhGenie on-prem",
             "options": {
@@ -24,6 +29,7 @@
                 "apiKey": "{env:FHGENIE_ONPREM_API_KEY}",
             },
             "models": {
+                "MiniMaxAI/MiniMax-M2.5": { "name": "MiniMax M2.5" },
                 "Qwen/Qwen3-Coder-Next-FP8": { "name": "Qwen3 Coder Next FP8" },
             },
         },
@@ -47,6 +53,28 @@
             },
         },
     },
-    "model": "github-copilot/gpt-5.3-codex",
-    "small_model": "FhGenie/gpt-5-nano-2025-08-07",
+    "model": "fhgenie-on-prem/Qwen/Qwen3-Coder-Next-FP8",
+    "small_model": "fhgenie-on-prem/Qwen/Qwen3-Coder-Next-FP8",
+
+    // // MCP
+    // "mcp": {
+    //     "gitlab-3gpp": {
+    //         "type": "local",
+    //         "command": ["npx", "-y", "@zereight/mcp-gitlab"],
+    //         "enabled": true,
+    //         "environment": {
+    //             "GITLAB_PERSONAL_ACCESS_TOKEN": "{env:GITLAB_3GPP_PERSONAL_ACCESS_TOKEN}",
+    //             "GITLAB_API_URL": "{env:GITLAB_3GPP_URL}"
+    //         }
+    //     },
+    //     "gitlab-git01": {
+    //         "type": "local",
+    //         "command": ["npx", "-y", "@zereight/mcp-gitlab"],
+    //         "enabled": true,
+    //         "environment": {
+    //             "GITLAB_PERSONAL_ACCESS_TOKEN": "{env:GITLAB_GIT01_PERSONAL_ACCESS_TOKEN}",
+    //             "GITLAB_API_URL": "{env:GITLAB_GIT01_URL}"
+    //         }
+    //     }
+    // },
 }
