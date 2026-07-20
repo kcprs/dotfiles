@@ -12,6 +12,7 @@ _bin/
 .luarc.json
 .ripgreprc
 .opencode
+opencode.jsonc
 
 razel.jsonl
 razel-out/
