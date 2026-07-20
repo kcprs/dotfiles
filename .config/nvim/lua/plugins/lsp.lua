@@ -34,6 +34,7 @@ end
 
 ---@class ServerConfig: vim.lsp.Config
 ---@field condition? fun(): boolean
+---@field auto_install? boolean
 
 ---@type { [string]: ServerConfig }
 local servers = {
@@ -57,6 +58,11 @@ local servers = {
     },
     basedpyright = {},
     rust_analyzer = {
+        -- Do not auto-install with Mason - rust-analyzer should be installed via rustup to keep
+        -- it up to date with the Rust toolchain.
+        --
+        -- > rustup component add rust-analyzer
+        auto_install = false,
         -- Never explicitly call enable() - done by rustaceanvim
         condition = function()
             return false
@@ -86,7 +92,7 @@ local servers = {
     copilot = {
         condition = function()
             return os.getenv("GH_COPILOT_ON") == "true"
-        end
+        end,
     },
 
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
@@ -133,8 +139,10 @@ return {
         -- before setting up the servers.
         require("mason").setup()
         require("mason-lspconfig").setup({
-            -- Ensure the servers above are installed
-            ensure_installed = vim.tbl_keys(servers),
+            -- Ensure the servers above are installed unless explicitly opted out.
+            ensure_installed = vim.tbl_filter(function(server)
+                return servers[server].auto_install ~= false
+            end, vim.tbl_keys(servers)),
             automatic_enable = false,
         })
 
