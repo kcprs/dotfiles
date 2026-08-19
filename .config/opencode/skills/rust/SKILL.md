@@ -16,14 +16,7 @@ these commands.
 
 ## Documentation
 
-### Writing
-
 - Always put documentation comments above any attributes (e.g. `#[derive(...)]`).
-
-### Reading
-
-- When searching for documentation of crates pulled in via cargo, prefer to look up the docs on
-  docs.rs rather than grepping in the local .cargo registry directory.
 
 ## Dependencies
 
