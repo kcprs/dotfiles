@@ -25,7 +25,7 @@
             "$HOME/.config/delta/themes",
 
             // Allow reading git config
-            "$HOME/.config/git",
+            "$HOME/.config/git"
         ],
         "deny": [
             ".envrc"
