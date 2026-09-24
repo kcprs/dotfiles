@@ -123,7 +123,7 @@ return {
         "saghen/blink.cmp",
         {
             "mrcjkb/rustaceanvim",
-            version = "^6",
+            version = "^9",
             ft = { "rust" },
             config = function()
                 vim.g.rustaceanvim = {
