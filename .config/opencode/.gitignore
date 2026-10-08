@@ -3,6 +3,7 @@ node_modules
 package.json
 package-lock.json
 bun.lock
+service.json
 
 # nono
 plugins/nono-sandbox.ts
