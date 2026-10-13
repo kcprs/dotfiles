@@ -1,0 +1,15 @@
+layout {
+    tab name="1: nvim" {
+        pane
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+    }
+
+    tab name="2: opencode" {
+        pane
+        pane size=1 borderless=true {
+            plugin location="compact-bar"
+        }
+    }
+}
