@@ -17,6 +17,7 @@ abbr --add gw git worktree
 abbr --add gcl git clean -dixff
 abbr --add grau git rebase --autosquash @{u}
 abbr --add griu git rebase -i @{u}
+abbr --add gbg 'git branch -vv | rg gone | awk \'{print $1}\''
 
 abbr --add ls eza --all
 abbr --add la eza --all --long --header --total-size --git
