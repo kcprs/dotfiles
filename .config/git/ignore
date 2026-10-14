@@ -13,6 +13,7 @@ _bin/
 .ripgreprc
 .opencode
 opencode.jsonc
+.opencode.jsonc
 
 razel.jsonl
 razel-out/

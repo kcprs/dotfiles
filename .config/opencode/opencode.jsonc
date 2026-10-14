@@ -3,11 +3,11 @@
     "default_agent": "plan",
 
     // Models
-    "provider": {
+    "providers": {
         "fhgenie": {
-            "npm": "@ai-sdk/azure",
+            "package": "aisdk:@ai-sdk/azure",
             "name": "FhGenie",
-            "options": {
+            "settings": {
                 "baseURL": "{env:FHGENIE_URL}",
                 "apiKey": "{env:FHGENIE_API_KEY}",
             },
@@ -19,9 +19,9 @@
             },
         },
         "fhgenie-on-prem": {
-            "npm": "@ai-sdk/openai-compatible",
+            "package": "aisdk:@ai-sdk/openai-compatible",
             "name": "FhGenie on-prem",
-            "options": {
+            "settings": {
                 "baseURL": "{env:FHGENIE_ONPREM_URL}",
                 "apiKey": "{env:FHGENIE_ONPREM_API_KEY}",
             },
@@ -31,9 +31,9 @@
             },
         },
         "ame-litellm": {
-            "npm": "@ai-sdk/openai-compatible",
+            "package": "aisdk:@ai-sdk/openai-compatible",
             "name": "LiteLLM",
-            "options": {
+            "settings": {
                 "baseURL": "{env:AME_LITELLM_URL}",
                 "apiKey": "{env:AME_LITELLM_API_KEY}",
             },
@@ -53,7 +53,11 @@
         },
     },
     "model": "ame-litellm/GLM-5.3-NVFP4",
-    "small_model": "ame-litellm/DeepSeek-V4.1-Flash",
+    "agents": {
+        "title": {
+            "model": "ame-litellm/DeepSeek-V4.1-Flash",
+        },
+    },
 
     // // MCP
     // "mcp": {

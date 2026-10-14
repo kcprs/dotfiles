@@ -10,10 +10,16 @@
   "session": {
     "sidebar": "auto",
     "scrollbar": false,
-    "thinking": "hide"
+    "thinking": "hide",
+    "new_location": "launch",
+    "permissions": "prompt"
   },
   "animations": true,
   "prompt": {
     "editor": true
+  },
+  "tabs": {
+    "mode": "off",
+    "scope": "cwd"
   }
 }

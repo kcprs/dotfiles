@@ -4,6 +4,12 @@
         "name": "opencode-custom",
         "description": "Custom opencode profile with additional access to some tools"
     },
+    "environment": {
+        "set_vars": {
+            // Force opencode to project-local settings despite nono blocking project-local config files.
+            "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc"
+        }
+    },
     "filesystem": {
         "allow": [
             // To allow editing prompts via nvim within opencode
