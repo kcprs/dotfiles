@@ -1,40 +1,104 @@
 {
-    "extends": "opencode",
-    "meta": {
-        "name": "opencode-custom",
-        "description": "Custom opencode profile with additional access to some tools"
+  "extends": [
+    "opencode"
+  ],
+  "meta": {
+    "name": "opencode-custom",
+    "version": "",
+    "description": "Custom opencode profile with additional access to some tools",
+    "author": null
+  },
+  "security": {
+    "signal_mode": null,
+    "process_info_mode": null,
+    "ipc_mode": null,
+    "capability_elevation": null,
+    "approval_backends": {},
+    "approval_defaults": null,
+    "wsl2_proxy_policy": null
+  },
+  "groups": {
+    "include": [],
+    "exclude": []
+  },
+  "commands": {
+    "allow": [],
+    "deny": []
+  },
+  "filesystem": {
+    "allow": [
+      "~/.local/state/nvim",
+      "~/.local/share/nvim"
+    ],
+    "read": [
+      "~/.config/nvim"
+    ],
+    "write": [],
+    "allow_file": [],
+    "read_file": [],
+    "write_file": [],
+    "unix_socket": [],
+    "unix_socket_bind": [],
+    "unix_socket_dir": [],
+    "unix_socket_dir_bind": [],
+    "unix_socket_subtree": [],
+    "unix_socket_subtree_bind": [],
+    "deny": [
+      ".envrc"
+    ],
+    "bypass_protection": [],
+    "suppress_save_prompt": []
+  },
+  "network": {
+    "block": false,
+    "allow_http2": false,
+    "allow_domain": [],
+    "deny_domain": [],
+    "open_port": [],
+    "open_port_range": [],
+    "listen_port": [],
+    "listen_port_range": [],
+    "connect_port": [],
+    "no_proxy": [],
+    "custom_credentials": {},
+    "tls_intercept": null,
+    "upstream_proxy": null,
+    "upstream_bypass": []
+  },
+  "diagnostics": {
+    "suppress_system_services": [],
+    "redaction": {
+      "extra_env_vars": []
     },
-    "environment": {
-        "set_vars": {
-            // Force opencode to project-local settings despite nono blocking project-local config files.
-            "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc"
-        }
-    },
-    "filesystem": {
-        "allow": [
-            // To allow editing prompts via nvim within opencode
-            "$HOME/.cache/nvim",
-            "$HOME/.local/share/nvim",
-            "$HOME/.local/state/nvim",
-
-            // For MCP servers runnning via npx
-            "$HOME/.npm",
-
-            // For cargo dependencies. Nothing secret here.
-            "$HOME/.cargo/registry/src"
-        ],
-        "read": [
-            // Allow reading nvim config for prompt editing
-            "$HOME/.config/nvim",
-
-            // git is configured to use delta, which wants to load a theme
-            "$HOME/.config/delta/themes",
-
-            // Allow reading git config
-            "$HOME/.config/git"
-        ],
-        "deny": [
-            ".envrc"
-        ]
+    "network_denial_audit": {}
+  },
+  "linux": {
+    "af_unix_mediation": null,
+    "sandbox_policy": null
+  },
+  "env_credentials": {},
+  "environment": {
+    "deny_vars": [],
+    "case_insensitive_vars": false,
+    "set_vars": {
+      "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc",
+      "SHELL": "/bin/zsh"
     }
+  },
+  "credential_capture": {},
+  "credential_providers": {},
+  "credential_routes": [],
+  "workdir": {
+    "access": "none"
+  },
+  "hooks": {},
+  "session_hooks": {},
+  "rollback": {
+    "exclude_patterns": [],
+    "exclude_globs": []
+  },
+  "skipdirs": [],
+  "packs": [],
+  "command_args": [],
+  "unsafe_macos_seatbelt_rules": []
 }
