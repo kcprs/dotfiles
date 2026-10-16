@@ -107,8 +107,13 @@ keybinds clear-defaults=true {
         bind "j" { Resize "Decrease"; }
     }
 
-    shared_except "tmux" {
+    shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
+        bind "Ctrl l" { SwitchToMode "Locked"; }
+    }
+    
+    locked {
+        bind "Esc" "Ctrl c" { SwitchToMode "Normal"; }
     }
 }
 
