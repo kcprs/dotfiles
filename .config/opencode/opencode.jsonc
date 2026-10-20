@@ -12,10 +12,10 @@
                 "apiKey": "{env:FHGENIE_API_KEY}",
             },
             "models": {
-                "gpt-6-luna": { "name": "GPT-6 Luna" },
-                "gpt-5.6-terra": { "name": "GPT-5.6 Terra" },
-                "gpt-6.1-sol": { "name": "GPT-6.1 Sol" },
-                "deepseek-v4-flash": { "name": "Deepseek v4 Flash" },
+                "gpt-6-luna": { "name": "OpenAI GPT-6 Luna" },
+                "gpt-5.6-terra": { "name": "OpenAI GPT-5.6 Terra" },
+                "gpt-6.1-sol": { "name": "OpenAI GPT-6.1 Sol" },
+                "gpt-6-astra": { "name": "OpenAI GPT-6 Astra" },
             },
         },
         "fhgenie-on-prem": {
@@ -39,9 +39,9 @@
             },
             "models": {
                 "gpt-6-luna": { "name": "OpenAI GPT-6 Luna" },
-                "gpt-6-sol": { "name": "OpenAI GPT-6 Sol" },
+                "gpt-5.6-terra": { "name": "OpenAI GPT-5.6 Terra" },
                 "gpt-6.1-sol": { "name": "OpenAI GPT-6.1 Sol" },
-                "claude-haiku-4-5": { "name": "Anthropic Claude Haiku 4.5" },
+                "claude-haiku-5-5": { "name": "Anthropic Claude Haiku 5.5" },
                 "claude-sonnet-5-5": { "name": "Anthropic Claude Sonnet 5.5" },
                 "claude-opus-5-5": { "name": "Anthropic Claude Opus 5.5" },
                 "eu.anthropic.claude-haiku-4-5-20251001-v1:0": { "name": "Anthropic Claude Haiku 4.5 - EU residency" },
@@ -49,15 +49,12 @@
                 "eu.anthropic.claude-opus-5": { "name": "Anthropic Claude Opus 5 - EU residency" },
                 "DeepSeek-V4.1-Flash": { "name": "DeepSeek V4.1 Flash" },
                 "GLM-5.3-NVFP4": { "name": "GLM 5.3 NVFP4" },
+                "NVIDIA-Nemotron-3-Nano-4B-BF16": { "name": "NVIDIA Nemotron 3 Nano 4B (BF16)" },
+                "Qwen3-Coder-Next-FP8": { "name": "Qwen 3 Coder Next (FP8)" },
             },
         },
     },
     "model": "ame-litellm/GLM-5.3-NVFP4",
-    "agents": {
-        "title": {
-            "model": "ame-litellm/DeepSeek-V4.1-Flash",
-        },
-    },
 
     // // MCP
     // "mcp": {
