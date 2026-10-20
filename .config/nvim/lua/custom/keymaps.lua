@@ -239,40 +239,6 @@ function M.lsp_clangd(buffer)
     map_with_leader_l("n", "o", "<cmd>LspClangdSwitchSourceHeader<cr>", { desc = "LSP: switch source/header" })
 end
 
-function M.harpoon()
-    local map_with_leader_h = bind_group(map, "<leader>h", "harpoon")
-
-    local harpoon = require("harpoon")
-
-    map_with_leader_h("n", "a", function()
-        harpoon:list():add()
-    end, { desc = "[h]arpoon [a]dd" })
-    map_with_leader_h("n", "s", function()
-        harpoon.ui:toggle_quick_menu(harpoon:list())
-    end, { desc = "[h]arpoon [s]how" })
-
-    map_with_leader_h("n", "h", function()
-        harpoon:list():select(1)
-    end, { desc = "[h]arpoon file 1" })
-    map_with_leader_h("n", "j", function()
-        harpoon:list():select(2)
-    end, { desc = "[h]arpoon file 2" })
-    map_with_leader_h("n", "k", function()
-        harpoon:list():select(3)
-    end, { desc = "[h]arpoon file 3" })
-    map_with_leader_h("n", "l", function()
-        harpoon:list():select(4)
-    end, { desc = "[h]arpoon file 4" })
-
-    -- Toggle previous & next buffers stored within Harpoon list
-    map_with_leader_h("n", "p", function()
-        harpoon:list():prev()
-    end, { desc = "[h]arpoon [p]revious" })
-    map_with_leader_h("n", "n", function()
-        harpoon:list():next()
-    end, { desc = "[h]arpoon [n]ext" })
-end
-
 local git_blame_shown = nil
 function M.gitsigns(buffer)
     local map_with_leader_g = bind_group(map, "<leader>g", "git", buffer)
