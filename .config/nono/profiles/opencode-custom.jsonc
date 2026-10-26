@@ -31,10 +31,13 @@
       "~/.local/share/nvim"
     ],
     "read": [
+      "~/.config/delta/themes",
       "~/.config/nvim"
     ],
     "write": [],
-    "allow_file": [],
+    "allow_file": [
+      "~/.config/git/.gitconfig_local"
+    ],
     "read_file": [],
     "write_file": [],
     "unix_socket": [],
@@ -47,7 +50,12 @@
       ".envrc"
     ],
     "bypass_protection": [],
-    "suppress_save_prompt": []
+    "suppress_save_prompt": [
+      "~/src",
+      "~/src/dotfiles",
+      "~/src/dotfiles/.config",
+      "~/src/dotfiles/.config/nono"
+    ]
   },
   "network": {
     "block": false,
