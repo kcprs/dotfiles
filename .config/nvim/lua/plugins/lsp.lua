@@ -1,5 +1,4 @@
--- Default diagnostics settings
-require("custom.lsp").set_diagnostics_preset(1)
+local M = {}
 
 local function default_on_attach(client, bufnr)
     require("custom.keymaps").lsp_common(bufnr)
@@ -98,80 +97,56 @@ local servers = {
     -- html = { filetypes = { 'html', 'twig', 'hbs'} },
 }
 
-return {
-    "mason-org/mason-lspconfig.nvim",
-    dependencies = {
-        "neovim/nvim-lspconfig",
-        "mason-org/mason.nvim",
+function M.setup()
+    -- Default diagnostics settings
+    require("custom.lsp").set_diagnostics_preset(1)
 
-        -- Useful status updates for LSP
-        { "j-hui/fidget.nvim", tag = "v1.4.0", opts = {} },
-
-        {
-            "folke/lazydev.nvim",
-            ft = "lua",
+    -- Configure Rust before its filetype plugin starts the server.
+    vim.g.rustaceanvim = {
+        server = {
+            on_attach = rust_on_attach,
         },
+    }
 
-        -- Breadcrumbs and navigating symbols
-        {
-            "SmiteshP/nvim-navbuddy",
-            dependencies = {
-                "SmiteshP/nvim-navic",
-                "MunifTanjim/nui.nvim",
-            },
-        },
-        "saghen/blink.cmp",
-        {
-            "mrcjkb/rustaceanvim",
-            version = "^9",
-            ft = { "rust" },
-            config = function()
-                vim.g.rustaceanvim = {
-                    server = {
-                        on_attach = rust_on_attach,
-                    },
-                }
-            end,
-        },
-    },
-    config = function()
-        -- mason-lspconfig requires that these setup functions are called in this order
-        -- before setting up the servers.
-        require("mason").setup()
-        require("mason-lspconfig").setup({
-            -- Ensure the servers above are installed unless explicitly opted out.
-            ensure_installed = vim.tbl_filter(function(server)
-                return servers[server].auto_install ~= false
-            end, vim.tbl_keys(servers)),
-            automatic_enable = false,
-        })
+    -- Useful status updates for LSP
+    require("fidget").setup({})
 
-        -- Setup neovim lua configuration
-        require("lazydev").setup()
+    -- Breadcrumbs and navigating symbols are attached in default_on_attach.
+    -- mason-lspconfig requires that these setup functions are called in this order
+    -- before setting up the servers.
+    require("mason").setup()
+    require("mason-lspconfig").setup({
+        -- Ensure the servers above are installed unless explicitly opted out.
+        ensure_installed = vim.tbl_filter(function(server)
+            return servers[server].auto_install ~= false
+        end, vim.tbl_keys(servers)),
+        automatic_enable = false,
+    })
 
-        for server, config in pairs(servers) do
-            local on_attach = config.on_attach or default_on_attach
+    for server, config in pairs(servers) do
+        local on_attach = config.on_attach or default_on_attach
 
-            -- "merge" pre-existing on_attach function - it may come from nvim-lspconfig
-            if vim.lsp.config[server].on_attach ~= nil then
-                local on_attach_1 = vim.lsp.config[server].on_attach
-                local on_attach_2 = on_attach
-                on_attach = function(client, bufnr)
-                    ---@diagnostic disable-next-line: need-check-nil
-                    on_attach_1(client, bufnr)
-                    on_attach_2(client, bufnr)
-                end
-            end
-
-            config.on_attach = on_attach
-
-            vim.lsp.config(server, config)
-
-            if not config.condition or config.condition() then
-                vim.lsp.enable(server)
+        -- "merge" pre-existing on_attach function - it may come from nvim-lspconfig
+        if vim.lsp.config[server].on_attach ~= nil then
+            local on_attach_1 = vim.lsp.config[server].on_attach
+            local on_attach_2 = on_attach
+            on_attach = function(client, bufnr)
+                ---@diagnostic disable-next-line: need-check-nil
+                on_attach_1(client, bufnr)
+                on_attach_2(client, bufnr)
             end
         end
 
-        vim.lsp.inline_completion.enable()
-    end,
-}
+        config.on_attach = on_attach
+
+        vim.lsp.config(server, config)
+
+        if not config.condition or config.condition() then
+            vim.lsp.enable(server)
+        end
+    end
+
+    vim.lsp.inline_completion.enable()
+end
+
+return M

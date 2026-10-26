@@ -1,7 +1,8 @@
-return {
-    "nvim-lualine/lualine.nvim",
+local M = {}
+
+function M.setup()
     -- See `:help lualine.txt`
-    opts = {
+    require("lualine").setup({
         options = {
             disabled_filetypes = { "DiffviewFiles" },
         },
@@ -32,7 +33,9 @@ return {
         },
         extensions = {
             "oil",
-            "toggleterm",
+            "toggleterm", -- TODO: remove, not used
         },
-    },
-}
+    })
+end
+
+return M

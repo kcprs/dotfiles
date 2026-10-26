@@ -10,7 +10,7 @@
   "session": {
     "sidebar": "auto",
     "scrollbar": false,
-    "thinking": "hide",
+    "thinking": "show",
     "new_location": "launch",
     "permissions": "prompt"
   },

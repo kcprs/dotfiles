@@ -1,9 +1,7 @@
-return {
-    "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = {
-        { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" },
-    },
-    opts = {
+local M = {}
+
+function M.setup()
+    require("render-markdown").setup({
         heading = {
             icons = { "󰎤  ", "󰎧  ", "󰎪  ", "󰎭  ", "󰎱  ", "󰎳  " },
         },
@@ -13,5 +11,7 @@ return {
         code = {
             border = "thin",
         },
-    },
-}
+    })
+end
+
+return M

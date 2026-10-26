@@ -1,7 +1,7 @@
-return {
-    "saecki/crates.nvim",
-    tag = "stable",
-    config = function()
-        require("crates").setup({})
-    end,
-}
+local M = {}
+
+function M.setup()
+    require("crates").setup({})
+end
+
+return M
