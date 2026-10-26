@@ -7,6 +7,7 @@ vim.opt.relativenumber = true
 
 -- Vertical rule
 vim.opt.colorcolumn = "100"
+vim.opt.textwidth = 100
 
 -- Enable mouse mode
 vim.opt.mouse = "a"
