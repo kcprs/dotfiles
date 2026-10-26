@@ -36,7 +36,6 @@ local plugin_specs = {
     { src = "https://github.com/rcarriga/nvim-dap-ui" }, -- Deps: nvim-dap, nvim-nio.
     { src = "https://github.com/mfussenegger/nvim-dap-python" }, -- Deps: nvim-dap.
     { src = "https://github.com/neovim/nvim-lspconfig" }, -- Deps: nvim-navic, nvim-navbuddy (attach callbacks in this config).
-    { src = "https://github.com/mason-org/mason-lspconfig.nvim" }, -- Deps: mason.nvim, nvim-lspconfig.
     { src = "https://github.com/j-hui/fidget.nvim", version = "v1.4.0" },
     { src = "https://github.com/SmiteshP/nvim-navbuddy" }, -- Deps: nvim-navic, nui.nvim.
     { src = "https://github.com/mrcjkb/rustaceanvim", version = vim.version.range("^9") }, -- Deps: nvim-dap (optional debugging), nvim-navic and nvim-navbuddy (attach callbacks in this config).
@@ -48,7 +47,6 @@ local plugin_specs = {
     { src = "https://github.com/nvim-lua/plenary.nvim" },
     { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = "https://github.com/nvim-neotest/nvim-nio" },
-    { src = "https://github.com/mason-org/mason.nvim" },
     { src = "https://github.com/MunifTanjim/nui.nvim" },
 }
 

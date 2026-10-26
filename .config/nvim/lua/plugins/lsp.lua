@@ -33,7 +33,6 @@ end
 
 ---@class ServerConfig: vim.lsp.Config
 ---@field condition? fun(): boolean
----@field auto_install? boolean
 
 ---@type { [string]: ServerConfig }
 local servers = {
@@ -57,11 +56,10 @@ local servers = {
     },
     basedpyright = {},
     rust_analyzer = {
-        -- Do not auto-install with Mason - rust-analyzer should be installed via rustup to keep
+        -- rust-analyzer should be installed via rustup to keep
         -- it up to date with the Rust toolchain.
         --
         -- > rustup component add rust-analyzer
-        auto_install = false,
         -- Never explicitly call enable() - done by rustaceanvim
         condition = function()
             return false
@@ -112,16 +110,7 @@ function M.setup()
     require("fidget").setup({})
 
     -- Breadcrumbs and navigating symbols are attached in default_on_attach.
-    -- mason-lspconfig requires that these setup functions are called in this order
-    -- before setting up the servers.
-    require("mason").setup()
-    require("mason-lspconfig").setup({
-        -- Ensure the servers above are installed unless explicitly opted out.
-        ensure_installed = vim.tbl_filter(function(server)
-            return servers[server].auto_install ~= false
-        end, vim.tbl_keys(servers)),
-        automatic_enable = false,
-    })
+    -- Server executables are installed externally and resolved through Neovim's PATH.
 
     for server, config in pairs(servers) do
         local on_attach = config.on_attach or default_on_attach
