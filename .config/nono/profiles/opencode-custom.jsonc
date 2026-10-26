@@ -89,8 +89,7 @@
     "deny_vars": [],
     "case_insensitive_vars": false,
     "set_vars": {
-      "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc",
-      "SHELL": "/bin/zsh"
+      "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc"
     }
   },
   "credential_capture": {},
