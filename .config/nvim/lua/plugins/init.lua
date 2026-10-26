@@ -39,13 +39,13 @@ local plugin_specs = {
     { src = "https://github.com/j-hui/fidget.nvim", version = "v1.4.0" },
     { src = "https://github.com/SmiteshP/nvim-navbuddy" }, -- Deps: nvim-navic, nui.nvim.
     { src = "https://github.com/mrcjkb/rustaceanvim", version = vim.version.range("^9") }, -- Deps: nvim-dap (optional debugging), nvim-navic and nvim-navbuddy (attach callbacks in this config).
+    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
+    { src = "https://github.com/folke/lazydev.nvim" },
 
     -- Dependencies (main plugins can also be dependencies of other main plugins).
-    { src = "https://github.com/folke/lazydev.nvim" },
     { src = "https://github.com/nvim-tree/nvim-web-devicons" },
     { src = "https://github.com/SmiteshP/nvim-navic" },
     { src = "https://github.com/nvim-lua/plenary.nvim" },
-    { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
     { src = "https://github.com/nvim-neotest/nvim-nio" },
     { src = "https://github.com/MunifTanjim/nui.nvim" },
 }
@@ -74,6 +74,7 @@ function M.setup()
     require("plugins.gitsigns").setup()
     require("plugins.hex").setup()
     require("plugins.neogit").setup()
+    require("plugins.nvim-treesitter").setup()
     require("plugins.render-markdown").setup()
     require("plugins.vim-illuminate").setup()
     require("plugins.dap").setup()
