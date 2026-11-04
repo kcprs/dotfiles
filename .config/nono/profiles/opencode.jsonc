@@ -1,0 +1,41 @@
+{
+  "$schema": "./profile.schema.json",
+  "extends": [
+    "nolabs-ai/opencode"
+  ],
+  "meta": {
+    "name": "opencode",
+    "description": "Custom opencode profile with additional access to some tools"
+  },
+  "filesystem": {
+    "allow": [
+      "~/.local/state/nvim",
+      "~/.local/share/nvim",
+      "~/.config/fish"
+    ],
+    "read": [
+      "~/.config/delta/themes",
+      "~/.config/nvim"
+    ],
+    "write": [],
+    "allow_file": [
+      "~/.config/git/.gitconfig_local"
+    ],
+    "read_file": [],
+    "write_file": [],
+    "deny": [
+      ".envrc"
+    ],
+    "suppress_save_prompt": [
+      "~/src",
+      "~/src/dotfiles",
+      "~/src/dotfiles/.config",
+      "~/src/dotfiles/.config/nono"
+    ]
+  },
+  "environment": {
+    "set_vars": {
+      "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc"
+    }
+  }
+}
