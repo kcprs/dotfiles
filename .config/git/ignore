@@ -14,7 +14,7 @@ _bin/
 .opencode
 opencode.jsonc
 .opencode.jsonc
-.nono/
+.nono
 
 razel.jsonl
 razel-out/
