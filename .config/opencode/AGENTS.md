@@ -25,6 +25,9 @@ this file**. If the workspace has no SESSION.md, create one and add your notes t
 - Run shell scripts through shellcheck.
 - Use `tmp/` (project-local) for intermediate files and comparison artifacts, not `/tmp`. This keeps
   outputs discoverable and project-scoped, and avoids requesting permissions for `/tmp`.
+- Do not commit changes to the repository unless explicitly instructed to do so. If you are unsure,
+  ask first. The same applies to any other operations that would affect the repository, such as
+  creating new branches or tags, or modifying commit history.
 
 ## Documentation preferences
 
