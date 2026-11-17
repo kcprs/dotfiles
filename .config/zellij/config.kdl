@@ -6,13 +6,13 @@ keybinds clear-defaults=true {
     tmux {
         bind "Esc" "Ctrl c" { SwitchToMode "Normal"; }
 
-        bind "s" { SwitchToMode "Search"; }
+        bind "/" { SwitchToMode "Search"; }
         bind "m" { SwitchToMode "Move"; }
         bind "i" { SwitchToMode "Resize"; }
         bind "r" { SwitchToMode "RenameTab"; }
 
         bind ";" "Ctrl ;" { NewPane; SwitchToMode "Normal"; }
-        bind "d" { NewPane "Down"; SwitchToMode "Normal"; }
+        bind "s" { NewPane "Down"; SwitchToMode "Normal"; }
         bind "v" { NewPane "Right"; SwitchToMode "Normal"; }
         bind "t" { NewTab; SwitchToMode "Normal"; }
 
@@ -41,6 +41,14 @@ keybinds clear-defaults=true {
 
         bind "w" "Ctrl w" {
             LaunchOrFocusPlugin "zellij:session-manager" {
+                floating true
+                move_to_focused_tab true
+            };
+            SwitchToMode "Normal"
+        }
+
+        bind "," {
+            LaunchOrFocusPlugin "configuration" {
                 floating true
                 move_to_focused_tab true
             };
@@ -107,6 +115,11 @@ keybinds clear-defaults=true {
         bind "j" { Resize "Decrease"; }
     }
 
+    scroll {
+        bind "Esc" "Ctrl c" { SwitchToMode "Normal"; }
+        bind "Ctrl b" { SwitchToMode "Tmux"; }
+    }
+
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
         bind "Ctrl l" { SwitchToMode "Locked"; }
@@ -143,4 +156,3 @@ default_layout "dev"
 theme "catppuccin-mocha"
 
 show_startup_tips false
-
