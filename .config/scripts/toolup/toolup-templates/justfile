@@ -1,0 +1,13 @@
+default: build
+
+####################################################################################################
+#                                             BUILD
+####################################################################################################
+
+build:
+    cmake -B "${__BUILD_DIR_VAR__:?Load .envrc before building}" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    cp "${__BUILD_DIR_VAR__:?Load .envrc before building}/compile_commands.json" .
+    cmake --build "${__BUILD_DIR_VAR__:?Load .envrc before building}"
+
+clean:
+    rm -rf -- "${__BUILD_DIR_VAR__:?Load .envrc before cleaning}"
