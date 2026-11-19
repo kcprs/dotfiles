@@ -19,3 +19,4 @@ default_layout "dev"
 theme "catppuccin-mocha"
 
 show_startup_tips false
+on_quit "quit"
