@@ -3,6 +3,16 @@ local M = {}
 function M.setup()
     require("fzf-lua").setup({
         fzf_opts = { ["--cycle"] = true },
+        files = {
+            fzf_opts = {
+                ["--scheme"] = "default",
+            },
+        },
+        grep = {
+            hidden = true,
+            rg_opts = "--glob '!.git' "
+                .. require("fzf-lua").defaults.grep.rg_opts,
+        },
         keymap = {
             builtin = {
                 true,
