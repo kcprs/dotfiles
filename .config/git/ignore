@@ -16,6 +16,9 @@ opencode.jsonc
 .opencode.jsonc
 .nono
 
+tmp/
+SESSION.md
+
 razel.jsonl
 razel-out/
 
