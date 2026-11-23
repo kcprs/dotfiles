@@ -3,4 +3,3 @@ set -gx CMAKE_GENERATOR Ninja
 set -gx CMAKE_EXPORT_COMPILE_COMMANDS 1
 set -gx CMAKE_BUILD_TYPE Debug
 set -gx ZELLIJ_SOCKET_DIR /tmp/zellij
-set -gx NONO_PROFILE opencode

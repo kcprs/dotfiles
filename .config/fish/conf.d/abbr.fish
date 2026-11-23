@@ -43,5 +43,5 @@ abbr --add da direnv allow
 abbr --add de direnv export fish
 abbr --add jsonl_to_json "jq -R -s 'split(\"\\n\") | map(select(length > 0) | fromjson)'"
 abbr --add oc nono run --allow-cwd -- opencode --standalone
-abbr --add pi nono run --allow-cwd --profile pi -- pi
+abbr --add pi nono run --allow-cwd -- pi
 abbr --add toolup 'bash ~/.config/scripts/toolup/toolup.sh'
