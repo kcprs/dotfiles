@@ -1,8 +1,6 @@
 {
   "$schema": "./profile.schema.json",
-  "extends": [
-    "nolabs-ai/opencode"
-  ],
+  "extends": "nolabs-ai/opencode",
   "meta": {
     "name": "opencode",
     "description": "Custom opencode profile with additional access to some tools"
@@ -10,8 +8,7 @@
   "filesystem": {
     "allow": [
       "~/.local/state/nvim",
-      "~/.local/share/nvim",
-      "~/.config/fish"
+      "~/.local/share/nvim"
     ],
     "read": [
       "~/.config/delta/themes",
