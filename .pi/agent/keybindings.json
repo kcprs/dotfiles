@@ -1,0 +1,6 @@
+{
+  "$schema": "https://pi.dev/schemas/keybindings.schema.json",
+  "app.model.select": "ctrl+,",
+  "app.session.resume": "ctrl+.",
+  "app.session.new": "ctrl+n"
+}

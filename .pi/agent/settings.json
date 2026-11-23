@@ -1,0 +1,13 @@
+{
+  "lastChangelogVersion": "1.6.0",
+  "enableInstallTelemetry": false,
+  "theme": "catppuccin-mocha",
+  "packages": [
+    "npm:@sherif-fanous/pi-catppuccin",
+    {
+      "source": "~/.config/nono/packages/nolabs-ai/pi"
+    }
+  ],
+  "defaultProvider": "ame-litellm",
+  "defaultModel": "gpt-6.1-sol"
+}

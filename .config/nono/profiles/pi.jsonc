@@ -1,0 +1,32 @@
+{
+  "$schema": "./profile.schema.json",
+  "extends": "nolabs-ai/pi",
+  "meta": {
+    "name": "pi",
+    "description": "Custom pi profile with additional access to some tools"
+  },
+  "groups": {
+    "include": []
+  },
+  "workdir": {
+    "access": "readwrite"
+  },
+  "filesystem": {
+    "allow": [
+      "~/.npm",
+      "~/.local/state/nvim",
+      "~/.local/share/nvim"
+    ],
+    "read": [
+      "~/.config/delta/themes",
+      "~/.config/nvim"
+    ],
+    "write": [],
+    "allow_file": [],
+    "read_file": [],
+    "write_file": [],
+    "deny": [
+      ".envrc"
+    ]
+  }
+}

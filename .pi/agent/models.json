@@ -1,0 +1,45 @@
+{
+    "$schema": "https://pi.dev/schemas/models.schema.json",
+    "providers": {
+        "fhgenie": {
+            "name": "FhGenie",
+            "baseUrl": "https://fhgenie-api-iis-general.openai.azure.com/openai",
+            "api": "azure-openai-responses",
+            "apiKey": "$FHGENIE_API_KEY",
+            "models": [
+                { "id": "gpt-6-luna", "name": "GPT-6 Luna" },
+                { "id": "gpt-6.1-terra", "name": "GPT-6.1 Terra" },
+                { "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol" },
+                { "id": "gpt-6-astra", "name": "GPT-6 Astra" }
+            ]
+        },
+        "fhgenie-on-prem": {
+            "name": "FhGenie on-prem",
+            "baseUrl": "https://fhgenie.fraunhofer.de/v1",
+            "api": "openai-completions",
+            "apiKey": "$FHGENIE_ONPREM_API_KEY",
+            "models": [
+                { "id": "nvidia/GLM-5.3-NVFP4", "name": "GLM-5.3" },
+                { "id": "deepseek-ai/DeepSeek-V4.1-Flash", "name": "DeepSeek V4.1 Flash" }
+            ]
+        },
+        "ame-litellm": {
+            "name": "LiteLLM",
+            "baseUrl": "https://litellm.ame-services.iis.fhg.de/v1",
+            "api": "openai-completions",
+            "apiKey": "$AME_LITELLM_API_KEY",
+            "models": [
+                { "id": "gpt-6-luna", "name": "GPT-6 Luna" },
+                { "id": "gpt-5.6-terra", "name": "GPT-5.6 Terra" },
+                { "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol" },
+                { "id": "claude-haiku-5-5", "name": "Claude Haiku 5.5" },
+                { "id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5" },
+                { "id": "claude-opus-5-5", "name": "Claude Opus 5.5" },
+                { "id": "DeepSeek-V4.1-Flash", "name": "DeepSeek V4.1 Flash" },
+                { "id": "GLM-5.3-NVFP4", "name": "GLM 5.3 NVFP4" },
+                { "id": "NVIDIA-Nemotron-3-Nano-4B-BF16", "name": "NVIDIA Nemotron 3 Nano 4B (BF16)" },
+                { "id": "Qwen3-Coder-Next-FP8", "name": "Qwen 3 Coder Next (FP8)" }
+            ]
+        }
+    }
+}
