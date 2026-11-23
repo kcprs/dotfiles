@@ -127,9 +127,11 @@ model stdout for selection, display stderr separately, and propagate failures.
 - Are some providers forbidden for confidential projects?
 - Must the selected `~/.ai.<policy>.envrc` file exist before generation proceeds?
 
-**Answer:** AI policy only selects the corresponding envrc file to source; it
+**Answer:** AI policy selects the corresponding envrc file to source; it
 does not restrict models or providers. If the selected `~/.ai.<policy>.envrc`
-file does not exist, stop with an error before writing any files.
+file does not exist, stop with an error before writing any files. For policy
+`confidential`, generate a project profile that extends the private local
+profile named `opencode-confidential`, stored in `opencode-confidential.jsonc`.
 
 ## 9. nono schema, profile, and metadata
 
@@ -152,9 +154,14 @@ author, or license.
 2. Generate `.nono/profile.schema.json` with
    `nono profile schema --output .nono/profile.schema.json`.
 3. Generate `.nono/profile.jsonc` with
-   `nono profile init --extends opencode --output .nono/profile.jsonc <project_name>`.
+   `nono profile init --extends <base_profile> --output .nono/profile.jsonc <project_name>`.
+   Use `opencode-confidential` as the base for policy `confidential`. Use `opencode` for
+   the other AI policies. The user must install the private base before setup.
 4. Add `"$schema": "profile.schema.json"` to the generated profile, since
    `nono profile init` does not include it.
+5. Keep private network permissions in the local base profile. Do not copy them
+   into the generated project profile. Ignore `opencode-confidential.jsonc`
+   in `.config/nono/profiles/.gitignore`.
 
 ## 10. Project naming, template safety, and activation
 

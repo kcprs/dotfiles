@@ -251,7 +251,10 @@ for ((i=0; i<${#files[@]}; i++)); do
             ;;
         .nono/profile.jsonc)
             mkdir -p .nono
-            init_args=(profile init --extends opencode --output "$current_file")
+            # Keep private network permissions in a local base, not in project files.
+            base_profile=opencode
+            [[ "$policy" != confidential ]] || base_profile=opencode-confidential
+            init_args=(profile init --extends "$base_profile" --output "$current_file")
             [[ ${actions[i]} != replace ]] || init_args+=(--force)
             run_quietly nono "${init_args[@]}" "$profile_name"
             # Preserve the generated comments and formatting instead of reserializing JSONC.
