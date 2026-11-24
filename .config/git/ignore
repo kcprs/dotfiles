@@ -15,6 +15,7 @@ _bin/
 opencode.jsonc
 .opencode.jsonc
 .nono
+.pi
 
 tmp/
 SESSION.md

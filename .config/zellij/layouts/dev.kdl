@@ -10,7 +10,7 @@ layout {
         pane
     }
 
-    ui name="2: opencode" {
+    ui name="2: agent" {
         pane
     }
 
