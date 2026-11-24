@@ -1,5 +1,5 @@
 #!/bin/bash
-# Tool up the current directory. Bash 3.2 and the system Perl are sufficient on macOS.
+# Tool up the current directory. Bash 3.2 and jq handle JSON on macOS.
 set -Eeo pipefail
 export LC_ALL=C
 
@@ -66,6 +66,24 @@ render_template() {
     printf '%s\n' "$content"
 }
 
+# Add the schema while keeping the generated profile intact if jq rejects it.
+add_profile_schema() {
+    local path=$1 temporary
+    temporary=$(mktemp "${path}.XXXXXX")
+    if ! cp -p "$path" "$temporary"; then
+        rm -f "$temporary"
+        return 1
+    fi
+    if jq -S --arg schema profile.schema.json '. + {"$schema": $schema}' \
+        "$path" > "$temporary"; then
+        if mv "$temporary" "$path"; then
+            return 0
+        fi
+    fi
+    rm -f "$temporary"
+    return 1
+}
+
 # Failures intentionally leave partial results, including backups, for inspection.
 report_failure() {
     local status=$?
@@ -104,7 +122,7 @@ if [[ "$policy" != none ]]; then
     require opencode 'Install OpenCode v2 before configuring AI tools.'
     require pi 'Install Pi before configuring AI tools.'
     require nono 'Install nono before configuring AI tools.'
-    require perl 'The macOS system Perl is required for JSON handling.'
+    require jq 'Install it with: brew install jq'
     [[ -n "$profile_name" ]] || fail 'The directory name cannot be converted to a nono profile name.'
     policy_env="$HOME/.ai.$policy.envrc"
     [[ -f "$policy_env" ]] || fail "The selected AI policy file does not exist: $policy_env"
@@ -175,7 +193,7 @@ if [[ "$policy" != none ]]; then
     [[ "$usable" == yes ]] || fail 'OpenCode returned no usable provider/model IDs.'
     [[ "$valid" == yes ]] || warn "Selected Pi model is not listed by OpenCode: $model"
 else
-    for file in .opencode.jsonc opencode.json opencode.jsonc .opencode/opencode.json .opencode/opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.jsonc .nono/profile.schema.json .nono/profile.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc; do
+    for file in .opencode.json .opencode.jsonc opencode.json opencode.jsonc .opencode/opencode.json .opencode/opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.jsonc .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc; do
         if exists "$file"; then warn "Existing AI configuration will not be touched: $file"; fi
     done
     if [[ -f .envrc ]] && grep -Eq 'source_env.*\.ai\.|NONO_PROFILE' .envrc; then
@@ -201,13 +219,13 @@ if [[ "$cpp" == yes ]]; then
 fi
 if [[ "$python" == yes ]]; then require python3 'Install it with: brew install python'; fi
 if [[ "$policy" != none ]]; then
-    files+=(.opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc)
+    files+=(.opencode.json .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json)
 fi
 
 if ((${#files[@]} == 0)); then printf 'No files to create.\n'; exit 0; fi
 for file in "${files[@]}"; do
     case "$file" in
-        .justfile|.clang-tidy|.opencode.jsonc)
+        .justfile|.clang-tidy|.opencode.json)
             template="$template_dir/${file#.}"
             [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
             ;;
@@ -285,7 +303,7 @@ for ((i=0; i<${#files[@]}; i++)); do
         .envrc)
             {
                 if [[ "$policy" != none ]]; then
-                    printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.jsonc\n# export NONO_PROFILE=.nono/agent-opencode.jsonc\n' "$policy_env"
+                    printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.json\n# export NONO_PROFILE=.nono/agent-opencode.json\n' "$policy_env"
                     # Keep dependency-cache writes inside the sandbox's writable project.
                     # Resolve at activation so moving the checkout needs no regeneration.
                     # shellcheck disable=SC2016
@@ -301,14 +319,17 @@ for ((i=0; i<${#files[@]}; i++)); do
         .clang-tidy)
             cp "$template_dir/clang-tidy" "$current_file"
             ;;
-        .opencode.jsonc)
-            model_json=$(perl -MJSON::PP -e 'print encode_json($ARGV[0])' "$model")
-            render_template "$template_dir/opencode.jsonc" '__MODEL_JSON__' "$model_json" > "$current_file"
+        .opencode.json)
+            # Keep the generated config strict JSON; jq safely encodes model IDs as strings.
+            # The MCP example is included as JSON and remains disabled by default.
+            jq -S --arg model "$model" '.model = $model' \
+                "$template_dir/opencode.json" > "$current_file"
             ;;
         .pi/settings.json)
             mkdir -p .pi
-            perl -MJSON::PP -e 'print JSON::PP->new->pretty->encode({"\$schema" => "https://pi.dev/schemas/settings.schema.json", defaultProvider => $ARGV[0], defaultModel => $ARGV[1]})' \
-                "$model_provider" "$model_id" > "$current_file"
+            jq -n -S --arg schema 'https://pi.dev/schemas/settings.schema.json' \
+                --arg provider "$model_provider" --arg model "$model_id" \
+                '{"$schema": $schema, defaultProvider: $provider, defaultModel: $model}' > "$current_file"
             ;;
         .pi/mcp.json)
             mkdir -p .pi
@@ -325,19 +346,19 @@ for ((i=0; i<${#files[@]}; i++)); do
             init_args=(profile init --output "$current_file")
             [[ ${actions[i]} != replace ]] || init_args+=(--force)
             run_quietly nono "${init_args[@]}" "$profile_name"
-            # Preserve the generated comments and formatting instead of reserializing JSONC.
-            perl -0777 -i -pe 's/\A(\s*\{)/$1\n  "\$schema": "profile.schema.json",/ or die "Profile is not a JSON object\n"' "$current_file"
+            # Rewrite through a sibling temp file so malformed generated JSON leaves the source intact.
+            add_profile_schema "$current_file"
             ;;
-        .nono/agent-pi.jsonc|.nono/agent-opencode.jsonc)
+        .nono/agent-pi.json|.nono/agent-opencode.json)
             # The shared project base is resolved by sibling name, not by path.
             base_profile=$pi_base
             agent=pi
-            if [[ "$current_file" == .nono/agent-opencode.jsonc ]]; then
+            if [[ "$current_file" == .nono/agent-opencode.json ]]; then
                 base_profile=$opencode_base
                 agent=opencode
             fi
-            perl -MJSON::PP -e 'print JSON::PP->new->pretty->encode({"\$schema" => "profile.schema.json", meta => {name => $ARGV[0]}, extends => [$ARGV[1], "profile"]})' \
-                "$profile_name-$agent" "$base_profile" > "$current_file"
+            jq -n -S --arg name "$profile_name-$agent" --arg base "$base_profile" \
+                '{"$schema": "profile.schema.json", meta: {name: $name}, extends: [$base, "profile"]}' > "$current_file"
             ;;
     esac
     written+=("$current_file")

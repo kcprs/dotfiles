@@ -85,20 +85,21 @@ failed and which files were already written. Do not roll back the run.
 
 Check only dependencies required by the selected options before writing any
 files. If any are missing, stop with an informative message. The mandatory `gum`
-check and its informative missing-dependency message are already agreed.
+check and its informative missing-dependency message are already agreed. AI setup
+also requires `jq` for deterministic JSON generation and schema insertion.
 
 ## 6. OpenCode version and configuration filename
 
 - Which OpenCode version should this target?
 - Is `.opencode.jsonc` intentional, or should the script use the documented
   `opencode.jsonc` or `.opencode/opencode.jsonc` filename?
-- Verify the global configuration path and commented MCP example against the
-  installed version before implementation.
+- Verify the global configuration path and generated JSON against the installed
+  version before implementation.
 
 **Answer:** Target OpenCode v2 and Pi without pinning a minor or patch version.
 Use the currently installed versions when specific behavior needs to be verified.
-Keep `.opencode.jsonc`: the user has explicitly reconfigured the configuration
-filename in nono sandboxes. Write Pi project model settings to `.pi/settings.json`.
+Write strict JSON to `.opencode.json` so jq can generate it with explicitly
+sorted keys. Write Pi project model settings to `.pi/settings.json`.
 Generate `.pi/mcp.json` as valid JSON with a `gitlab-3gpp` server using `npx -y
 @zereight/mcp-gitlab`, disabled by default (`"enabled": false`). Reference
 `GITLAB_PERSONAL_ACCESS_TOKEN` and `GITLAB_API_URL` with Pi's `${NAME}` syntax;
@@ -106,11 +107,11 @@ do not substitute credentials while scaffolding. Missing variables do not
 prevent loading a disabled server. Enable it through `/mcp` after credentials
 are available, or edit the file and run `/reload`. Treat this file like other
 targets for confirmation, backup-and-replace, and safety checks. Policy `none`
-leaves it untouched. Keep OpenCode's commented MCP template unchanged.
-Every AI-enabled project configures both agents; do not prompt for agent selection.
+leaves it untouched. Every AI-enabled project configures both agents; do not
+prompt for agent selection.
 
 **Verification before implementation:** Check the global configuration path
-and commented MCP template against the installed version and the user's setup.
+and MCP configuration against the installed version and the user's setup.
 
 ## 7. Model discovery and selection
 
@@ -140,8 +141,9 @@ project files. Update this list if another configured provider requires a key.
 If either model discovery fails or returns no usable models, stop before writing;
 do not offer manual entry. Show a gum spinner for each discovery, preserving
 stdout for selection or comparison, displaying stderr separately, and propagating
-failures. Write the chosen ID to `.opencode.jsonc` and its provider and model
-components to `.pi/settings.json`.
+failures. Write the chosen ID to `.opencode.json` and its provider and model
+components to `.pi/settings.json`, using jq's sorted-key output for generated
+objects.
 
 ## 8. AI policy behavior and envrc prerequisites
 
@@ -197,14 +199,14 @@ author, or license.
    `nono profile schema --output .nono/profile.schema.json`.
 2. Generate `.nono/profile.json` with `nono profile init` and no base. This
    shared profile contains project-specific settings and is not used alone.
-3. Generate `.nono/agent-pi.jsonc` and `.nono/agent-opencode.jsonc`, each
+3. Generate `.nono/agent-pi.json` and `.nono/agent-opencode.json`, each
    extending its selected agent base followed by `profile`. Sibling bases are
    resolved by name; the shared base uses `.json` because sibling `.jsonc` base
    resolution is not supported by the installed version.
 4. Add `"$schema": "profile.schema.json"` to all three profiles. Keep private
    network permissions in the local bases, not in the generated project files.
-5. Export `NONO_PROFILE=.nono/agent-pi.jsonc` in `.envrc`, with a second,
-   commented export for `.nono/agent-opencode.jsonc` for manual switching.
+5. Export `NONO_PROFILE=.nono/agent-pi.json` in `.envrc`, with a second,
+   commented export for `.nono/agent-opencode.json` for manual switching.
 6. Do not detect, warn about, or migrate old setups. Rerunning toolup backs up
    and replaces current targets, including any customized project profile.
 

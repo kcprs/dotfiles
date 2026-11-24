@@ -14,7 +14,7 @@ _bin/
 .ripgreprc
 .opencode
 opencode.jsonc
-.opencode.jsonc
+.opencode.json
 .nono
 .pi
 

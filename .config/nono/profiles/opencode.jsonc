@@ -32,7 +32,7 @@
   },
   "environment": {
     "set_vars": {
-      "OPENCODE_CONFIG": "$WORKDIR/.opencode.jsonc"
+      "OPENCODE_CONFIG": "$WORKDIR/.opencode.json"
     }
   }
 }
