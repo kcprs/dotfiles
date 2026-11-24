@@ -180,6 +180,13 @@ Do not add `CARGO_HOME` based on AI policy alone, or when Rust tools are decline
 Ignore `.cargo-home/` through the dotfiles' global Git ignore list at
 `.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
 
+Format the generated `.envrc` as clearly separated sections, in this order:
+**AI Tools**, **Rust**, **Python**, and **C/C++**. Include only sections selected
+for the project. Each section has a centered title between divider lines made of
+exactly 100 `#` characters; the divider lines contain no spaces or other
+characters. Center titles within that 100-column width, and separate adjacent
+sections with a blank line.
+
 ## 9. nono schema, profile, and metadata
 
 The requested sequence assigns two different contents to

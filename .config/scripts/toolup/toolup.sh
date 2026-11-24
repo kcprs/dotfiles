@@ -66,6 +66,15 @@ render_template() {
     printf '%s\n' "$content"
 }
 
+# Match the requested 100-column divider width and center each section title against it.
+write_envrc_section_header() {
+    local title=$1 width=100 title_column separator
+    separator=$(printf '%*s' "$width" '')
+    separator=${separator// /#}
+    title_column=$(((width - ${#title}) / 2))
+    printf '%s\n#%*s%s\n%s\n' "$separator" "$((title_column - 1))" '' "$title" "$separator"
+}
+
 # Add the schema while keeping the generated profile intact if jq rejects it.
 add_profile_schema() {
     local path=$1 temporary
@@ -304,17 +313,33 @@ for ((i=0; i<${#files[@]}; i++)); do
     case "$current_file" in
         .envrc)
             {
+                section_separator=''
                 if [[ "$policy" != none ]]; then
+                    printf '%s' "$section_separator"
+                    write_envrc_section_header 'AI Tools'
                     printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.json\n# export NONO_PROFILE=.nono/agent-opencode.json\n' "$policy_env"
+                    section_separator=$'\n'
                 fi
                 if [[ "$rust" == yes ]]; then
                     # Keep dependency-cache writes inside the sandbox's writable project.
                     # Resolve at activation so moving the checkout needs no regeneration.
+                    printf '%s' "$section_separator"
+                    write_envrc_section_header 'Rust'
                     # shellcheck disable=SC2016
-                    printf '\nCARGO_HOME="$(expand_path .cargo-home)"\nexport CARGO_HOME\n'
+                    printf 'CARGO_HOME="$(expand_path .cargo-home)"\nexport CARGO_HOME\n'
+                    section_separator=$'\n'
                 fi
-                [[ "$python" != yes ]] || printf '\nlayout python3\n'
-                [[ "$cpp" != yes ]] || printf '\nexport %s=_build\n' "$build_var"
+                if [[ "$python" == yes ]]; then
+                    printf '%s' "$section_separator"
+                    write_envrc_section_header 'Python'
+                    printf 'layout python3\n'
+                    section_separator=$'\n'
+                fi
+                if [[ "$cpp" == yes ]]; then
+                    printf '%s' "$section_separator"
+                    write_envrc_section_header 'C/C++'
+                    printf 'export %s=_build\n' "$build_var"
+                fi
             } > "$current_file"
             ;;
         .justfile)
