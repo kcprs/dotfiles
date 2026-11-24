@@ -280,3 +280,35 @@ toolup itself does not search for legacy paths. The skill applies only
 user-approved changes to new targets, then lists exact old source files and
 asks whether to delete them. It deletes only after explicit confirmation and
 never deletes generated targets or unselected candidates.
+
+## 13. Project-local fd ignore template
+
+**Requested behavior:** Make the normally Git-ignored `SESSION.md` discoverable
+by `fd` in projects scaffolded with an AI policy other than `none`. This fd
+configuration is for use in Pi, which is not used with policy `none`.
+
+**Answer:** The following requirements are confirmed:
+
+- Add `toolup-templates/fdignore` beside the existing templates and copy it to
+  `.fdignore` in the current project root. Copy the template literally; do not
+  interpolate it or read the dotfiles repository's root `.fdignore` at runtime.
+- The initial template contains exactly `!/SESSION.md` followed by a newline.
+  The leading slash limits the exception to the project-root file; do not also
+  unignore nested `SESSION.md` files or other Git-ignored files. This changes
+  fd's ignore behavior, not Git's tracking behavior.
+- Include `.fdignore` only when AI policy is `confidential`, `restricted`, or
+  `public`, independently of language/tool setup. Do not add a separate prompt
+  or require `fd` to be installed: toolup only installs the configuration.
+- With policy `none`, do not create, back up, replace, or validate an existing
+  `.fdignore`, and do not require its template, even when Rust, C/C++, or Python
+  setup is selected. Section 11's “No files to create” behavior remains unchanged
+  when all tools are declined.
+- Treat `.fdignore` like other managed targets under sections 3–5 and 12:
+  validate its template before writing, list creation or replacement and its
+  backup path in the final summary, and write only after confirmation. An
+  existing file is backed up and replaced, not merged or appended to; a
+  replacement participates in the migration handoff. Apply the same directory,
+  symlink, backup-collision, and post-confirmation safety checks.
+- Do not create `SESSION.md`, modify project or global Git ignore files, or
+  change global fd configuration as part of this feature.
+

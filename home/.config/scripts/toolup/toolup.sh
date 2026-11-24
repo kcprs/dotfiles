@@ -265,13 +265,13 @@ if [[ "$cpp" == yes ]]; then
 fi
 if [[ "$python" == yes ]]; then require python3 'Install it with: brew install python'; fi
 if [[ "$policy" != none ]]; then
-    files+=(.opencode.json .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json)
+    files+=(.opencode.json .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json .fdignore)
 fi
 
 if ((${#files[@]} == 0)); then printf 'No files to create.\n'; exit 0; fi
 for file in "${files[@]}"; do
     case "$file" in
-        .justfile|.clang-tidy|.opencode.json)
+        .justfile|.clang-tidy|.opencode.json|.fdignore)
             template="$template_dir/${file#.}"
             [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
             ;;
@@ -380,8 +380,8 @@ for ((i=0; i<${#files[@]}; i++)); do
         .justfile)
             render_template "$template_dir/justfile" '__BUILD_DIR_VAR__' "$build_var" > "$current_file"
             ;;
-        .clang-tidy)
-            cp "$template_dir/clang-tidy" "$current_file"
+        .clang-tidy|.fdignore)
+            cp "$template_dir/${current_file#.}" "$current_file"
             ;;
         .opencode.json)
             # Keep the generated config strict JSON; jq safely encodes model IDs as strings.
