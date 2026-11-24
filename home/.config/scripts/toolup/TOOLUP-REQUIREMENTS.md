@@ -10,7 +10,7 @@ question as decisions are made. Suggestions below are not confirmed decisions.
   current working directory?
 
 **Answer:** Place the script and its templates, tests, and requirements in
-`.config/scripts/toolup` in this dotfiles repository.
+`home/.config/scripts/toolup` in this dotfiles repository.
 Expose it through a fish abbreviation named `toolup`. The script scaffolds
 the current working directory. The chosen script filename is `toolup.sh`.
 
@@ -178,7 +178,7 @@ and to satisfy ShellCheck SC2155.
 
 Do not add `CARGO_HOME` based on AI policy alone, or when Rust tools are declined.
 Ignore `.cargo-home/` through the dotfiles' global Git ignore list at
-`.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
+`home/.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
 
 Format the generated `.envrc` as clearly separated sections, in this order:
 **AI Tools**, **Rust**, **Python**, and **C/C++**. Include only sections selected
@@ -272,7 +272,7 @@ the arrays recorded during the run; do not infer pairs from timestamps. The
 manifest contains paths only, not file contents or credentials.
 
 The user-level Pi skill lives at
-`.pi/agent/skills/toolup-migrate/SKILL.md` (the machine's
+`home/.pi/agent/skills/toolup-migrate/SKILL.md` (the machine's
 `~/.pi/agent/skills/toolup-migrate/SKILL.md`). It processes manifest pairs and
 also checks for plausible legacy configs of tools managed by toolup. It must
 present such candidates and let the user choose whether to include each one;

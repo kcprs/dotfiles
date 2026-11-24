@@ -23,12 +23,7 @@
     "deny": [
       ".envrc"
     ],
-    "suppress_save_prompt": [
-      "~/src",
-      "~/src/dotfiles",
-      "~/src/dotfiles/.config",
-      "~/src/dotfiles/.config/nono"
-    ]
+    "suppress_save_prompt": []
   },
   "environment": {
     "set_vars": {
