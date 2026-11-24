@@ -157,6 +157,25 @@ file does not exist, stop with an error before writing any files. For policy
 policies, they extend `opencode` and `pi`. Check that both selected bases
 resolve before writing files.
 
+For every AI policy other than `none`, include the following in the generated
+`.envrc` to keep Cargo dependency-cache writes inside the writable project:
+
+```sh
+CARGO_HOME="$(expand_path .cargo-home)"
+export CARGO_HOME
+```
+
+Use direnv's `expand_path` at environment activation, not during scaffolding.
+Direnv evaluates `.envrc` from its containing directory, so the resulting
+absolute path stays anchored to the project root when commands run from
+subdirectories and adapts when the checkout moves. Do not hard-code the checkout
+path. Assign and export separately to avoid masking the command's exit status
+and to satisfy ShellCheck SC2155.
+
+Policy `none` must not add `CARGO_HOME`, even when C/C++ or Python setup generates
+an `.envrc`. Ignore `.cargo-home/` through the dotfiles' global Git ignore list
+at `.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
+
 ## 9. nono schema, profile, and metadata
 
 The requested sequence assigns two different contents to

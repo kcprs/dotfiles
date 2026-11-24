@@ -286,6 +286,10 @@ for ((i=0; i<${#files[@]}; i++)); do
             {
                 if [[ "$policy" != none ]]; then
                     printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.jsonc\n# export NONO_PROFILE=.nono/agent-opencode.jsonc\n' "$policy_env"
+                    # Keep dependency-cache writes inside the sandbox's writable project.
+                    # Resolve at activation so moving the checkout needs no regeneration.
+                    # shellcheck disable=SC2016
+                    printf '\nCARGO_HOME="$(expand_path .cargo-home)"\nexport CARGO_HOME\n'
                 fi
                 [[ "$python" != yes ]] || printf '\nlayout python3\n'
                 [[ "$cpp" != yes ]] || printf '\nexport %s=_build\n' "$build_var"

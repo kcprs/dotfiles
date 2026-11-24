@@ -6,6 +6,7 @@ _bin/
 
 .envrc
 .direnv/
+.cargo-home/
 .justfile
 .nvim.lua
 .session.vim
