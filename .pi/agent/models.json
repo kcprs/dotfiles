@@ -7,9 +7,93 @@
             "api": "azure-openai-responses",
             "apiKey": "$FHGENIE_API_KEY",
             "models": [
-                { "id": "gpt-6-luna", "name": "GPT-6 Luna" },
-                { "id": "gpt-6.1-terra", "name": "GPT-6.1 Terra" },
-                { "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol" },
+                {
+                    "id": "gpt-6-luna",
+                    "name": "GPT-6 Luna",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": "none",
+                        "minimal": null,
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 0.1,
+                        "output": 0.5,
+                        "cacheRead": 0.01,
+                        "cacheWrite": 0.125,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 0.2,
+                                "output": 0.75,
+                                "cacheRead": 0.02,
+                                "cacheWrite": 0.25
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "gpt-6.1-terra",
+                    "name": "GPT-6.1 Terra",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": "none",
+                        "minimal": null,
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 1.0,
+                        "output": 5.0,
+                        "cacheRead": 0.05,
+                        "cacheWrite": 1.25,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 2.0,
+                                "output": 7.5,
+                                "cacheRead": 0.1,
+                                "cacheWrite": 2.5
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "gpt-6.1-sol",
+                    "name": "GPT-6.1 Sol",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": null,
+                        "minimal": null,
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 2.0,
+                        "output": 10.0,
+                        "cacheRead": 0.1,
+                        "cacheWrite": 2.5,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 4.0,
+                                "output": 15.0,
+                                "cacheRead": 0.2,
+                                "cacheWrite": 5.0
+                            }
+                        ]
+                    }
+                },
                 { "id": "gpt-6-astra", "name": "GPT-6 Astra" }
             ]
         },
@@ -19,8 +103,18 @@
             "api": "openai-completions",
             "apiKey": "$FHGENIE_ONPREM_API_KEY",
             "models": [
-                { "id": "nvidia/GLM-5.3-NVFP4", "name": "GLM-5.3" },
-                { "id": "deepseek-ai/DeepSeek-V4.1-Flash", "name": "DeepSeek V4.1 Flash" }
+                {
+                    "id": "nvidia/GLM-5.3-NVFP4",
+                    "name": "GLM-5.3",
+                    "contextWindow": 262144,
+                    "maxTokens": 262144
+                },
+                {
+                    "id": "deepseek-ai/DeepSeek-V4.1-Flash",
+                    "name": "DeepSeek V4.1 Flash",
+                    "contextWindow": 262144,
+                    "maxTokens": 262144
+                }
             ]
         },
         "ame-litellm": {
@@ -29,15 +123,173 @@
             "api": "openai-completions",
             "apiKey": "$AME_LITELLM_API_KEY",
             "models": [
-                { "id": "gpt-6-luna", "name": "GPT-6 Luna" },
-                { "id": "gpt-5.6-terra", "name": "GPT-5.6 Terra" },
-                { "id": "gpt-6.1-sol", "name": "GPT-6.1 Sol" },
-                { "id": "claude-haiku-5-5", "name": "Claude Haiku 5.5" },
-                { "id": "claude-sonnet-5-5", "name": "Claude Sonnet 5.5" },
-                { "id": "claude-opus-5-5", "name": "Claude Opus 5.5" },
-                { "id": "DeepSeek-V4.1-Flash", "name": "DeepSeek V4.1 Flash" },
-                { "id": "GLM-5.3-NVFP4", "name": "GLM 5.3 NVFP4" },
-                { "id": "NVIDIA-Nemotron-3-Nano-4B-BF16", "name": "NVIDIA Nemotron 3 Nano 4B (BF16)" },
+                {
+                    "id": "gpt-6-luna",
+                    "name": "GPT-6 Luna",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": "none",
+                        "minimal": null,
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 0.1,
+                        "output": 0.5,
+                        "cacheRead": 0.01,
+                        "cacheWrite": 0.125,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 0.2,
+                                "output": 0.75,
+                                "cacheRead": 0.02,
+                                "cacheWrite": 0.25
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "gpt-5.6-terra",
+                    "name": "GPT-5.6 Terra",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": "none",
+                        "minimal": null,
+                        "xhigh": "xhigh"
+                    },
+                    "cost": {
+                        "input": 2.0,
+                        "output": 12.0,
+                        "cacheRead": 0.2,
+                        "cacheWrite": 2.5,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 4.0,
+                                "output": 18.0,
+                                "cacheRead": 0.4,
+                                "cacheWrite": 5.0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "gpt-6.1-sol",
+                    "name": "GPT-6.1 Sol",
+                    "contextWindow": 922000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "off": null,
+                        "minimal": null,
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 2.0,
+                        "output": 10.0,
+                        "cacheRead": 0.1,
+                        "cacheWrite": 2.5,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 272000,
+                                "input": 4.0,
+                                "output": 15.0,
+                                "cacheRead": 0.2,
+                                "cacheWrite": 5.0
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "claude-haiku-5-5",
+                    "name": "Claude Haiku 5.5",
+                    "contextWindow": 1000000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 0.11,
+                        "output": 0.55,
+                        "cacheRead": 0.011,
+                        "cacheWrite": 0.1375,
+                        "tiers": [
+                            {
+                                "inputTokensAbove": 100000,
+                                "input": 0.55,
+                                "output": 2.75,
+                                "cacheRead": 0.055,
+                                "cacheWrite": 0.6875
+                            }
+                        ]
+                    }
+                },
+                {
+                    "id": "claude-sonnet-5-5",
+                    "name": "Claude Sonnet 5.5",
+                    "contextWindow": 1000000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 2.2,
+                        "output": 11.0,
+                        "cacheRead": 0.11,
+                        "cacheWrite": 2.75
+                    }
+                },
+                {
+                    "id": "claude-opus-5-5",
+                    "name": "Claude Opus 5.5",
+                    "contextWindow": 1000000,
+                    "maxTokens": 128000,
+                    "reasoning": true,
+                    "input": ["text", "image"],
+                    "thinkingLevelMap": {
+                        "xhigh": "xhigh",
+                        "max": "max"
+                    },
+                    "cost": {
+                        "input": 4.4,
+                        "output": 22.0,
+                        "cacheRead": 0.22,
+                        "cacheWrite": 5.5
+                    }
+                },
+                {
+                    "id": "DeepSeek-V4.1-Flash",
+                    "name": "DeepSeek V4.1 Flash",
+                    "contextWindow": 262144,
+                    "maxTokens": 262144
+                },
+                {
+                    "id": "GLM-5.3-NVFP4",
+                    "name": "GLM 5.3 NVFP4",
+                    "contextWindow": 262144,
+                    "maxTokens": 262144
+                },
+                {
+                    "id": "NVIDIA-Nemotron-3-Nano-4B-BF16",
+                    "name": "NVIDIA Nemotron 3 Nano 4B (BF16)",
+                    "contextWindow": 262144,
+                    "maxTokens": 262144
+                },
                 { "id": "Qwen3-Coder-Next-FP8", "name": "Qwen 3 Coder Next (FP8)" }
             ]
         }
