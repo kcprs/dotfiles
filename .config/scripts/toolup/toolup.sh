@@ -102,6 +102,7 @@ esac
 
 if [[ "$policy" != none ]]; then
     require opencode 'Install OpenCode v2 before configuring AI tools.'
+    require pi 'Install Pi before configuring AI tools.'
     require nono 'Install nono before configuring AI tools.'
     require perl 'The macOS system Perl is required for JSON handling.'
     [[ -n "$profile_name" ]] || fail 'The directory name cannot be converted to a nono profile name.'
@@ -109,18 +110,44 @@ if [[ "$policy" != none ]]; then
     [[ -f "$policy_env" ]] || fail "The selected AI policy file does not exist: $policy_env"
     [[ "$profile_name" == "$project_name" ]] || warn "nono profile name normalized to: $profile_name"
 
+    # Keep private network permissions in local bases, not in project files.
+    pi_base=pi
+    opencode_base=opencode
+    if [[ "$policy" == confidential ]]; then
+        pi_base=pi-confidential
+        opencode_base=opencode-confidential
+    fi
+    for base_profile in "$pi_base" "$opencode_base"; do
+        if ! run_quietly nono profile show --json "$base_profile"; then
+            fail "nono base profile cannot be resolved: $base_profile"
+        fi
+    done
+
     # Query the CLI rather than duplicating provider/model configuration logic.
     # Keep command stdout separate from spinner UI and diagnostics so only model
     # IDs are captured, while errors remain visible and retain their exit status.
-    if ! model_list=$(gum spin --title 'Loading OpenCode models…' \
-        --show-stdout --show-stderr -- opencode models --standalone); then
-        fail 'OpenCode model discovery failed.'
+    # Pi prints separate provider and model columns. Joining only those columns
+    # preserves model IDs containing slashes and avoids parsing display metadata.
+    # Credentials arrive only after the generated .envrc is trusted. Static
+    # model listing needs nonempty keys, not valid ones; scope placeholders to
+    # this subprocess so they cannot reach OpenCode or generated configuration.
+    # TODO: Extend this list when another configured provider needs a key.
+    if ! model_list=$(gum spin --title 'Loading Pi models…' \
+        --show-stdout --show-stderr -- env \
+        FHGENIE_API_KEY=toolup-discovery-placeholder \
+        FHGENIE_ONPREM_API_KEY=toolup-discovery-placeholder \
+        AME_LITELLM_API_KEY=toolup-discovery-placeholder \
+        pi --list-models); then
+        fail 'Pi model discovery failed.'
     fi
     models=()
-    while IFS= read -r candidate; do
-        [[ "$candidate" =~ ^[^[:space:]/]+/[^[:space:]]+$ ]] && models+=("$candidate")
+    while read -r provider model_id rest; do
+        [[ "$provider" == provider && "$model_id" == model ]] && continue
+        if [[ "$provider" =~ ^[^[:space:]/]+$ && "$model_id" =~ ^[^[:space:]]+$ && -n "$rest" ]]; then
+            models+=("$provider/$model_id")
+        fi
     done <<< "$model_list"
-    ((${#models[@]})) || fail 'OpenCode returned no usable provider/model IDs.'
+    ((${#models[@]})) || fail 'Pi returned no usable provider/model IDs.'
 
     # No configured default is detected or preselected; preserve CLI list order.
     model=$(gum filter --header 'Default AI model (type to search)' --strict \
@@ -128,8 +155,27 @@ if [[ "$policy" != none ]]; then
     valid=no
     for candidate in "${models[@]}"; do [[ "$candidate" != "$model" ]] || valid=yes; done
     [[ "$valid" == yes ]] || fail 'No valid model selected.'
+    model_provider=${model%%/*}
+    model_id=${model#*/}
+
+    # OpenCode may list additional built-in models. Only the selected Pi model
+    # needs to match; a mismatch is informative, not a reason to block setup.
+    if ! opencode_models=$(gum spin --title 'Loading OpenCode models…' \
+        --show-stdout --show-stderr -- opencode models --standalone); then
+        fail 'OpenCode model discovery failed.'
+    fi
+    valid=no
+    usable=no
+    while IFS= read -r candidate; do
+        if [[ "$candidate" =~ ^[^[:space:]/]+/[^[:space:]]+$ ]]; then
+            usable=yes
+            [[ "$candidate" != "$model" ]] || valid=yes
+        fi
+    done <<< "$opencode_models"
+    [[ "$usable" == yes ]] || fail 'OpenCode returned no usable provider/model IDs.'
+    [[ "$valid" == yes ]] || warn "Selected Pi model is not listed by OpenCode: $model"
 else
-    for file in .opencode.jsonc opencode.json opencode.jsonc .opencode/opencode.json .opencode/opencode.jsonc .nono/profile.jsonc .nono/profile.schema.json; do
+    for file in .opencode.jsonc opencode.json opencode.jsonc .opencode/opencode.json .opencode/opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.jsonc .nono/profile.schema.json .nono/profile.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc; do
         if exists "$file"; then warn "Existing AI configuration will not be touched: $file"; fi
     done
     if [[ -f .envrc ]] && grep -Eq 'source_env.*\.ai\.|NONO_PROFILE' .envrc; then
@@ -154,7 +200,9 @@ if [[ "$cpp" == yes ]]; then
     files+=(.justfile .clang-tidy)
 fi
 if [[ "$python" == yes ]]; then require python3 'Install it with: brew install python'; fi
-if [[ "$policy" != none ]]; then files+=(.opencode.jsonc .nono/profile.schema.json .nono/profile.jsonc); fi
+if [[ "$policy" != none ]]; then
+    files+=(.opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc)
+fi
 
 if ((${#files[@]} == 0)); then printf 'No files to create.\n'; exit 0; fi
 for file in "${files[@]}"; do
@@ -163,10 +211,18 @@ for file in "${files[@]}"; do
             template="$template_dir/${file#.}"
             [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
             ;;
+        .pi/mcp.json)
+            template="$template_dir/pi-mcp.json"
+            [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
+            ;;
     esac
 done
-if [[ "$policy" != none ]] && exists .nono && [[ ! -d .nono || -L .nono ]]; then
-    fail '.nono must be a real directory, not a file or symlink.'
+if [[ "$policy" != none ]]; then
+    for directory in .nono .pi; do
+        if exists "$directory" && [[ ! -d "$directory" || -L "$directory" ]]; then
+            fail "$directory must be a real directory, not a file or symlink."
+        fi
+    done
 fi
 
 # Plan all replacements before the final confirmation. Backups remain siblings
@@ -229,7 +285,7 @@ for ((i=0; i<${#files[@]}; i++)); do
         .envrc)
             {
                 if [[ "$policy" != none ]]; then
-                    printf 'source_env %q\n\nexport NONO_PROFILE=.nono/profile.jsonc\n' "$policy_env"
+                    printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.jsonc\n# export NONO_PROFILE=.nono/agent-opencode.jsonc\n' "$policy_env"
                 fi
                 [[ "$python" != yes ]] || printf '\nlayout python3\n'
                 [[ "$cpp" != yes ]] || printf '\nexport %s=_build\n' "$build_var"
@@ -245,20 +301,39 @@ for ((i=0; i<${#files[@]}; i++)); do
             model_json=$(perl -MJSON::PP -e 'print encode_json($ARGV[0])' "$model")
             render_template "$template_dir/opencode.jsonc" '__MODEL_JSON__' "$model_json" > "$current_file"
             ;;
+        .pi/settings.json)
+            mkdir -p .pi
+            perl -MJSON::PP -e 'print JSON::PP->new->pretty->encode({"\$schema" => "https://pi.dev/schemas/settings.schema.json", defaultProvider => $ARGV[0], defaultModel => $ARGV[1]})' \
+                "$model_provider" "$model_id" > "$current_file"
+            ;;
+        .pi/mcp.json)
+            mkdir -p .pi
+            # Copy rather than interpolate: Pi resolves these variables only
+            # when the user enables the server with credentials available.
+            cp "$template_dir/pi-mcp.json" "$current_file"
+            ;;
         .nono/profile.schema.json)
             mkdir -p .nono
             run_quietly nono profile schema --output "$current_file"
             ;;
-        .nono/profile.jsonc)
+        .nono/profile.json)
             mkdir -p .nono
-            # Keep private network permissions in a local base, not in project files.
-            base_profile=opencode
-            [[ "$policy" != confidential ]] || base_profile=opencode-confidential
-            init_args=(profile init --extends "$base_profile" --output "$current_file")
+            init_args=(profile init --output "$current_file")
             [[ ${actions[i]} != replace ]] || init_args+=(--force)
             run_quietly nono "${init_args[@]}" "$profile_name"
             # Preserve the generated comments and formatting instead of reserializing JSONC.
             perl -0777 -i -pe 's/\A(\s*\{)/$1\n  "\$schema": "profile.schema.json",/ or die "Profile is not a JSON object\n"' "$current_file"
+            ;;
+        .nono/agent-pi.jsonc|.nono/agent-opencode.jsonc)
+            # The shared project base is resolved by sibling name, not by path.
+            base_profile=$pi_base
+            agent=pi
+            if [[ "$current_file" == .nono/agent-opencode.jsonc ]]; then
+                base_profile=$opencode_base
+                agent=opencode
+            fi
+            perl -MJSON::PP -e 'print JSON::PP->new->pretty->encode({"\$schema" => "profile.schema.json", meta => {name => $ARGV[0]}, extends => [$ARGV[1], "profile"]})' \
+                "$profile_name-$agent" "$base_profile" > "$current_file"
             ;;
     esac
     written+=("$current_file")

@@ -95,10 +95,19 @@ check and its informative missing-dependency message are already agreed.
 - Verify the global configuration path and commented MCP example against the
   installed version before implementation.
 
-**Answer:** Target OpenCode v2 generally, without pinning a minor or patch
-version. Use the currently installed version when specific behavior needs to be
-verified. Keep `.opencode.jsonc`: the user has explicitly reconfigured the
-configuration filename in nono sandboxes.
+**Answer:** Target OpenCode v2 and Pi without pinning a minor or patch version.
+Use the currently installed versions when specific behavior needs to be verified.
+Keep `.opencode.jsonc`: the user has explicitly reconfigured the configuration
+filename in nono sandboxes. Write Pi project model settings to `.pi/settings.json`.
+Generate `.pi/mcp.json` as valid JSON with a `gitlab-3gpp` server using `npx -y
+@zereight/mcp-gitlab`, disabled by default (`"enabled": false`). Reference
+`GITLAB_PERSONAL_ACCESS_TOKEN` and `GITLAB_API_URL` with Pi's `${NAME}` syntax;
+do not substitute credentials while scaffolding. Missing variables do not
+prevent loading a disabled server. Enable it through `/mcp` after credentials
+are available, or edit the file and run `/reload`. Treat this file like other
+targets for confirmation, backup-and-replace, and safety checks. Policy `none`
+leaves it untouched. Keep OpenCode's commented MCP template unchanged.
+Every AI-enabled project configures both agents; do not prompt for agent selection.
 
 **Verification before implementation:** Check the global configuration path
 and commented MCP template against the installed version and the user's setup.
@@ -113,13 +122,26 @@ and commented MCP template against the installed version and the user's setup.
 - Suggestion: searchable chat models from configured providers, displaying full
   provider/model IDs and preselecting the configured model when available.
 
-**Answer:** Include every model listed by the OpenCode CLI and provide gum
-search/filter functionality. Do not detect or preselect the current configured
-default model; this feature was dropped to simplify the script. Preserve the
-full provider/model ID in the generated config.
-If model discovery fails, stop with an error; do not offer manual entry.
-Show a gum spinner titled “Loading OpenCode models…” during discovery. Preserve
-model stdout for selection, display stderr separately, and propagate failures.
+**Answer:** List every model reported by `pi --list-models` and provide gum
+search/filter functionality. Select one model for both agents; preserve the full
+provider and model ID, including slashes within the model ID. Do not detect or
+preselect a configured default. Query `opencode models --standalone` and warn,
+but continue, if the selected provider/model ID is not listed. Extra OpenCode
+models, including built-ins, are expected and do not constitute a mismatch.
+Matching IDs are assumed to use equivalent endpoints and credentials.
+
+Pi discovery supplies dummy values for `FHGENIE_API_KEY`,
+`FHGENIE_ONPREM_API_KEY`, and `AME_LITELLM_API_KEY` only in the listing
+subprocess. This lets Pi list the statically configured models before `.envrc`
+is created and trusted; no real credentials are needed for that listing. The
+placeholders are not exported to the caller, passed to OpenCode, or written to
+project files. Update this list if another configured provider requires a key.
+
+If either model discovery fails or returns no usable models, stop before writing;
+do not offer manual entry. Show a gum spinner for each discovery, preserving
+stdout for selection or comparison, displaying stderr separately, and propagating
+failures. Write the chosen ID to `.opencode.jsonc` and its provider and model
+components to `.pi/settings.json`.
 
 ## 8. AI policy behavior and envrc prerequisites
 
@@ -130,8 +152,10 @@ model stdout for selection, display stderr separately, and propagate failures.
 **Answer:** AI policy selects the corresponding envrc file to source; it
 does not restrict models or providers. If the selected `~/.ai.<policy>.envrc`
 file does not exist, stop with an error before writing any files. For policy
-`confidential`, generate a project profile that extends the private local
-profile named `opencode-confidential`, stored in `opencode-confidential.jsonc`.
+`confidential`, the agent profiles extend the private local bases
+`opencode-confidential` and `pi-confidential`, respectively. For other AI
+policies, they extend `opencode` and `pi`. Check that both selected bases
+resolve before writing files.
 
 ## 9. nono schema, profile, and metadata
 
@@ -150,18 +174,20 @@ The requested sequence assigns two different contents to
 typos. Disregard the supplied metadata object; do not ask for description,
 author, or license.
 
-1. Create `.nono` if needed.
-2. Generate `.nono/profile.schema.json` with
+1. Create `.nono` if needed and generate `.nono/profile.schema.json` with
    `nono profile schema --output .nono/profile.schema.json`.
-3. Generate `.nono/profile.jsonc` with
-   `nono profile init --extends <base_profile> --output .nono/profile.jsonc <project_name>`.
-   Use `opencode-confidential` as the base for policy `confidential`. Use `opencode` for
-   the other AI policies. The user must install the private base before setup.
-4. Add `"$schema": "profile.schema.json"` to the generated profile, since
-   `nono profile init` does not include it.
-5. Keep private network permissions in the local base profile. Do not copy them
-   into the generated project profile. Ignore `opencode-confidential.jsonc`
-   in `.config/nono/profiles/.gitignore`.
+2. Generate `.nono/profile.json` with `nono profile init` and no base. This
+   shared profile contains project-specific settings and is not used alone.
+3. Generate `.nono/agent-pi.jsonc` and `.nono/agent-opencode.jsonc`, each
+   extending its selected agent base followed by `profile`. Sibling bases are
+   resolved by name; the shared base uses `.json` because sibling `.jsonc` base
+   resolution is not supported by the installed version.
+4. Add `"$schema": "profile.schema.json"` to all three profiles. Keep private
+   network permissions in the local bases, not in the generated project files.
+5. Export `NONO_PROFILE=.nono/agent-pi.jsonc` in `.envrc`, with a second,
+   commented export for `.nono/agent-opencode.jsonc` for manual switching.
+6. Do not detect, warn about, or migrate old setups. Rerunning toolup backs up
+   and replaces current targets, including any customized project profile.
 
 ## 10. Project naming, template safety, and activation
 
