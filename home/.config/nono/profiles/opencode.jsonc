@@ -18,7 +18,9 @@
     "allow_file": [
       "~/.config/git/.gitconfig_local"
     ],
-    "read_file": [],
+    "read_file": [
+      "~/.pi/agent/AGENTS.md"
+    ],
     "write_file": [],
     "deny": [
       ".envrc"
