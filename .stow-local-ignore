@@ -1,7 +1,8 @@
 .DS_Store
+.agents
 .envrc
-.session.vim
 .git
 .gitignore
-archive
+.session.vim
 README.md
+archive
