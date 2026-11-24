@@ -55,7 +55,7 @@ options+=("Make no changes"$'\t'"__none__")
 # selection defaults ensures that every action really is an opt-in.
 if selection=$(gum choose --no-limit --ordered --selected='' \
     --label-delimiter=$'\t' --output-delimiter=$'\n' \
-    --header='Select model updates, removals, and additions (space toggles; enter confirms)' \
+    --header='Select model updates, removals, additions, and metadata refreshes (space toggles; enter confirms)' \
     -- "${options[@]}"); then
     :
 else
