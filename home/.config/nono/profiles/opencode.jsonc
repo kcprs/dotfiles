@@ -25,7 +25,7 @@
     "deny": [
       ".envrc"
     ],
-    "suppress_save_prompt": []
+    "suppress_save_prompt": ["/"]
   },
   "environment": {
     "set_vars": {

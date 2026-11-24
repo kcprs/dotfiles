@@ -29,6 +29,7 @@
     "write_file": [],
     "deny": [
       ".envrc"
-    ]
+    ],
+    "suppress_save_prompt": ["/"]
   }
 }
