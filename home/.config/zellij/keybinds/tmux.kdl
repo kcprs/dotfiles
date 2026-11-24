@@ -15,6 +15,7 @@ keybinds {
         bind "m" { SwitchToMode "Move"; }
         bind "i" { SwitchToMode "Resize"; }
         bind "r" { SwitchToMode "RenameTab"; }
+        bind "o" { SwitchToMode "Locked"; }
 
         bind ";" "Ctrl ;" { NewPane; SwitchToMode "Normal"; }
         bind "s" { NewPane "Down"; SwitchToMode "Normal"; }
@@ -127,7 +128,6 @@ keybinds {
 
     shared_except "tmux" "locked" {
         bind "Ctrl b" { SwitchToMode "Tmux"; }
-        bind "Ctrl l" { SwitchToMode "Locked"; }
     }
 
     locked {
