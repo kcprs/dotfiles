@@ -201,14 +201,16 @@ else
     fi
 fi
 
+rust=$(gum choose --header 'Set up Rust tools?' --selected no no yes)
 cpp=$(gum choose --header 'Set up C/C++ tools?' --selected no no yes)
 python=$(gum choose --header 'Set up a Python venv?' --selected no no yes)
+[[ "$rust" == yes || "$rust" == no ]] || fail 'No valid Rust answer selected.'
 [[ "$cpp" == yes || "$cpp" == no ]] || fail 'No valid C/C++ answer selected.'
 [[ "$python" == yes || "$python" == no ]] || fail 'No valid Python answer selected.'
 
 # These tools are needed to use the selected configuration, even though setup
 # deliberately does not build the project or activate direnv.
-if [[ "$policy" != none || "$cpp" == yes || "$python" == yes ]]; then
+if [[ "$policy" != none || "$cpp" == yes || "$python" == yes || "$rust" == yes ]]; then
     require direnv 'Install it with: brew install direnv'
     files+=(.envrc)
 fi
@@ -264,7 +266,7 @@ done
 summary=$(
     printf 'Project: %s\nDirectory: %s\nAI policy: %s\n' "$project_name" "$PWD" "$policy"
     [[ -z "$model" ]] || printf 'Model: %s\nnono profile name: %s\n' "$model" "$profile_name"
-    printf 'C/C++ tools: %s\nPython venv: %s\n' "$cpp" "$python"
+    printf 'C/C++ tools: %s\nPython venv: %s\nRust tools: %s\n' "$cpp" "$python" "$rust"
     [[ "$cpp" != yes ]] || printf 'Build variable: %s=_build\n' "$build_var"
     printf '\nFiles:\n'
     for ((i=0; i<${#files[@]}; i++)); do
@@ -304,6 +306,8 @@ for ((i=0; i<${#files[@]}; i++)); do
             {
                 if [[ "$policy" != none ]]; then
                     printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.json\n# export NONO_PROFILE=.nono/agent-opencode.json\n' "$policy_env"
+                fi
+                if [[ "$rust" == yes ]]; then
                     # Keep dependency-cache writes inside the sandbox's writable project.
                     # Resolve at activation so moving the checkout needs no regeneration.
                     # shellcheck disable=SC2016

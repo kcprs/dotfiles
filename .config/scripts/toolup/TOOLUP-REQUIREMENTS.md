@@ -31,14 +31,15 @@ existing `GUM_*` style preferences, including explicitly empty values.
 
 ## 3. Default answers and confirmation
 
-- What should the default answers be for C/C++ tools and a Python venv?
+- What should the default answers be for C/C++ tools, Python venv, and Rust tools?
 - Should the script show a summary and ask for confirmation before writing?
 - Suggestion: default to **no** for both optional tool setups and show a final
   confirmation.
 
-**Answer:** Default both C/C++ tools and Python venv setup to **no**. As the final
-interactive step, show a summary of the choices and files to create, then ask for
-confirmation before writing any files.
+**Answer:** Default C/C++ tools, Python venv, and Rust tools setup to **no**. After
+AI policy and any conditional model selection, ask about Rust, C/C++, and Python
+setup in that order. As the final interactive step, show a summary of the choices
+and files to create, then ask for confirmation before writing any files.
 Default the final confirmation to **yes**.
 Display the final summary with `gum style` in a rounded, padded panel with a
 terminal-palette cyan border and ordinary terminal text colors.
@@ -69,9 +70,9 @@ When AI policy `none` is selected, warn if AI configuration files already exist,
 but do not modify those AI configuration files. The user's wording “policy nono”
 is interpreted as `none`.
 
-Exception: if C/C++ or Python setup is selected, an existing `.envrc` is still
-replaced with a backup after final confirmation, even if replacement removes existing AI
-settings. The user confirmed this behavior.
+Exception: if C/C++, Python, or Rust setup is selected, an existing `.envrc` is
+still replaced with a backup after final confirmation, even if replacement removes
+existing AI settings. The user confirmed this behavior.
 
 ## 5. Missing dependencies and failed commands
 
@@ -159,8 +160,9 @@ file does not exist, stop with an error before writing any files. For policy
 policies, they extend `opencode` and `pi`. Check that both selected bases
 resolve before writing files.
 
-For every AI policy other than `none`, include the following in the generated
-`.envrc` to keep Cargo dependency-cache writes inside the writable project:
+When Rust tools are selected, include the following in the generated `.envrc`
+to keep Cargo dependency-cache writes inside the writable project, regardless of
+AI policy:
 
 ```sh
 CARGO_HOME="$(expand_path .cargo-home)"
@@ -174,9 +176,9 @@ subdirectories and adapts when the checkout moves. Do not hard-code the checkout
 path. Assign and export separately to avoid masking the command's exit status
 and to satisfy ShellCheck SC2155.
 
-Policy `none` must not add `CARGO_HOME`, even when C/C++ or Python setup generates
-an `.envrc`. Ignore `.cargo-home/` through the dotfiles' global Git ignore list
-at `.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
+Do not add `CARGO_HOME` based on AI policy alone, or when Rust tools are declined.
+Ignore `.cargo-home/` through the dotfiles' global Git ignore list at
+`.config/git/ignore`; toolup does not need to modify a project's `.gitignore`.
 
 ## 9. nono schema, profile, and metadata
 
@@ -239,11 +241,11 @@ author, or license.
 
 ## 11. No options selected
 
-- If AI policy is `none` and both C/C++ tools and Python venv setup are declined,
-  should the script create nothing?
+- If AI policy is `none` and C/C++, Python, and Rust setup are declined, should
+  the script create nothing?
 - Suggestion: report “No files to create,” warn about any existing AI
   configuration, and leave everything untouched.
 
-**Answer:** If AI policy is `none` and both C/C++ tools and Python venv setup
-are declined, create nothing. Report “No files to create,” warn about any
-existing AI configuration, and leave everything untouched.
+**Answer:** If AI policy is `none` and C/C++, Python, and Rust setup are all
+declined, create nothing. Report “No files to create,” warn about any existing
+AI configuration, and leave everything untouched.
