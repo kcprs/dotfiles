@@ -1,3 +1,6 @@
+!.clang-tidy
+!.pi/
+
 containers
 github-copilot
 htop
