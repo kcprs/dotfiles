@@ -93,6 +93,41 @@ add_profile_schema() {
     return 1
 }
 
+# Preserve the exact backup-to-target pairs so the migration skill never guesses
+# which timestamped backups came from this successful run.
+write_migration_handoff() {
+    local replacement_count=0 i
+    migration_manifest=''
+    for ((i=0; i<${#files[@]}; i++)); do
+        [[ ${actions[i]} != replace ]] || replacement_count=$((replacement_count + 1))
+    done
+    ((replacement_count)) || return 0
+
+    if [[ -L tmp || ( -e tmp && ! -d tmp ) ]]; then
+        warn 'Could not create the migration handoff: tmp must be a real directory.'
+        return 0
+    fi
+    if [[ ! -d tmp ]] && ! mkdir tmp; then
+        warn 'Could not create the migration handoff directory: tmp.'
+        return 0
+    fi
+    if ! migration_manifest=$(mktemp "tmp/toolup-migration-$timestamp.XXXXXX"); then
+        migration_manifest=''
+        warn 'Could not create the migration handoff file.'
+        return 0
+    fi
+    if ! {
+        printf 'toolup-migration-manifest-v1\n'
+        for ((i=0; i<${#files[@]}; i++)); do
+            [[ ${actions[i]} != replace ]] || printf '%s\t%s\n' "${files[i]}" "${backups[i]}"
+        done
+    } > "$migration_manifest"; then
+        rm -f "$migration_manifest"
+        migration_manifest=''
+        warn 'Could not write the migration handoff file.'
+    fi
+}
+
 # Failures intentionally leave partial results, including backups, for inspection.
 report_failure() {
     local status=$?
@@ -394,4 +429,8 @@ for ((i=0; i<${#files[@]}; i++)); do
     printf 'Written: %s\n' "$current_file"
     current_file=''
 done
+write_migration_handoff
 printf "\nDone. No environment was activated. Run \`direnv allow\` yourself when ready.\n"
+if [[ -n "$migration_manifest" ]]; then
+    printf 'To help migrate old configs, run this in Pi:\n/skill:toolup-migrate %s\n' "$migration_manifest"
+fi
