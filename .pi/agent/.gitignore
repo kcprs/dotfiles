@@ -2,4 +2,6 @@ auth.json
 bin/
 install/
 models-store.json
+pi-web-access/
 sessions/
+trust.json
