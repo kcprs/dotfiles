@@ -26,6 +26,7 @@ files=()
 actions=()
 backups=()
 written=()
+warnings=()
 current_file=''
 writing=no
 
@@ -33,6 +34,45 @@ fail() { printf 'Error: %s\n' "$*" >&2; exit 1; }
 warn() { printf 'Warning: %s\n' "$*" >&2; }
 require() { command -v "$1" >/dev/null || fail "$1 is required. $2"; }
 exists() { [[ -e "$1" || -L "$1" ]]; }
+queue_warning() { warnings+=("$*"); }
+
+choose_yes_no() {
+    local answer
+    answer=$(gum choose --header "$1" --selected no no yes) || return $?
+    [[ "$answer" == yes || "$answer" == no ]] || fail "No valid $2 answer selected."
+    printf '%s\n' "$answer"
+}
+
+# Present decision-dependent warnings together, including when no targets are selected.
+print_warnings() {
+    if ((${#warnings[@]})); then
+        printf '\nWarnings:\n'
+        printf '  %s\n' "${warnings[@]}"
+    fi
+}
+
+# Validate early for useful feedback, then again after the interactive pause.
+# These checks are best-effort, not protection against concurrent filesystem changes.
+check_target_directories() {
+    local directory
+    if [[ "$policy" != none ]]; then
+        for directory in .nono .pi; do
+            if exists "$directory" && [[ ! -d "$directory" || -L "$directory" ]]; then
+                fail "$directory must be a real directory, not a file or symlink."
+            fi
+        done
+    fi
+}
+
+# Quote even ordinary paths, and prevent expansion when direnv reads the file.
+write_source_env() {
+    local path=$1
+    path=${path//\\/\\\\}
+    path=${path//\"/\\\"}
+    path=${path//\$/\\\$}
+    path=${path//\`/\\\`}
+    printf 'source_env "%s"\n' "$path"
+}
 
 # Hide successful command output, but retain full diagnostics and the exit status
 # when generation fails
@@ -56,6 +96,17 @@ while [[ -L "$script_path" ]]; do
     [[ "$script_path" == /* ]] || script_path="$script_dir/$script_path"
 done
 template_dir=$(cd -P "$(dirname "$script_path")" && pwd)/toolup-templates
+
+# Keep template names in one place so validation and generation cannot drift.
+template_for_target() {
+    case "$1" in
+        .justfile|.clang-tidy|.opencode.json|.fdignore)
+            printf '%s/%s\n' "$template_dir" "${1#.}"
+            ;;
+        .pi/mcp.json) printf '%s/pi-mcp.json\n' "$template_dir" ;;
+        *) return 1 ;;
+    esac
+}
 
 # Replace literal placeholders, not shell expressions. Templates are data and
 # are never sourced or evaluated; quoting and JSON encoding happen at the call site.
@@ -96,7 +147,7 @@ add_profile_schema() {
 # Preserve the exact backup-to-target pairs so the migration skill never guesses
 # which timestamped backups came from this successful run.
 write_migration_handoff() {
-    local replacement_count=0 i
+    local replacement_count=0 i handoff_status=0
     migration_manifest=''
     for ((i=0; i<${#files[@]}; i++)); do
         [[ ${actions[i]} != replace ]] || replacement_count=$((replacement_count + 1))
@@ -105,27 +156,34 @@ write_migration_handoff() {
 
     if [[ -L tmp || ( -e tmp && ! -d tmp ) ]]; then
         warn 'Could not create the migration handoff: tmp must be a real directory.'
-        return 0
+        return 1
     fi
     if [[ ! -d tmp ]] && ! mkdir tmp; then
         warn 'Could not create the migration handoff directory: tmp.'
-        return 0
+        return 1
     fi
     if ! migration_manifest=$(mktemp "tmp/toolup-migration-$timestamp.XXXXXX"); then
         migration_manifest=''
         warn 'Could not create the migration handoff file.'
-        return 0
+        return 1
     fi
-    if ! {
-        printf 'toolup-migration-manifest-v1\n'
+    # The caller handles failure explicitly, so check every write rather than
+    # relying on errexit (which is disabled within a tested function call).
+    {
+        printf 'toolup-migration-manifest-v1\n' || handoff_status=1
         for ((i=0; i<${#files[@]}; i++)); do
-            [[ ${actions[i]} != replace ]] || printf '%s\t%s\n' "${files[i]}" "${backups[i]}"
+            if [[ ${actions[i]} == replace ]]; then
+                printf '%s\t%s\n' "${files[i]}" "${backups[i]}" || handoff_status=1
+            fi
         done
-    } > "$migration_manifest"; then
+    } > "$migration_manifest" || handoff_status=1
+    if ((handoff_status)); then
         rm -f "$migration_manifest"
         migration_manifest=''
         warn 'Could not write the migration handoff file.'
+        return 1
     fi
+    return 0
 }
 
 # Failures intentionally leave partial results, including backups, for inspection.
@@ -143,6 +201,8 @@ report_failure() {
 }
 trap report_failure ERR
 trap 'printf "Interrupted.\n" >&2; (exit 130); report_failure' INT TERM
+
+# --- Choices and discovery ---
 
 require gum 'Install it with: brew install gum'
 [[ $(uname -s) == Darwin ]] || fail 'This script currently supports macOS only.'
@@ -170,7 +230,7 @@ if [[ "$policy" != none ]]; then
     [[ -n "$profile_name" ]] || fail 'The directory name cannot be converted to a nono profile name.'
     policy_env="$HOME/.ai.$policy.envrc"
     [[ -f "$policy_env" ]] || fail "The selected AI policy file does not exist: $policy_env"
-    [[ "$profile_name" == "$project_name" ]] || warn "nono profile name normalized to: $profile_name"
+    [[ "$profile_name" == "$project_name" ]] || queue_warning "nono profile name normalized to: $profile_name"
 
     # Keep private network permissions in local bases, not in project files.
     pi_base=pi
@@ -235,22 +295,37 @@ if [[ "$policy" != none ]]; then
         fi
     done <<< "$opencode_models"
     [[ "$usable" == yes ]] || fail 'OpenCode returned no usable provider/model IDs.'
-    [[ "$valid" == yes ]] || warn "Selected Pi model is not listed by OpenCode: $model"
-else
-    for file in .opencode.json .opencode.jsonc opencode.json opencode.jsonc .opencode/opencode.json .opencode/opencode.jsonc .pi/settings.json .pi/mcp.json .nono/profile.jsonc .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json .nono/agent-pi.jsonc .nono/agent-opencode.jsonc; do
-        if exists "$file"; then warn "Existing AI configuration will not be touched: $file"; fi
-    done
-    if [[ -f .envrc ]] && grep -Eq 'source_env.*\.ai\.|NONO_PROFILE' .envrc; then
-        warn 'Existing .envrc contains AI settings; selected tool setup will replace it with a backup after final confirmation.'
-    fi
+    [[ "$valid" == yes ]] || queue_warning "Selected Pi model is not listed by OpenCode: $model"
 fi
 
-rust=$(gum choose --header 'Set up Rust tools?' --selected no no yes)
-cpp=$(gum choose --header 'Set up C/C++ tools?' --selected no no yes)
-python=$(gum choose --header 'Set up a Python venv?' --selected no no yes)
-[[ "$rust" == yes || "$rust" == no ]] || fail 'No valid Rust answer selected.'
-[[ "$cpp" == yes || "$cpp" == no ]] || fail 'No valid C/C++ answer selected.'
-[[ "$python" == yes || "$python" == no ]] || fail 'No valid Python answer selected.'
+rust=$(choose_yes_no 'Set up Rust tools?' Rust)
+cpp=$(choose_yes_no 'Set up C/C++ tools?' C/C++)
+python=$(choose_yes_no 'Set up a Python venv?' Python)
+
+# --- Warnings, dependencies, and target selection ---
+
+# All choices are now known, so warnings can describe the actual replacement plan.
+if [[ "$policy" == none ]]; then
+    ai_config_paths=(
+        .opencode.json .opencode.jsonc opencode.json opencode.jsonc
+        .opencode/opencode.json .opencode/opencode.jsonc
+        .pi/settings.json .pi/mcp.json
+        .nono/profile.jsonc .nono/profile.schema.json .nono/profile.json
+        .nono/agent-pi.json .nono/agent-opencode.json
+        .nono/agent-pi.jsonc .nono/agent-opencode.jsonc
+        .fdignore
+    )
+    for file in "${ai_config_paths[@]}"; do
+        if exists "$file"; then queue_warning "Existing AI configuration will not be touched: $file"; fi
+    done
+    if [[ -f .envrc ]] && grep -Eq 'source_env.*\.ai\.|NONO_PROFILE' .envrc; then
+        if [[ "$rust" == yes || "$cpp" == yes || "$python" == yes ]]; then
+            queue_warning 'Existing .envrc contains AI settings; tool setup will replace it with a backup after confirmation, removing those settings.'
+        else
+            queue_warning 'Existing .envrc contains AI settings; it will be left untouched.'
+        fi
+    fi
+fi
 
 # These tools are needed to use the selected configuration, even though setup
 # deliberately does not build the project or activate direnv.
@@ -268,26 +343,19 @@ if [[ "$policy" != none ]]; then
     files+=(.opencode.json .pi/settings.json .pi/mcp.json .nono/profile.schema.json .nono/profile.json .nono/agent-pi.json .nono/agent-opencode.json .fdignore)
 fi
 
-if ((${#files[@]} == 0)); then printf 'No files to create.\n'; exit 0; fi
-for file in "${files[@]}"; do
-    case "$file" in
-        .justfile|.clang-tidy|.opencode.json|.fdignore)
-            template="$template_dir/${file#.}"
-            [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
-            ;;
-        .pi/mcp.json)
-            template="$template_dir/pi-mcp.json"
-            [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
-            ;;
-    esac
-done
-if [[ "$policy" != none ]]; then
-    for directory in .nono .pi; do
-        if exists "$directory" && [[ ! -d "$directory" || -L "$directory" ]]; then
-            fail "$directory must be a real directory, not a file or symlink."
-        fi
-    done
+if ((${#files[@]} == 0)); then
+    printf 'No files to create.\n'
+    print_warnings
+    exit 0
 fi
+# --- Validation and replacement plan ---
+
+for file in "${files[@]}"; do
+    if template=$(template_for_target "$file"); then
+        [[ -f "$template" && -r "$template" ]] || fail "Required template is missing or unreadable: $template"
+    fi
+done
+check_target_directories
 
 # Plan all replacements before the final confirmation. Backups remain siblings
 # of their originals, and suffixes prevent collisions even within the same second.
@@ -317,12 +385,41 @@ summary=$(
         printf '  %s: %s\n' "${actions[i]}" "${files[i]}"
         if [[ -n ${backups[i]} ]]; then printf '    backup: %s\n' "${backups[i]}"; fi
     done
+    print_warnings
 )
+# --- Confirmation and writes ---
+
 gum style --border rounded --border-foreground "${BORDER_FOREGROUND-6}" \
     --padding '1 2' --margin '1 0' "$summary"
-if ! gum confirm 'Write the files listed above?' --default=true; then printf 'Cancelled. No files written.\n'; exit 0; fi
+confirmation_prompt='Write the files listed above?'
+# Gum also uses exit 1 for UI failures. Capture the chosen action to distinguish
+# a declined confirmation from an error, while leaving UI and diagnostics visible.
+if confirmation_output=$(gum confirm "$confirmation_prompt" --default=true --show-output); then
+    :
+else
+    status=$?
+    case "$status" in
+        1)
+            if [[ "$confirmation_output" == "$confirmation_prompt No" ]]; then
+                printf 'Cancelled. No files written.\n'
+                exit 0
+            fi
+            ;;
+        130)
+            printf 'Interrupted. No files written.\n' >&2
+            exit 130
+            ;;
+    esac
+    printf 'Error: confirmation failed (exit %s). No files written.\n' "$status" >&2
+    exit "$status"
+fi
 
+check_target_directories
 writing=yes
+# Create shared parents once; individual targets no longer depend on write order.
+if [[ "$policy" != none ]]; then
+    mkdir -p .pi .nono
+fi
 for ((i=0; i<${#files[@]}; i++)); do
     current_file=${files[i]}
     # Recheck paths after confirmation so newly appeared files are not overwritten.
@@ -345,6 +442,7 @@ for ((i=0; i<${#files[@]}; i++)); do
         # Replacing a symlink must not overwrite the file it points to.
         if [[ -L "$current_file" ]]; then rm "$current_file"; fi
     fi
+    template=$(template_for_target "$current_file") || template=''
     case "$current_file" in
         .envrc)
             {
@@ -352,7 +450,8 @@ for ((i=0; i<${#files[@]}; i++)); do
                 if [[ "$policy" != none ]]; then
                     printf '%s' "$section_separator"
                     write_envrc_section_header 'AI Tools'
-                    printf 'source_env %q\n\nexport NONO_PROFILE=.nono/agent-pi.json\n# export NONO_PROFILE=.nono/agent-opencode.json\n' "$policy_env"
+                    write_source_env "$policy_env"
+                    printf '\nexport NONO_PROFILE=.nono/agent-pi.json\n# export NONO_PROFILE=.nono/agent-opencode.json\n'
                     section_separator=$'\n'
                 fi
                 if [[ "$rust" == yes ]]; then
@@ -378,35 +477,31 @@ for ((i=0; i<${#files[@]}; i++)); do
             } > "$current_file"
             ;;
         .justfile)
-            render_template "$template_dir/justfile" '__BUILD_DIR_VAR__' "$build_var" > "$current_file"
+            render_template "$template" '__BUILD_DIR_VAR__' "$build_var" > "$current_file"
             ;;
         .clang-tidy|.fdignore)
-            cp "$template_dir/${current_file#.}" "$current_file"
+            cp "$template" "$current_file"
             ;;
         .opencode.json)
             # Keep the generated config strict JSON; jq safely encodes model IDs as strings.
             # The MCP example is included as JSON and remains disabled by default.
             jq -S --arg model "$model" '.model = $model' \
-                "$template_dir/opencode.json" > "$current_file"
+                "$template" > "$current_file"
             ;;
         .pi/settings.json)
-            mkdir -p .pi
             jq -n -S --arg schema 'https://pi.dev/schemas/settings.schema.json' \
                 --arg provider "$model_provider" --arg model "$model_id" \
                 '{"$schema": $schema, defaultProvider: $provider, defaultModel: $model}' > "$current_file"
             ;;
         .pi/mcp.json)
-            mkdir -p .pi
             # Copy rather than interpolate: Pi resolves these variables only
             # when the user enables the server with credentials available.
-            cp "$template_dir/pi-mcp.json" "$current_file"
+            cp "$template" "$current_file"
             ;;
         .nono/profile.schema.json)
-            mkdir -p .nono
             run_quietly nono profile schema --output "$current_file"
             ;;
         .nono/profile.json)
-            mkdir -p .nono
             init_args=(profile init --output "$current_file")
             [[ ${actions[i]} != replace ]] || init_args+=(--force)
             run_quietly nono "${init_args[@]}" "$profile_name"
@@ -429,7 +524,12 @@ for ((i=0; i<${#files[@]}; i++)); do
     printf 'Written: %s\n' "$current_file"
     current_file=''
 done
-write_migration_handoff
+# --- Migration handoff ---
+
+if ! write_migration_handoff; then
+    printf 'Scaffolding completed, but migration handoff failed. Files and backups remain in place.\n' >&2
+    exit 1
+fi
 printf "\nDone. No environment was activated. Run \`direnv allow\` yourself when ready.\n"
 if [[ -n "$migration_manifest" ]]; then
     printf 'To help migrate old configs, run this in Pi:\n/skill:toolup-migrate %s\n' "$migration_manifest"
