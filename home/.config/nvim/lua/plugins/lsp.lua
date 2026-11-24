@@ -135,7 +135,7 @@ function M.setup()
         end
     end
 
-    vim.lsp.inline_completion.enable()
+    -- vim.lsp.inline_completion.enable()
 end
 
 return M
