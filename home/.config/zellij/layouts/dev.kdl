@@ -11,7 +11,11 @@ layout {
         pane
     }
 
-    tab name="2: agent" {
+    tab name="2: pi" {
+        pane
+    }
+
+    tab name="3: pi" {
         pane
     }
 
