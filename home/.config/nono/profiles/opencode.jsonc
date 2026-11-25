@@ -7,6 +7,7 @@
   },
   "filesystem": {
     "allow": [
+      "~/.agents",
       "~/.local/state/nvim",
       "~/.local/share/nvim"
     ],
