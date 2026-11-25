@@ -1,6 +1,6 @@
 {
     "mcpServers": {
-        "gitlab-3gpp": {
+        "gitlab": {
             "command": "npx",
             "args": ["-y", "@zereight/mcp-gitlab"],
             "enabled": false,

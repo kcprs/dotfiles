@@ -2,7 +2,7 @@
   "$schema": "https://opencode.ai/config.json",
   "mcp": {
     "servers": {
-      "gitlab-3gpp": {
+      "gitlab": {
         "type": "local",
         "command": ["npx", "-y", "@zereight/mcp-gitlab"],
         "disabled": true,
