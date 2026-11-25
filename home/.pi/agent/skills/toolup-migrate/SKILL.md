@@ -13,8 +13,16 @@ old setting is retained without the user's approval.
 
 ## Read and validate the handoff
 
-The user should provide the manifest path printed by toolup. Run this skill from
-the project root. The manifest is a tab-separated text file whose first line is
+Run this skill from the project root. If the user provides the manifest path
+printed by toolup, use that path. Otherwise, look only in the project's local
+`tmp/` directory for files matching `toolup-migration-*` and offer the newest
+one by modification time. Show the exact path and ask whether to use it; wait
+for confirmation before reading the manifest or starting migration. If the
+user declines, no candidate exists, or multiple candidates tie for newest, ask
+the user to provide or choose a manifest path instead. Do not infer source/target
+pairs from this discovery step; the selected manifest remains authoritative.
+
+The manifest is a tab-separated text file whose first line is
 `toolup-migration-manifest-v1`; each following line contains a target path,
 a tab, and the backup path created for that target during the latest successful
 toolup run.
@@ -55,7 +63,13 @@ processing the same source or target twice.
 
 For each approved source/target pair:
 
-1. Compare the old source with the current target and summarize meaningful
+1. Show a unified diff of the old source against the current target in a
+   fenced `diff` block in the response, not just in tool output. Label both
+   paths clearly: removed (`-`) lines belong to the old source and added (`+`)
+   lines belong to the current target. Redact secret-looking values before
+   displaying the diff. Show all hunks; if the diff is too large for one
+   response, present it in clearly labeled parts before asking what to keep.
+   If the files are identical, say so explicitly. Then summarize meaningful
    differences in user-facing terms. Distinguish custom settings from defaults
    that the new toolup version intentionally changed or removed.
 2. Ask which specific differences the user wants to keep. Do not silently
@@ -69,9 +83,10 @@ For each approved source/target pair:
    validation.
 
 Configuration files may contain credentials or other private values. Do not
-quote secret-looking values in diffs or summaries. If a proposed migration
-would expose or duplicate a credential, explain the concern and ask before
-proceeding.
+quote secret-looking values in diffs or summaries, or copy credentials from
+an old file into a new one. Prefer existing environment-variable references.
+If a proposed migration would expose or duplicate a credential, explain the
+concern and ask before proceeding.
 
 If a source or target changes while the review is underway, stop and ask the
 user to re-review that pair. Do not overwrite intervening edits.

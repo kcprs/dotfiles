@@ -532,5 +532,5 @@ if ! write_migration_handoff; then
 fi
 printf "\nDone. No environment was activated. Run \`direnv allow\` yourself when ready.\n"
 if [[ -n "$migration_manifest" ]]; then
-    printf 'To help migrate old configs, run this in Pi:\n/skill:toolup-migrate %s\n' "$migration_manifest"
+    printf 'To help migrate old configs, run this in Pi:\n/skill:toolup-migrate\n'
 fi

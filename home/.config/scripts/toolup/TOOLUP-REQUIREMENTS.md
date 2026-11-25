@@ -343,13 +343,12 @@ header followed by one target-path and backup-path pair per replaced file. Use
 the arrays recorded during the run; do not infer pairs from timestamps. The
 manifest contains paths only, not file contents or credentials.
 
-The user-level Pi skill lives at
-`home/.pi/agent/skills/toolup-migrate/SKILL.md` (the machine's
-`~/.pi/agent/skills/toolup-migrate/SKILL.md`). It processes manifest pairs and
-also checks for plausible legacy configs of tools managed by toolup. It must
-present such candidates and let the user choose whether to include each one.
-Toolup itself performs only the policy-`none` warning checks specified in
-section 10; it does not discover additional legacy migration candidates.
-The skill applies only user-approved changes to new targets, then lists exact
-old source files and asks whether to delete them. It deletes only after explicit confirmation and
-never deletes generated targets or unselected candidates.
+The user-level Pi skill lives at `~/.pi/agent/skills/toolup-migrate/SKILL.md`.
+It processes manifest pairs and also checks for plausible legacy configs of
+tools managed by toolup. It must present such candidates and let the user choose
+whether to include each one. Toolup itself performs only the policy-`none`
+warning checks specified in section 10; it does not discover additional legacy
+migration candidates. The skill applies only user-approved changes to new
+targets, then lists exact old source files and asks whether to delete them. It
+deletes only after explicit confirmation and never deletes generated targets or
+unselected candidates.
