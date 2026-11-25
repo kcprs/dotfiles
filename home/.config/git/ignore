@@ -12,6 +12,7 @@ _bin/
 .session.vim
 .luarc.json
 .ripgreprc
+.fdignore
 .opencode
 opencode.jsonc
 .opencode.json
