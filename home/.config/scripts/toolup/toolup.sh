@@ -46,8 +46,10 @@ choose_yes_no() {
 # Present decision-dependent warnings together, including when no targets are selected.
 print_warnings() {
     if ((${#warnings[@]})); then
-        printf '\nWarnings:\n'
-        printf '  %s\n' "${warnings[@]}"
+        local top_margin=${1:-1} warning_summary
+        warning_summary=$(printf '%s\n' 'Warnings:' "${warnings[@]}")
+        gum style --border rounded --border-foreground 3 \
+            --padding '1 2' --margin "$top_margin 0 1 0" "$warning_summary"
     fi
 }
 
@@ -385,12 +387,13 @@ summary=$(
         printf '  %s: %s\n' "${actions[i]}" "${files[i]}"
         if [[ -n ${backups[i]} ]]; then printf '    backup: %s\n' "${backups[i]}"; fi
     done
-    print_warnings
 )
 # --- Confirmation and writes ---
 
 gum style --border rounded --border-foreground "${BORDER_FOREGROUND-6}" \
     --padding '1 2' --margin '1 0' "$summary"
+# The summary's bottom margin already provides the blank line between panels.
+print_warnings 0
 confirmation_prompt='Write the files listed above?'
 # Gum also uses exit 1 for UI failures. Capture the chosen action to distinguish
 # a declined confirmation from an error, while leaving UI and diagnostics visible.

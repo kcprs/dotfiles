@@ -67,12 +67,14 @@ Default the border to terminal ANSI palette index 6 (cyan), preserving any
 existing `BORDER_FOREGROUND` override, including an explicitly empty value.
 Leave ordinary text foreground and background at terminal defaults.
 
-Collect nonfatal setup warnings and display them together in a **Warnings**
-section of the final summary, after all choices have been made. This includes
-model compatibility, normalized profile names, and policy-`none` warnings.
-When no targets are selected, display the collected warnings alongside
-“No files to create,” without asking for confirmation. Fatal errors and command
-diagnostics remain immediate; failures after writing begins are reported then.
+Collect nonfatal setup warnings and display them together in a separate
+**Warnings** panel below the final summary, before confirmation. Use a rounded,
+padded panel with terminal ANSI palette index 3 (yellow) for the border. Omit
+the panel when there are no warnings. This includes model compatibility,
+normalized profile names, and policy-`none` warnings. When no targets are
+selected, display the same panel below “No files to create,” without asking for
+confirmation. Fatal errors and command diagnostics remain immediate; failures
+after writing begins are reported then.
 
 ## 4. Model discovery and selection
 
