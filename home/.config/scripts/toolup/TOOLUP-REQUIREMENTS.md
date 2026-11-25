@@ -118,9 +118,10 @@ selected option adds its corresponding section to `.envrc`:
 The generated `.justfile` must provide:
 
 - A default recipe that runs `build`.
-- A `build` recipe that configures CMake in the selected build directory with
-  compilation-database generation enabled, copies `compile_commands.json` to
-  the project root, and builds the project.
+- A `build` recipe that configures CMake in the selected build directory, relying
+  on the globally exported `CMAKE_EXPORT_COMPILE_COMMANDS` environment variable
+  for compilation-database generation, copies `compile_commands.json` to the
+  project root, and builds the project.
 - A `clean` recipe that removes the selected build directory, refusing to run
   if the build-directory variable is unset or empty.
 
@@ -137,9 +138,9 @@ run CMake, build or clean the project, or run clang-tidy during scaffolding.
 - Explicitly quote the resolved absolute home path in `source_env`, including
   paths without spaces. Escape shell-special characters so the path remains
   literal at activation; do not leave `$HOME` in the generated file.
-- Quote build-directory expansions and guard `clean` against an unset or empty
-  variable.
-- Add `-DCMAKE_EXPORT_COMPILE_COMMANDS=ON` to the CMake configure command.
+- Quote build-directory expansions and guard both `build` and `clean` against
+  an unset or empty variable, using `<build_dir_env_var_name> not defined` as
+  the error message, with the actual build-directory variable name substituted.
 - Write the selected configuration files, create their required directories,
   and perform the backups specified in section 10. Do not run `direnv allow`
   or activate the environment; leave authorization and activation to the user.
