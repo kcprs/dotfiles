@@ -10,7 +10,7 @@
     "npm:pi-web-access"
   ],
   "defaultProvider": "ame-litellm",
-  "defaultModel": "gpt-6.1-sol",
+  "defaultModel": "gpt-6.2-sol",
   "extensionChangelogVersions": {
     "{\"source\":\"npm:pi-web-access\",\"scope\":\"user\"}": "0.48.0"
   },
