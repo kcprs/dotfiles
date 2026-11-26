@@ -27,6 +27,7 @@ keybinds {
         bind "p" { GoToPreviousTab; SwitchToMode "Normal"; }
         bind "n" "Enter" { ToggleTab; SwitchToMode "Normal"; }
         bind "Ctrl Enter" { GoToNextTab; }
+        bind "Ctrl Shift Enter" { GoToPreviousTab; }
 
         bind "h" "Ctrl h" { MoveFocus "Left"; SwitchToMode "Normal"; }
         bind "l" "Ctrl l" { MoveFocus "Right"; SwitchToMode "Normal"; }
