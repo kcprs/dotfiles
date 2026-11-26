@@ -93,6 +93,18 @@ missing output file grants no approval; a successfully saved empty selection
 means no changes. Update names alongside IDs, preserve unrelated settings, and
 reassess model-specific overrides rather than carrying obsolete values forward.
 
+### Keep the virtual-model router in sync
+
+This configuration also has a global extension at
+`~/.pi/agent/extensions/model-router.ts` (tracked in the dotfiles repo as
+`home/.pi/agent/extensions/model-router.ts`). It hard-codes chat-model IDs and
+Decision deployment names for `fhgenie/auto` and `ame-litellm/auto`. After
+selecting model changes, compare affected IDs against that extension. If an
+approved update, removal, or replacement changes a model or deployment used by
+a router, explicitly report that the router mapping also needs updating. Do not
+silently edit the extension as part of a `models.json` refresh; it is a separate
+code change and requires the user's authorization.
+
 ## 3. Fetch and apply metadata
 
 After approved ID changes, **query endpoints again** for selected added/updated
